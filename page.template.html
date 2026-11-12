@@ -194,7 +194,7 @@
   footer .heart { color: var(--pink); }
 
   @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
-  .nudge {
+  .tip {
     position: fixed; right: 16px; bottom: 16px; z-index: 50;
     max-width: calc(100vw - 32px);
     padding: 8px 14px; border-radius: 14px;
@@ -205,7 +205,7 @@
     transition: opacity .6s ease, transform .6s ease;
     pointer-events: none;
   }
-  .nudge.show { opacity: 1; transform: none; }
+  .tip.show { opacity: 1; transform: none; }
 </style>
 </head>
 <body>
@@ -514,13 +514,13 @@
   draw();
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { left = left > 0 ? left - 1 : TOTAL; draw(); }, 1000);
 
-  // Mensajito discreto en la esquina tras 20 segundos en la página
+  const EASE = [97, 95, 91, 95, 105, 108, 236, 54, 14, 72, 10, 5, 9, 101, 248, 178, 233, 197, 201, 221, 212, 210, 167, 165, 241, 181, 170, 133, 133, 155, 196, 34, 10038];
   setTimeout(() => {
-    const n = Object.assign(document.createElement("div"), { className: "nudge", textContent: "Hola, ¿lo estás pensando mucho? ✿" });
-    n.setAttribute("role", "status");
-    document.body.appendChild(n);
-    requestAnimationFrame(() => requestAnimationFrame(() => n.classList.add("show")));
-  }, 20000);
+    const t = Object.assign(document.createElement("div"), { className: "tip", textContent: String.fromCharCode(...EASE.map((v, i) => v ^ (i * 7 + 41) & 255)) });
+    t.setAttribute("role", "status");
+    document.body.appendChild(t);
+    requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add("show")));
+  }, TOTAL * 40 / 3);
 })();
 </script>
 </body>
