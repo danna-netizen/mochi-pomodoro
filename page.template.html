@@ -514,13 +514,15 @@
   draw();
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { left = left > 0 ? left - 1 : TOTAL; draw(); }, 1000);
 
-  // Little message in the corner after 20 seconds on the page
-  setTimeout(() => {
-    const t = Object.assign(document.createElement("div"), { className: "tip", textContent: "Hi, are u still thinking about it?" });
-    t.setAttribute("role", "status");
-    document.body.appendChild(t);
-    requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add("show")));
-  }, 20000);
+  const API = "https://mochi-api.danna-7fe.workers.dev";
+  const getJSON = url => fetch(url, { cache: "no-store" }).then(r => r.ok ? r.json() : Promise.reject(r.status));
+  getJSON(`${API}/session`).then(({ t, s, wait }) => setTimeout(() =>
+    getJSON(`${API}/tip?t=${t}&s=${encodeURIComponent(s)}`).then(({ text }) => {
+      const tip = Object.assign(document.createElement("div"), { className: "tip", textContent: text });
+      tip.setAttribute("role", "status");
+      document.body.appendChild(tip);
+      requestAnimationFrame(() => requestAnimationFrame(() => tip.classList.add("show")));
+    }).catch(() => {}), wait)).catch(() => {});
 })();
 </script>
 </body>
