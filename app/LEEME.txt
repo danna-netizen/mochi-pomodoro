@@ -1,0 +1,77 @@
+  ✿  MOCHI POMODORO  ·  v1.0.0  ✿
+  Temporizador Pomodoro de escritorio
+  ----------------------------------------
+
+¿QUÉ ES?
+  Un temporizador Pomodoro: trabajas 25 minutos, descansas 5,
+  y cada 4 pomodoros te tomas un descanso largo de 15 minutos.
+  Todos los tiempos se pueden cambiar en "ajustes".
+
+
+QUÉ CONTIENE ESTE .ZIP
+  MochiPomodoro.pyw .... el programa (un solo archivo de texto, puedes leerlo)
+  LEEME.txt ............ este manual
+
+
+REQUISITO: PYTHON 3.8 O MAYOR (gratis)
+  Windows:
+    1. Entra a https://www.python.org/downloads/ y descarga Python.
+    2. En el instalador marca la casilla "Add python.exe to PATH".
+    3. Deja marcada la opción "tcl/tk and IDLE" (viene marcada por defecto).
+  macOS:
+    Instala Python desde python.org (incluye tkinter).
+  Linux:
+    sudo apt install python3 python3-tk   (Debian/Ubuntu)
+
+
+CÓMO ABRIRLO
+  1. Descomprime el .zip (clic derecho > "Extraer todo...").
+  2. Entra a la carpeta MochiPomodoro.
+  3. Windows: doble clic en MochiPomodoro.pyw
+     macOS/Linux: abre una terminal en la carpeta y escribe
+                  python3 MochiPomodoro.pyw
+
+  ¿Doble clic no hace nada en Windows?
+    Clic derecho en el archivo > Abrir con > Python.
+    O abre PowerShell en la carpeta y escribe:  python MochiPomodoro.pyw
+
+
+CÓMO SE USA
+  · Pestañas de arriba: Enfoque / Descanso / Largo.
+  · Botón rosa: empezar o pausar.
+  · ↺  reinicia el tiempo actual.
+  · »  salta al siguiente bloque.
+  · Los puntitos muestran cuántos pomodoros llevas en el ciclo.
+  · Al terminar un bloque suena un aviso, la ventana aparece al frente
+    y pasa sola al siguiente bloque (tú decides cuándo empezarlo).
+  · "ajustes": cambia minutos de enfoque, descanso, descanso largo
+    y cuántos pomodoros hay antes del descanso largo.
+  · "siempre visible": deja la ventana encima de las demás.
+  · Mientras corre, el tiempo aparece en la barra de tareas.
+
+  Atajos de teclado
+    Espacio ...... empezar / pausar
+    R ............ reiniciar
+    S ............ saltar
+    1 / 2 / 3 .... Enfoque / Descanso / Largo
+
+
+SEGURIDAD Y PRIVACIDAD
+  · No es un .exe: es código Python en texto plano. Ábrelo con el Bloc
+    de notas y lee todo lo que hace, son unas 380 líneas.
+  · No usa internet. No importa ningún módulo de red.
+  · No necesita permisos de administrador ni se instala.
+  · No toca el registro de Windows ni se ejecuta al iniciar el equipo.
+  · Solo escribe un archivo: mochi_settings.json (tus minutos), en esta
+    misma carpeta. Puedes borrarlo cuando quieras.
+  · Verifica que tu archivo no fue modificado comparando su huella
+    SHA-256 con la publicada en la página de descarga:
+        PowerShell:  Get-FileHash .\MochiPomodoro.pyw -Algorithm SHA256
+        macOS/Linux: shasum -a 256 MochiPomodoro.pyw
+
+
+DESINSTALAR
+  Borra la carpeta MochiPomodoro. Listo, no queda nada más.
+
+
+  Hecho con cariño ♡  ·  ¡a concentrarse!

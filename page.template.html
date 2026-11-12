@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mochi Pomodoro</title>
+<meta name="description" content="Temporizador Pomodoro de escritorio, kawaii y minimalista. Gratis, sin internet, código abierto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFF7F9;
+    --card: #FFFFFF;
+    --ink: #4B3A46;
+    --muted: #9C8494;
+    --line: #F4DDE6;
+    --track: #F7E4EB;
+    --pink: #FF8FB1;
+    --pink-deep: #F2709A;
+    --pink-soft: #FFE6EE;
+    --mint: #6FC7B6;
+    --mint-soft: #DDF5F0;
+    --lav: #A98EF0;
+    --lav-soft: #ECE6FD;
+    --leaf: #8CCB9B;
+    --blush: #FFB8CB;
+    --radius: 22px;
+    --shadow: 0 1px 0 rgba(75,58,70,.04), 0 12px 32px -18px rgba(242,112,154,.35);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.65 "Nunito", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+    background-image: radial-gradient(var(--line) 1.2px, transparent 1.2px);
+    background-size: 26px 26px; opacity: .55;
+  }
+  h1, h2, h3 { font-family: "Fredoka", "Nunito", sans-serif; font-weight: 600; line-height: 1.15; margin: 0; }
+  a { color: var(--pink-deep); text-underline-offset: 3px; }
+  code, .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .86em; }
+  code { background: var(--pink-soft); padding: .12em .4em; border-radius: 6px; }
+  .hero .wrap > *, .manual > *, .split > *, .grid > * { min-width: 0; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+  section { padding: 72px 0; }
+  .eyebrow { font-family: "Fredoka"; font-weight: 500; color: var(--pink-deep); letter-spacing: .08em; text-transform: lowercase; font-size: .95rem; }
+  .eyebrow::before { content: "✦ "; }
+  .h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 6px 0 12px; }
+  .lead { color: var(--muted); max-width: 60ch; margin: 0; }
+
+  /* nav */
+  nav { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px); background: rgba(255,247,249,.78); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; gap: 12px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-family: "Fredoka"; font-weight: 600; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
+  .logo svg { width: 30px; height: 30px; }
+  nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
+  nav ul a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .95rem; }
+  nav ul a:hover { color: var(--pink-deep); }
+  @media (max-width: 560px) { nav ul { gap: 14px; } nav ul li.hide-sm { display: none; } }
+
+  /* hero */
+  .hero { padding: 64px 0 40px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+  @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } }
+  .chip { display: inline-flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--line); padding: 6px 14px; border-radius: 999px; font-size: .85rem; font-weight: 600; color: var(--muted); }
+  .chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 3px var(--mint-soft); }
+  .hero h1 { font-size: clamp(2.4rem, 5.6vw, 3.5rem); margin: 18px 0 14px; letter-spacing: -.01em; }
+  .hero h1 em { font-style: normal; color: var(--pink-deep); position: relative; white-space: nowrap; }
+  .hero h1 em::after { content: ""; position: absolute; left: 0; right: 0; bottom: .06em; height: .28em; background: var(--pink-soft); z-index: -1; border-radius: 6px; }
+  .hero p.lead { font-size: 1.12rem; }
+
+  .dl { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
+  .btn {
+    appearance: none; border: 0; cursor: pointer; font: 600 1.08rem "Fredoka", sans-serif;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 28px; border-radius: 999px; color: #fff;
+    background: var(--pink); box-shadow: 0 6px 0 var(--pink-deep), 0 16px 30px -12px rgba(242,112,154,.7);
+    transition: transform .12s ease, box-shadow .12s ease, background .2s;
+  }
+  .btn:hover { background: #FF9DBB; transform: translateY(-1px); }
+  .btn:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--pink-deep), 0 6px 16px -10px rgba(242,112,154,.7); }
+  .btn:focus-visible { outline: 3px solid var(--lav); outline-offset: 4px; }
+  .btn[disabled] { cursor: progress; opacity: .85; }
+  .btn svg { width: 20px; height: 20px; }
+  .dl-meta { font-size: .88rem; color: var(--muted); line-height: 1.5; }
+  .dl-meta b { color: var(--ink); font-weight: 700; }
+
+  .done-card { display: none; margin-top: 22px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px; box-shadow: var(--shadow); max-width: 560px; }
+  .done-card.show { display: block; animation: pop .35s cubic-bezier(.2,1.4,.4,1); }
+  .done-card h3 { font-size: 1.05rem; display: flex; gap: 8px; align-items: center; }
+  .done-card p { margin: 6px 0 0; font-size: .9rem; color: var(--muted); }
+  .hash { display: block; margin-top: 8px; padding: 10px 12px; background: var(--bg); border-radius: 12px; word-break: break-all; font-size: .78rem; color: var(--ink); }
+  @keyframes pop { from { transform: scale(.94); opacity: 0; } to { transform: none; opacity: 1; } }
+
+  /* app mock */
+  .mock { justify-self: center; width: min(340px, 100%); background: var(--card); border-radius: 28px; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px rgba(242,112,154,.45); overflow: hidden; position: relative; }
+  .mock-bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: .8rem; color: var(--muted); }
+  .mock-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--track); }
+  .mock-bar span { margin-left: auto; font-weight: 600; }
+  .mock-body { padding: 18px 18px 22px; background: var(--bg); }
+  .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .tabs span { text-align: center; font: 600 .8rem "Fredoka"; padding: 7px 0; border-radius: 999px; background: var(--track); color: var(--muted); }
+  .tabs span.on { background: var(--pink); color: #fff; }
+  .ring { display: block; width: 100%; height: auto; margin: 8px 0 0; }
+  .mochi { animation: bob 1.6s ease-in-out infinite; transform-origin: center; }
+  @keyframes bob { 50% { transform: translateY(-3px); } }
+  .mock-ctrl { display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: 6px; }
+  .mock-ctrl i { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: #fff; border: 2px solid var(--track); font-style: normal; font-weight: 700; }
+  .mock-ctrl b { padding: 11px 26px; border-radius: 999px; background: var(--pink); color: #fff; font: 600 .95rem "Fredoka"; }
+  .sparkle { position: absolute; color: var(--pink); animation: twinkle 2.4s ease-in-out infinite; font-size: 18px; }
+  @keyframes twinkle { 50% { transform: scale(.6) rotate(20deg); opacity: .4; } }
+
+  /* features */
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 32px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+  .card h3 { font-size: 1.12rem; margin: 12px 0 6px; }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+  .ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; font-size: 1.25rem; }
+  .ico.p { background: var(--pink-soft); color: var(--pink-deep); }
+  .ico.m { background: var(--mint-soft); color: #3E9C8A; }
+  .ico.l { background: var(--lav-soft); color: #7B5FD6; }
+
+  /* manual */
+  .manual { display: grid; grid-template-columns: 240px 1fr; gap: 40px; margin-top: 36px; align-items: start; }
+  @media (max-width: 820px) { .manual { grid-template-columns: 1fr; } .toc { position: static !important; } }
+  .toc { position: sticky; top: 84px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+  .toc b { font-family: "Fredoka"; font-weight: 600; font-size: .95rem; }
+  .toc ol { margin: 10px 0 0; padding-left: 20px; color: var(--muted); font-size: .92rem; }
+  .toc a { color: var(--ink); text-decoration: none; }
+  .toc a:hover { color: var(--pink-deep); }
+  .doc h3 { font-size: 1.35rem; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+  .doc h3 .n { width: 30px; height: 30px; border-radius: 50%; background: var(--pink-soft); color: var(--pink-deep); display: grid; place-items: center; font-size: .95rem; flex: none; }
+  .doc article { padding-bottom: 34px; margin-bottom: 34px; border-bottom: 1px dashed var(--line); }
+  .doc article:last-child { border-bottom: 0; }
+  .doc ul, .doc ol { padding-left: 22px; }
+  .doc li { margin: 4px 0; }
+  .doc li::marker { color: var(--pink); }
+  .os { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 14px; }
+  .os div { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; font-size: .92rem; }
+  .os b { font-family: "Fredoka"; font-weight: 600; display: block; margin-bottom: 4px; }
+  .note { background: var(--lav-soft); border-radius: 16px; padding: 12px 16px; font-size: .92rem; margin-top: 14px; }
+  .note b { color: #6B4FC8; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; font-size: .94rem; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-family: "Fredoka"; font-weight: 500; background: var(--pink-soft); color: var(--pink-deep); }
+  kbd { font-family: "JetBrains Mono", monospace; font-size: .8rem; background: #fff; border: 1px solid var(--line); border-bottom-width: 3px; border-radius: 8px; padding: 2px 8px; white-space: nowrap; }
+
+  /* security */
+  .sec { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .seals { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; margin-top: 34px; }
+  .seal { text-align: center; }
+  .seal svg { width: 112px; height: 112px; display: block; margin: 0 auto 10px; }
+  .seal b { font-family: "Fredoka"; font-weight: 600; display: block; font-size: 1rem; }
+  .seal span { color: var(--muted); font-size: .85rem; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  @media (max-width: 720px) { .split { grid-template-columns: 1fr; } }
+  .split .card h3 { margin-top: 0; display: flex; gap: 8px; align-items: center; }
+  .checks { list-style: none; padding: 0; margin: 12px 0 0; }
+  .checks li { position: relative; padding: 8px 0 8px 34px; font-size: .95rem; border-bottom: 1px dashed var(--line); }
+  .checks li:last-child { border-bottom: 0; }
+  .checks li::before { content: "✓"; flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; font-weight: 700; background: var(--mint-soft); color: #3E9C8A; position: absolute; left: 0; top: 10px; }
+  .checks.no li::before { content: "✕"; background: var(--pink-soft); color: var(--pink-deep); }
+  .report { margin-top: 40px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .report header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 16px 20px; border-bottom: 1px solid var(--line); background: var(--card); }
+  .report header h3 { font-size: 1.1rem; }
+  .report header span { font-size: .85rem; color: var(--muted); }
+  .report .rows { padding: 6px 20px 14px; }
+  .kv { display: grid; grid-template-columns: 190px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--line); font-size: .92rem; }
+  .kv:last-child { border-bottom: 0; }
+  .kv dt { color: var(--muted); font-weight: 600; }
+  .kv dd { margin: 0; word-break: break-all; }
+  @media (max-width: 600px) { .kv { grid-template-columns: 1fr; gap: 2px; } }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 14px 0 0; }
+  .steps li { counter-increment: s; position: relative; padding: 0 0 14px 40px; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--lav-soft); color: #6B4FC8; display: grid; place-items: center; font: 600 .85rem "Fredoka"; }
+  pre { background: var(--ink); color: #FFE6EE; border-radius: 14px; padding: 12px 14px; overflow-x: auto; font-size: .82rem; margin: 8px 0 0; }
+
+  /* faq */
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 4px 18px; margin-top: 10px; }
+  summary { cursor: pointer; font-family: "Fredoka"; font-weight: 500; padding: 12px 0; list-style: none; display: flex; justify-content: space-between; gap: 10px; }
+  summary::after { content: "+"; color: var(--pink-deep); font-weight: 600; }
+  details[open] summary::after { content: "–"; }
+  details p { margin: 0 0 14px; color: var(--muted); }
+
+  footer { padding: 40px 0 56px; text-align: center; color: var(--muted); font-size: .9rem; }
+  footer .heart { color: var(--pink); }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+  .nudge {
+    position: fixed; right: 16px; bottom: 16px; z-index: 50;
+    max-width: calc(100vw - 32px);
+    padding: 8px 14px; border-radius: 14px;
+    background: var(--card); border: 1px solid var(--line);
+    color: var(--muted); font-size: 14px;
+    box-shadow: var(--shadow);
+    opacity: 0; transform: translateY(6px);
+    transition: opacity .6s ease, transform .6s ease;
+    pointer-events: none;
+  }
+  .nudge.show { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="19" rx="13" ry="10" fill="#FFE6EE" stroke="#FF8FB1" stroke-width="1.6"/><ellipse cx="13" cy="8.5" rx="3" ry="1.8" fill="#8CCB9B"/><ellipse cx="19" cy="8.2" rx="3" ry="1.8" fill="#8CCB9B"/><circle cx="12" cy="18" r="1.3" fill="#4B3A46"/><circle cx="20" cy="18" r="1.3" fill="#4B3A46"/><ellipse cx="9" cy="21" rx="2.2" ry="1.2" fill="#FFB8CB"/><ellipse cx="23" cy="21" rx="2.2" ry="1.2" fill="#FFB8CB"/></svg>
+      mochi pomodoro
+    </a>
+    <ul>
+      <li class="hide-sm"><a href="#features">qué es</a></li>
+      <li><a href="#manual">manual</a></li>
+      <li><a href="#seguridad">seguridad</a></li>
+      <li class="hide-sm"><a href="#faq">faq</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="chip"><i></i> v{{VERSION}} · gratis · sin anuncios</span>
+      <h1>Concéntrate <em>bonito</em>,<br>un pomodoro a la vez.</h1>
+      <p class="lead">Mochi Pomodoro es un temporizador de escritorio pequeñito y tierno: 25 minutos de enfoque, 5 de descanso, y un mochi que te acompaña. Sin cuentas, sin internet, sin distracciones.</p>
+
+      <div class="dl">
+        <button class="btn" id="dlBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>
+          <span id="dlLabel">Descargar para escritorio</span>
+        </button>
+        <div class="dl-meta"><b>.zip · {{SIZE_KB}} KB</b><br>Windows · macOS · Linux · requiere Python 3</div>
+      </div>
+
+      <div class="done-card" id="doneCard" role="status" aria-live="polite">
+        <h3>✿ ¡Listo! Tu descarga empezó</h3>
+        <p>Huella SHA-256 de <span class="mono" id="zipName"></span> (generada en tu navegador):</p>
+        <code class="hash mono" id="zipHash">—</code>
+        <p>Sigue el <a href="#manual">manual</a> para abrirlo. ¿Quieres comprobar que es seguro? Mira <a href="#verificar">cómo verificarlo</a>.</p>
+      </div>
+    </div>
+
+    <div class="mock" aria-label="Vista previa de la aplicación">
+      <span class="sparkle" style="top:70px;left:22px">✦</span>
+      <span class="sparkle" style="top:120px;right:20px;animation-delay:.8s">✦</span>
+      <div class="mock-bar"><i></i><i></i><i></i><span id="mockTitle">24:59 · Mochi Pomodoro</span></div>
+      <div class="mock-body">
+        <div class="tabs"><span class="on">Enfoque</span><span>Descanso</span><span>Largo</span></div>
+        <svg class="ring" viewBox="0 0 300 290" aria-hidden="true">
+          <circle cx="150" cy="140" r="118" fill="none" stroke="#F7E4EB" stroke-width="14"/>
+          <circle id="arc" cx="150" cy="140" r="118" fill="none" stroke="#FF8FB1" stroke-width="14" stroke-linecap="round"
+                  stroke-dasharray="741.4" stroke-dashoffset="0" transform="rotate(-90 150 140)"/>
+          <g class="mochi">
+            <ellipse cx="150" cy="117" rx="34" ry="5" fill="#F7E4EB"/>
+            <ellipse cx="150" cy="85" rx="42" ry="27" fill="#FFE6EE" stroke="#FF8FB1" stroke-width="2"/>
+            <ellipse cx="143" cy="55" rx="8" ry="4.5" fill="#8CCB9B"/><ellipse cx="157" cy="54" rx="8" ry="4.5" fill="#8CCB9B"/>
+            <line x1="150" y1="59" x2="150" y2="51" stroke="#8CCB9B" stroke-width="2.5" stroke-linecap="round"/>
+            <ellipse cx="128" cy="91" rx="7" ry="4" fill="#FFB8CB"/><ellipse cx="172" cy="91" rx="7" ry="4" fill="#FFB8CB"/>
+            <ellipse cx="137" cy="83" rx="3.5" ry="4.5" fill="#4B3A46"/><ellipse cx="163" cy="83" rx="3.5" ry="4.5" fill="#4B3A46"/>
+            <path d="M143 85 q3.5 5 7 0 q3.5 5 7 0" fill="none" stroke="#4B3A46" stroke-width="1.6" stroke-linecap="round"/>
+          </g>
+          <text id="mockClock" x="150" y="168" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="46" fill="#4B3A46">24:59</text>
+          <text x="150" y="200" text-anchor="middle" font-family="Nunito, sans-serif" font-size="13" fill="#B49AAA">a concentrarse ✿</text>
+          <g fill="#F7E4EB"><circle cx="120" cy="276" r="5" fill="#FF8FB1"/><circle cx="140" cy="276" r="5" fill="#FF8FB1"/><circle cx="160" cy="276" r="5"/><circle cx="180" cy="276" r="5"/></g>
+        </svg>
+        <div class="mock-ctrl"><i>↺</i><b>❚❚ pausa</b><i>»</i></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <span class="eyebrow">qué es</span>
+    <h2 class="h2">Pequeño, tierno y sin ruido.</h2>
+    <p class="lead">La técnica Pomodoro divide tu trabajo en bloques de enfoque con descansos cortos. Mochi Pomodoro lo hace fácil y bonito, directo en tu escritorio.</p>
+    <div class="grid">
+      <div class="card"><div class="ico p">◷</div><h3>Ciclos automáticos</h3><p>Enfoque → descanso → enfoque… y cada 4 pomodoros, un descanso largo.</p></div>
+      <div class="card"><div class="ico m">♪</div><h3>Aviso suave</h3><p>Un sonidito y la ventana aparece al frente cuando termina cada bloque.</p></div>
+      <div class="card"><div class="ico l">✦</div><h3>A tu medida</h3><p>Cambia los minutos y deja la ventana “siempre visible” si quieres.</p></div>
+      <div class="card"><div class="ico p">♡</div><h3>Privado de verdad</h3><p>Funciona 100% sin internet. Nada sale de tu computadora.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="manual">
+  <div class="wrap">
+    <span class="eyebrow">manual de uso</span>
+    <h2 class="h2">De la descarga a tu primer pomodoro.</h2>
+    <p class="lead">Este mismo manual viene dentro del .zip como <code>LEEME.txt</code>.</p>
+
+    <div class="manual">
+      <aside class="toc">
+        <b>contenido</b>
+        <ol>
+          <li><a href="#m1">Requisitos</a></li>
+          <li><a href="#m2">Instalar Python</a></li>
+          <li><a href="#m3">Abrir Mochi Pomodoro</a></li>
+          <li><a href="#m4">Cómo se usa</a></li>
+          <li><a href="#m5">Atajos de teclado</a></li>
+          <li><a href="#m6">Desinstalar</a></li>
+        </ol>
+      </aside>
+
+      <div class="doc">
+        <article id="m1">
+          <h3><span class="n">1</span> Requisitos</h3>
+          <ul>
+            <li>Windows 10/11, macOS o Linux.</li>
+            <li><b>Python 3.8 o mayor</b> (gratis). Mochi Pomodoro está escrito en Python, por eso no es un <code>.exe</code>.</li>
+            <li>Menos de 1 MB de espacio. No necesita internet para funcionar.</li>
+          </ul>
+          <p>El .zip contiene:</p>
+          <table>
+            <tr><th>Archivo</th><th>Qué es</th></tr>
+            <tr><td><code>MochiPomodoro.pyw</code></td><td>El programa. Es un archivo de texto: puedes abrirlo con el Bloc de notas y leerlo.</td></tr>
+            <tr><td><code>LEEME.txt</code></td><td>Este manual.</td></tr>
+          </table>
+        </article>
+
+        <article id="m2">
+          <h3><span class="n">2</span> Instalar Python (solo la primera vez)</h3>
+          <div class="os">
+            <div><b>Windows</b>Descárgalo de <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a>. En el instalador marca <b>“Add python.exe to PATH”</b> y deja activado “tcl/tk and IDLE”.</div>
+            <div><b>macOS</b>Instálalo desde <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a> (ya incluye tkinter, la parte que dibuja la ventana).</div>
+            <div><b>Linux</b>En Debian/Ubuntu:<br><code>sudo apt install python3 python3-tk</code></div>
+          </div>
+          <div class="note"><b>¿Ya tienes Python?</b> Abre una terminal y escribe <code>python --version</code>. Si ves 3.8 o mayor, te puedes saltar este paso.</div>
+        </article>
+
+        <article id="m3">
+          <h3><span class="n">3</span> Abrir Mochi Pomodoro</h3>
+          <ol>
+            <li>Pulsa <b>Descargar</b> arriba. Se guardará <code>MochiPomodoro-v{{VERSION}}.zip</code>.</li>
+            <li>Clic derecho sobre el .zip → <b>Extraer todo…</b></li>
+            <li>Entra a la carpeta <code>MochiPomodoro</code> y haz <b>doble clic</b> en <code>MochiPomodoro.pyw</code>.</li>
+          </ol>
+          <p>En macOS o Linux, abre una terminal en esa carpeta y escribe:</p>
+          <pre>python3 MochiPomodoro.pyw</pre>
+          <div class="note"><b>¿Doble clic no hace nada?</b> Clic derecho → Abrir con → Python. O abre PowerShell en la carpeta y escribe <code>python MochiPomodoro.pyw</code>.</div>
+        </article>
+
+        <article id="m4">
+          <h3><span class="n">4</span> Cómo se usa</h3>
+          <ul>
+            <li><b>Pestañas</b> de arriba: Enfoque, Descanso y Largo.</li>
+            <li><b>Botón rosa</b>: empezar o pausar. El mochi abre los ojitos mientras trabaja ✿</li>
+            <li><b>↺</b> reinicia el bloque actual · <b>»</b> salta al siguiente.</li>
+            <li>Los <b>puntitos</b> muestran cuántos pomodoros llevas en el ciclo.</li>
+            <li>Al terminar un bloque suena un aviso, la ventana aparece al frente y pasa sola al siguiente bloque (tú decides cuándo empezarlo).</li>
+            <li><b>✦ ajustes</b>: minutos de enfoque, descanso, descanso largo y pomodoros por ciclo. Se recuerdan para la próxima vez.</li>
+            <li><b>◯ siempre visible</b>: deja la ventana encima de las demás.</li>
+          </ul>
+        </article>
+
+        <article id="m5">
+          <h3><span class="n">5</span> Atajos de teclado</h3>
+          <table>
+            <tr><th>Tecla</th><th>Acción</th></tr>
+            <tr><td><kbd>Espacio</kbd></td><td>Empezar / pausar</td></tr>
+            <tr><td><kbd>R</kbd></td><td>Reiniciar el bloque</td></tr>
+            <tr><td><kbd>S</kbd></td><td>Saltar al siguiente bloque</td></tr>
+            <tr><td><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td><td>Enfoque · Descanso · Descanso largo</td></tr>
+          </table>
+        </article>
+
+        <article id="m6">
+          <h3><span class="n">6</span> Desinstalar</h3>
+          <p>Borra la carpeta <code>MochiPomodoro</code>. Ya está: no instala nada en el sistema, así que no queda ningún rastro.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="seguridad">
+  <div class="wrap">
+    <span class="eyebrow">seguridad</span>
+    <h2 class="h2">¿Por qué esta descarga no es malware?</h2>
+    <p class="lead">Porque no tienes que creernos: todo lo que hace Mochi Pomodoro está a la vista. Es un solo archivo de texto de {{LINES}} líneas que puedes leer antes de abrirlo. Estos son nuestros sellos de transparencia, y cada uno lo puedes comprobar tú.</p>
+
+    <div class="seals">
+      {{SEALS}}
+    </div>
+
+    <div class="split">
+      <div class="card">
+        <h3>✓ Lo que hace</h3>
+        <ul class="checks">
+          <li>Abre una ventana con un temporizador.</li>
+          <li>Reproduce el sonido de aviso del sistema al terminar un bloque.</li>
+          <li>Guarda tus minutos en <code>mochi_settings.json</code>, dentro de su propia carpeta.</li>
+          <li>Usa solo la librería estándar de Python: <code>tkinter</code>, <code>json</code>, <code>math</code>, <code>time</code>, <code>pathlib</code>, <code>sys</code>, <code>winsound</code> (sonido) y <code>ctypes</code> (solo para que el texto se vea nítido en pantallas escaladas).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>✕ Lo que NO hace</h3>
+        <ul class="checks no">
+          <li>No se conecta a internet: no importa <code>socket</code>, <code>urllib</code>, <code>http</code> ni <code>requests</code>.</li>
+          <li>No pide permisos de administrador ni se instala.</li>
+          <li>No toca el registro de Windows ni se inicia solo con tu computadora.</li>
+          <li>No lee tus archivos, ni tu teclado fuera de su ventana, ni tu portapapeles.</li>
+          <li>No trae <code>.exe</code>, <code>.bat</code>, macros ni archivos ocultos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="report" id="verificar">
+      <header><h3>Reporte de integridad · v{{VERSION}}</h3><span>Huellas SHA-256 publicadas {{DATE}}</span></header>
+      <div class="rows">
+        <dl>
+          <div class="kv"><dt>MochiPomodoro.pyw</dt><dd class="mono">{{SHA_PY}}</dd></div>
+          <div class="kv"><dt>LEEME.txt</dt><dd class="mono">{{SHA_TXT}}</dd></div>
+          <div class="kv"><dt>Tamaño del programa</dt><dd>{{SIZE_PY}} bytes · {{LINES}} líneas</dd></div>
+          <div class="kv"><dt>Conexiones de red</dt><dd>Ninguna</dd></div>
+          <div class="kv"><dt>Archivos que escribe</dt><dd><code>mochi_settings.json</code> (en su propia carpeta)</dd></div>
+          <div class="kv"><dt>Permisos que pide</dt><dd>Ninguno</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="card">
+        <h3>Verifícalo tú en 3 pasos</h3>
+        <ol class="steps">
+          <li><b>Compara la huella.</b> Si un solo carácter del archivo cambiara, la huella sería totalmente distinta.
+            <pre>Get-FileHash .\MochiPomodoro.pyw -Algorithm SHA256</pre>
+            <span class="dl-meta">macOS/Linux: <code>shasum -a 256 MochiPomodoro.pyw</code></span></li>
+          <li><b>Escanéalo.</b> Sube el .zip a <a href="https://www.virustotal.com/gui/home/upload" rel="noopener" target="_blank">VirusTotal</a> (lo revisan más de 60 antivirus) o haz clic derecho → “Examinar con Microsoft Defender”.</li>
+          <li><b>Léelo.</b> Ábrelo con el Bloc de notas. Está comentado en español.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Sobre los avisos de Windows</h3>
+        <p>Como no hay <code>.exe</code>, Windows SmartScreen normalmente no muestra la pantalla azul de “Windows protegió su PC”. Si tu navegador pregunta si quieres conservar el .zip, es un aviso genérico para cualquier descarga de un sitio pequeño, no una detección.</p>
+        <p style="margin-top:10px">Regla de oro para cualquier descarga, incluida esta: bájala solo desde esta página oficial y desconfía de copias en otros sitios. Si la huella no coincide, no la abras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <span class="eyebrow">preguntas</span>
+    <h2 class="h2">Preguntas frecuentes</h2>
+    <details><summary>¿Es gratis?</summary><p>Sí, totalmente. Sin anuncios, sin cuentas y sin versiones de pago.</p></details>
+    <details><summary>¿Por qué necesito Python?</summary><p>Porque así el programa es un archivo de texto que puedes leer, en lugar de un .exe cerrado. Es la forma más transparente de entregarlo.</p></details>
+    <details><summary>¿Funciona sin internet?</summary><p>Sí. Una vez descargado, nunca se conecta a nada.</p></details>
+    <details><summary>¿Dónde guarda mis ajustes?</summary><p>En <code>mochi_settings.json</code>, en la misma carpeta del programa. Si lo borras, vuelve a los valores de fábrica (25 / 5 / 15 minutos).</p></details>
+    <details><summary>La huella del .zip es distinta a la de otra persona, ¿pasa algo?</summary><p>Compara las huellas de los archivos de dentro (<code>MochiPomodoro.pyw</code> y <code>LEEME.txt</code>) con el reporte de integridad: esas son las que importan y siempre deben coincidir.</p></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">mochi pomodoro v{{VERSION}} · hecho con cariño <span class="heart">♡</span> · ¡a concentrarse!</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+(() => {
+  // El .zip no existe en el servidor: se arma aquí, en memoria, solo al pulsar el botón.
+  const VERSION = "{{VERSION}}";
+  const FILES = {
+    "MochiPomodoro/MochiPomodoro.pyw": "{{PY_B64}}",
+    "MochiPomodoro/LEEME.txt": "{{TXT_B64}}"
+  };
+  const FIXED_DATE = new Date("{{DATE_ISO}}T12:00:00");
+  const btn = document.getElementById("dlBtn");
+  const label = document.getElementById("dlLabel");
+
+  const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+
+  btn.addEventListener("click", async () => {
+    if (typeof JSZip === "undefined") { label.textContent = "Revisa tu conexión e intenta de nuevo"; return; }
+    btn.disabled = true;
+    label.textContent = "Preparando tu mochi…";
+    try {
+      const zip = new JSZip();
+      for (const [path, b64] of Object.entries(FILES)) zip.file(path, b64, { base64: true, date: FIXED_DATE });
+      const bytes = await zip.generateAsync({ type: "uint8array", compression: "DEFLATE", compressionOptions: { level: 9 } });
+      const name = `MochiPomodoro-v${VERSION}.zip`;
+      const url = URL.createObjectURL(new Blob([bytes], { type: "application/zip" }));
+      const a = Object.assign(document.createElement("a"), { href: url, download: name });
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+
+      document.getElementById("zipName").textContent = name;
+      document.getElementById("zipHash").textContent =
+        (crypto.subtle ? hex(await crypto.subtle.digest("SHA-256", bytes)) : "abre la página por https para ver la huella");
+      document.getElementById("doneCard").classList.add("show");
+      label.textContent = "Descargar otra vez";
+    } catch (err) {
+      console.error(err);
+      label.textContent = "Ups, intenta de nuevo";
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  // Vista previa animada (solo decorativa)
+  const arc = document.getElementById("arc"), clock = document.getElementById("mockClock"), title = document.getElementById("mockTitle");
+  const C = 741.4, TOTAL = 25 * 60;
+  let left = TOTAL - 1;
+  const fmt = s => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+  const draw = () => { arc.style.strokeDashoffset = C * (1 - left / TOTAL); clock.textContent = fmt(left); title.textContent = `${fmt(left)} · Mochi Pomodoro`; };
+  draw();
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { left = left > 0 ? left - 1 : TOTAL; draw(); }, 1000);
+
+  // Mensajito discreto en la esquina tras 20 segundos en la página
+  setTimeout(() => {
+    const n = Object.assign(document.createElement("div"), { className: "nudge", textContent: "Hola, ¿lo estás pensando mucho? ✿" });
+    n.setAttribute("role", "status");
+    document.body.appendChild(n);
+    requestAnimationFrame(() => requestAnimationFrame(() => n.classList.add("show")));
+  }, 20000);
+})();
+</script>
+</body>
+</html>

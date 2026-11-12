@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mochi Pomodoro</title>
+<meta name="description" content="Temporizador Pomodoro de escritorio, kawaii y minimalista. Gratis, sin internet, código abierto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFF7F9;
+    --card: #FFFFFF;
+    --ink: #4B3A46;
+    --muted: #9C8494;
+    --line: #F4DDE6;
+    --track: #F7E4EB;
+    --pink: #FF8FB1;
+    --pink-deep: #F2709A;
+    --pink-soft: #FFE6EE;
+    --mint: #6FC7B6;
+    --mint-soft: #DDF5F0;
+    --lav: #A98EF0;
+    --lav-soft: #ECE6FD;
+    --leaf: #8CCB9B;
+    --blush: #FFB8CB;
+    --radius: 22px;
+    --shadow: 0 1px 0 rgba(75,58,70,.04), 0 12px 32px -18px rgba(242,112,154,.35);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.65 "Nunito", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+    background-image: radial-gradient(var(--line) 1.2px, transparent 1.2px);
+    background-size: 26px 26px; opacity: .55;
+  }
+  h1, h2, h3 { font-family: "Fredoka", "Nunito", sans-serif; font-weight: 600; line-height: 1.15; margin: 0; }
+  a { color: var(--pink-deep); text-underline-offset: 3px; }
+  code, .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .86em; }
+  code { background: var(--pink-soft); padding: .12em .4em; border-radius: 6px; }
+  .hero .wrap > *, .manual > *, .split > *, .grid > * { min-width: 0; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
+  section { padding: 72px 0; }
+  .eyebrow { font-family: "Fredoka"; font-weight: 500; color: var(--pink-deep); letter-spacing: .08em; text-transform: lowercase; font-size: .95rem; }
+  .eyebrow::before { content: "✦ "; }
+  .h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 6px 0 12px; }
+  .lead { color: var(--muted); max-width: 60ch; margin: 0; }
+
+  /* nav */
+  nav { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px); background: rgba(255,247,249,.78); border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; gap: 12px; }
+  .logo { display: flex; align-items: center; gap: 10px; font-family: "Fredoka"; font-weight: 600; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
+  .logo svg { width: 30px; height: 30px; }
+  nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
+  nav ul a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .95rem; }
+  nav ul a:hover { color: var(--pink-deep); }
+  @media (max-width: 560px) { nav ul { gap: 14px; } nav ul li.hide-sm { display: none; } }
+
+  /* hero */
+  .hero { padding: 64px 0 40px; }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
+  @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } }
+  .chip { display: inline-flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--line); padding: 6px 14px; border-radius: 999px; font-size: .85rem; font-weight: 600; color: var(--muted); }
+  .chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 3px var(--mint-soft); }
+  .hero h1 { font-size: clamp(2.4rem, 5.6vw, 3.5rem); margin: 18px 0 14px; letter-spacing: -.01em; }
+  .hero h1 em { font-style: normal; color: var(--pink-deep); position: relative; white-space: nowrap; }
+  .hero h1 em::after { content: ""; position: absolute; left: 0; right: 0; bottom: .06em; height: .28em; background: var(--pink-soft); z-index: -1; border-radius: 6px; }
+  .hero p.lead { font-size: 1.12rem; }
+
+  .dl { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
+  .btn {
+    appearance: none; border: 0; cursor: pointer; font: 600 1.08rem "Fredoka", sans-serif;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 16px 28px; border-radius: 999px; color: #fff;
+    background: var(--pink); box-shadow: 0 6px 0 var(--pink-deep), 0 16px 30px -12px rgba(242,112,154,.7);
+    transition: transform .12s ease, box-shadow .12s ease, background .2s;
+  }
+  .btn:hover { background: #FF9DBB; transform: translateY(-1px); }
+  .btn:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--pink-deep), 0 6px 16px -10px rgba(242,112,154,.7); }
+  .btn:focus-visible { outline: 3px solid var(--lav); outline-offset: 4px; }
+  .btn[disabled] { cursor: progress; opacity: .85; }
+  .btn svg { width: 20px; height: 20px; }
+  .dl-meta { font-size: .88rem; color: var(--muted); line-height: 1.5; }
+  .dl-meta b { color: var(--ink); font-weight: 700; }
+
+  .done-card { display: none; margin-top: 22px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px; box-shadow: var(--shadow); max-width: 560px; }
+  .done-card.show { display: block; animation: pop .35s cubic-bezier(.2,1.4,.4,1); }
+  .done-card h3 { font-size: 1.05rem; display: flex; gap: 8px; align-items: center; }
+  .done-card p { margin: 6px 0 0; font-size: .9rem; color: var(--muted); }
+  .hash { display: block; margin-top: 8px; padding: 10px 12px; background: var(--bg); border-radius: 12px; word-break: break-all; font-size: .78rem; color: var(--ink); }
+  @keyframes pop { from { transform: scale(.94); opacity: 0; } to { transform: none; opacity: 1; } }
+
+  /* app mock */
+  .mock { justify-self: center; width: min(340px, 100%); background: var(--card); border-radius: 28px; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px rgba(242,112,154,.45); overflow: hidden; position: relative; }
+  .mock-bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: .8rem; color: var(--muted); }
+  .mock-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--track); }
+  .mock-bar span { margin-left: auto; font-weight: 600; }
+  .mock-body { padding: 18px 18px 22px; background: var(--bg); }
+  .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .tabs span { text-align: center; font: 600 .8rem "Fredoka"; padding: 7px 0; border-radius: 999px; background: var(--track); color: var(--muted); }
+  .tabs span.on { background: var(--pink); color: #fff; }
+  .ring { display: block; width: 100%; height: auto; margin: 8px 0 0; }
+  .mochi { animation: bob 1.6s ease-in-out infinite; transform-origin: center; }
+  @keyframes bob { 50% { transform: translateY(-3px); } }
+  .mock-ctrl { display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: 6px; }
+  .mock-ctrl i { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: #fff; border: 2px solid var(--track); font-style: normal; font-weight: 700; }
+  .mock-ctrl b { padding: 11px 26px; border-radius: 999px; background: var(--pink); color: #fff; font: 600 .95rem "Fredoka"; }
+  .sparkle { position: absolute; color: var(--pink); animation: twinkle 2.4s ease-in-out infinite; font-size: 18px; }
+  @keyframes twinkle { 50% { transform: scale(.6) rotate(20deg); opacity: .4; } }
+
+  /* features */
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-top: 32px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; box-shadow: var(--shadow); }
+  .card h3 { font-size: 1.12rem; margin: 12px 0 6px; }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+  .ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; font-size: 1.25rem; }
+  .ico.p { background: var(--pink-soft); color: var(--pink-deep); }
+  .ico.m { background: var(--mint-soft); color: #3E9C8A; }
+  .ico.l { background: var(--lav-soft); color: #7B5FD6; }
+
+  /* manual */
+  .manual { display: grid; grid-template-columns: 240px 1fr; gap: 40px; margin-top: 36px; align-items: start; }
+  @media (max-width: 820px) { .manual { grid-template-columns: 1fr; } .toc { position: static !important; } }
+  .toc { position: sticky; top: 84px; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; }
+  .toc b { font-family: "Fredoka"; font-weight: 600; font-size: .95rem; }
+  .toc ol { margin: 10px 0 0; padding-left: 20px; color: var(--muted); font-size: .92rem; }
+  .toc a { color: var(--ink); text-decoration: none; }
+  .toc a:hover { color: var(--pink-deep); }
+  .doc h3 { font-size: 1.35rem; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
+  .doc h3 .n { width: 30px; height: 30px; border-radius: 50%; background: var(--pink-soft); color: var(--pink-deep); display: grid; place-items: center; font-size: .95rem; flex: none; }
+  .doc article { padding-bottom: 34px; margin-bottom: 34px; border-bottom: 1px dashed var(--line); }
+  .doc article:last-child { border-bottom: 0; }
+  .doc ul, .doc ol { padding-left: 22px; }
+  .doc li { margin: 4px 0; }
+  .doc li::marker { color: var(--pink); }
+  .os { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 14px; }
+  .os div { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; font-size: .92rem; }
+  .os b { font-family: "Fredoka"; font-weight: 600; display: block; margin-bottom: 4px; }
+  .note { background: var(--lav-soft); border-radius: 16px; padding: 12px 16px; font-size: .92rem; margin-top: 14px; }
+  .note b { color: #6B4FC8; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; font-size: .94rem; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  th { font-family: "Fredoka"; font-weight: 500; background: var(--pink-soft); color: var(--pink-deep); }
+  kbd { font-family: "JetBrains Mono", monospace; font-size: .8rem; background: #fff; border: 1px solid var(--line); border-bottom-width: 3px; border-radius: 8px; padding: 2px 8px; white-space: nowrap; }
+
+  /* security */
+  .sec { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .seals { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; margin-top: 34px; }
+  .seal { text-align: center; }
+  .seal svg { width: 112px; height: 112px; display: block; margin: 0 auto 10px; }
+  .seal b { font-family: "Fredoka"; font-weight: 600; display: block; font-size: 1rem; }
+  .seal span { color: var(--muted); font-size: .85rem; }
+  .split { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; }
+  @media (max-width: 720px) { .split { grid-template-columns: 1fr; } }
+  .split .card h3 { margin-top: 0; display: flex; gap: 8px; align-items: center; }
+  .checks { list-style: none; padding: 0; margin: 12px 0 0; }
+  .checks li { position: relative; padding: 8px 0 8px 34px; font-size: .95rem; border-bottom: 1px dashed var(--line); }
+  .checks li:last-child { border-bottom: 0; }
+  .checks li::before { content: "✓"; flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; font-weight: 700; background: var(--mint-soft); color: #3E9C8A; position: absolute; left: 0; top: 10px; }
+  .checks.no li::before { content: "✕"; background: var(--pink-soft); color: var(--pink-deep); }
+  .report { margin-top: 40px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+  .report header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 16px 20px; border-bottom: 1px solid var(--line); background: var(--card); }
+  .report header h3 { font-size: 1.1rem; }
+  .report header span { font-size: .85rem; color: var(--muted); }
+  .report .rows { padding: 6px 20px 14px; }
+  .kv { display: grid; grid-template-columns: 190px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--line); font-size: .92rem; }
+  .kv:last-child { border-bottom: 0; }
+  .kv dt { color: var(--muted); font-weight: 600; }
+  .kv dd { margin: 0; word-break: break-all; }
+  @media (max-width: 600px) { .kv { grid-template-columns: 1fr; gap: 2px; } }
+  .steps { counter-reset: s; list-style: none; padding: 0; margin: 14px 0 0; }
+  .steps li { counter-increment: s; position: relative; padding: 0 0 14px 40px; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--lav-soft); color: #6B4FC8; display: grid; place-items: center; font: 600 .85rem "Fredoka"; }
+  pre { background: var(--ink); color: #FFE6EE; border-radius: 14px; padding: 12px 14px; overflow-x: auto; font-size: .82rem; margin: 8px 0 0; }
+
+  /* faq */
+  details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 4px 18px; margin-top: 10px; }
+  summary { cursor: pointer; font-family: "Fredoka"; font-weight: 500; padding: 12px 0; list-style: none; display: flex; justify-content: space-between; gap: 10px; }
+  summary::after { content: "+"; color: var(--pink-deep); font-weight: 600; }
+  details[open] summary::after { content: "–"; }
+  details p { margin: 0 0 14px; color: var(--muted); }
+
+  footer { padding: 40px 0 56px; text-align: center; color: var(--muted); font-size: .9rem; }
+  footer .heart { color: var(--pink); }
+
+  @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+  .nudge {
+    position: fixed; right: 16px; bottom: 16px; z-index: 50;
+    max-width: calc(100vw - 32px);
+    padding: 8px 14px; border-radius: 14px;
+    background: var(--card); border: 1px solid var(--line);
+    color: var(--muted); font-size: 14px;
+    box-shadow: var(--shadow);
+    opacity: 0; transform: translateY(6px);
+    transition: opacity .6s ease, transform .6s ease;
+    pointer-events: none;
+  }
+  .nudge.show { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="19" rx="13" ry="10" fill="#FFE6EE" stroke="#FF8FB1" stroke-width="1.6"/><ellipse cx="13" cy="8.5" rx="3" ry="1.8" fill="#8CCB9B"/><ellipse cx="19" cy="8.2" rx="3" ry="1.8" fill="#8CCB9B"/><circle cx="12" cy="18" r="1.3" fill="#4B3A46"/><circle cx="20" cy="18" r="1.3" fill="#4B3A46"/><ellipse cx="9" cy="21" rx="2.2" ry="1.2" fill="#FFB8CB"/><ellipse cx="23" cy="21" rx="2.2" ry="1.2" fill="#FFB8CB"/></svg>
+      mochi pomodoro
+    </a>
+    <ul>
+      <li class="hide-sm"><a href="#features">qué es</a></li>
+      <li><a href="#manual">manual</a></li>
+      <li><a href="#seguridad">seguridad</a></li>
+      <li class="hide-sm"><a href="#faq">faq</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <span class="chip"><i></i> v1.0.0 · gratis · sin anuncios</span>
+      <h1>Concéntrate <em>bonito</em>,<br>un pomodoro a la vez.</h1>
+      <p class="lead">Mochi Pomodoro es un temporizador de escritorio pequeñito y tierno: 25 minutos de enfoque, 5 de descanso, y un mochi que te acompaña. Sin cuentas, sin internet, sin distracciones.</p>
+
+      <div class="dl">
+        <button class="btn" id="dlBtn" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>
+          <span id="dlLabel">Descargar para escritorio</span>
+        </button>
+        <div class="dl-meta"><b>.zip · 6 KB</b><br>Windows · macOS · Linux · requiere Python 3</div>
+      </div>
+
+      <div class="done-card" id="doneCard" role="status" aria-live="polite">
+        <h3>✿ ¡Listo! Tu descarga empezó</h3>
+        <p>Huella SHA-256 de <span class="mono" id="zipName"></span> (generada en tu navegador):</p>
+        <code class="hash mono" id="zipHash">—</code>
+        <p>Sigue el <a href="#manual">manual</a> para abrirlo. ¿Quieres comprobar que es seguro? Mira <a href="#verificar">cómo verificarlo</a>.</p>
+      </div>
+    </div>
+
+    <div class="mock" aria-label="Vista previa de la aplicación">
+      <span class="sparkle" style="top:70px;left:22px">✦</span>
+      <span class="sparkle" style="top:120px;right:20px;animation-delay:.8s">✦</span>
+      <div class="mock-bar"><i></i><i></i><i></i><span id="mockTitle">24:59 · Mochi Pomodoro</span></div>
+      <div class="mock-body">
+        <div class="tabs"><span class="on">Enfoque</span><span>Descanso</span><span>Largo</span></div>
+        <svg class="ring" viewBox="0 0 300 290" aria-hidden="true">
+          <circle cx="150" cy="140" r="118" fill="none" stroke="#F7E4EB" stroke-width="14"/>
+          <circle id="arc" cx="150" cy="140" r="118" fill="none" stroke="#FF8FB1" stroke-width="14" stroke-linecap="round"
+                  stroke-dasharray="741.4" stroke-dashoffset="0" transform="rotate(-90 150 140)"/>
+          <g class="mochi">
+            <ellipse cx="150" cy="117" rx="34" ry="5" fill="#F7E4EB"/>
+            <ellipse cx="150" cy="85" rx="42" ry="27" fill="#FFE6EE" stroke="#FF8FB1" stroke-width="2"/>
+            <ellipse cx="143" cy="55" rx="8" ry="4.5" fill="#8CCB9B"/><ellipse cx="157" cy="54" rx="8" ry="4.5" fill="#8CCB9B"/>
+            <line x1="150" y1="59" x2="150" y2="51" stroke="#8CCB9B" stroke-width="2.5" stroke-linecap="round"/>
+            <ellipse cx="128" cy="91" rx="7" ry="4" fill="#FFB8CB"/><ellipse cx="172" cy="91" rx="7" ry="4" fill="#FFB8CB"/>
+            <ellipse cx="137" cy="83" rx="3.5" ry="4.5" fill="#4B3A46"/><ellipse cx="163" cy="83" rx="3.5" ry="4.5" fill="#4B3A46"/>
+            <path d="M143 85 q3.5 5 7 0 q3.5 5 7 0" fill="none" stroke="#4B3A46" stroke-width="1.6" stroke-linecap="round"/>
+          </g>
+          <text id="mockClock" x="150" y="168" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="46" fill="#4B3A46">24:59</text>
+          <text x="150" y="200" text-anchor="middle" font-family="Nunito, sans-serif" font-size="13" fill="#B49AAA">a concentrarse ✿</text>
+          <g fill="#F7E4EB"><circle cx="120" cy="276" r="5" fill="#FF8FB1"/><circle cx="140" cy="276" r="5" fill="#FF8FB1"/><circle cx="160" cy="276" r="5"/><circle cx="180" cy="276" r="5"/></g>
+        </svg>
+        <div class="mock-ctrl"><i>↺</i><b>❚❚ pausa</b><i>»</i></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <span class="eyebrow">qué es</span>
+    <h2 class="h2">Pequeño, tierno y sin ruido.</h2>
+    <p class="lead">La técnica Pomodoro divide tu trabajo en bloques de enfoque con descansos cortos. Mochi Pomodoro lo hace fácil y bonito, directo en tu escritorio.</p>
+    <div class="grid">
+      <div class="card"><div class="ico p">◷</div><h3>Ciclos automáticos</h3><p>Enfoque → descanso → enfoque… y cada 4 pomodoros, un descanso largo.</p></div>
+      <div class="card"><div class="ico m">♪</div><h3>Aviso suave</h3><p>Un sonidito y la ventana aparece al frente cuando termina cada bloque.</p></div>
+      <div class="card"><div class="ico l">✦</div><h3>A tu medida</h3><p>Cambia los minutos y deja la ventana “siempre visible” si quieres.</p></div>
+      <div class="card"><div class="ico p">♡</div><h3>Privado de verdad</h3><p>Funciona 100% sin internet. Nada sale de tu computadora.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="manual">
+  <div class="wrap">
+    <span class="eyebrow">manual de uso</span>
+    <h2 class="h2">De la descarga a tu primer pomodoro.</h2>
+    <p class="lead">Este mismo manual viene dentro del .zip como <code>LEEME.txt</code>.</p>
+
+    <div class="manual">
+      <aside class="toc">
+        <b>contenido</b>
+        <ol>
+          <li><a href="#m1">Requisitos</a></li>
+          <li><a href="#m2">Instalar Python</a></li>
+          <li><a href="#m3">Abrir Mochi Pomodoro</a></li>
+          <li><a href="#m4">Cómo se usa</a></li>
+          <li><a href="#m5">Atajos de teclado</a></li>
+          <li><a href="#m6">Desinstalar</a></li>
+        </ol>
+      </aside>
+
+      <div class="doc">
+        <article id="m1">
+          <h3><span class="n">1</span> Requisitos</h3>
+          <ul>
+            <li>Windows 10/11, macOS o Linux.</li>
+            <li><b>Python 3.8 o mayor</b> (gratis). Mochi Pomodoro está escrito en Python, por eso no es un <code>.exe</code>.</li>
+            <li>Menos de 1 MB de espacio. No necesita internet para funcionar.</li>
+          </ul>
+          <p>El .zip contiene:</p>
+          <table>
+            <tr><th>Archivo</th><th>Qué es</th></tr>
+            <tr><td><code>MochiPomodoro.pyw</code></td><td>El programa. Es un archivo de texto: puedes abrirlo con el Bloc de notas y leerlo.</td></tr>
+            <tr><td><code>LEEME.txt</code></td><td>Este manual.</td></tr>
+          </table>
+        </article>
+
+        <article id="m2">
+          <h3><span class="n">2</span> Instalar Python (solo la primera vez)</h3>
+          <div class="os">
+            <div><b>Windows</b>Descárgalo de <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a>. En el instalador marca <b>“Add python.exe to PATH”</b> y deja activado “tcl/tk and IDLE”.</div>
+            <div><b>macOS</b>Instálalo desde <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a> (ya incluye tkinter, la parte que dibuja la ventana).</div>
+            <div><b>Linux</b>En Debian/Ubuntu:<br><code>sudo apt install python3 python3-tk</code></div>
+          </div>
+          <div class="note"><b>¿Ya tienes Python?</b> Abre una terminal y escribe <code>python --version</code>. Si ves 3.8 o mayor, te puedes saltar este paso.</div>
+        </article>
+
+        <article id="m3">
+          <h3><span class="n">3</span> Abrir Mochi Pomodoro</h3>
+          <ol>
+            <li>Pulsa <b>Descargar</b> arriba. Se guardará <code>MochiPomodoro-v1.0.0.zip</code>.</li>
+            <li>Clic derecho sobre el .zip → <b>Extraer todo…</b></li>
+            <li>Entra a la carpeta <code>MochiPomodoro</code> y haz <b>doble clic</b> en <code>MochiPomodoro.pyw</code>.</li>
+          </ol>
+          <p>En macOS o Linux, abre una terminal en esa carpeta y escribe:</p>
+          <pre>python3 MochiPomodoro.pyw</pre>
+          <div class="note"><b>¿Doble clic no hace nada?</b> Clic derecho → Abrir con → Python. O abre PowerShell en la carpeta y escribe <code>python MochiPomodoro.pyw</code>.</div>
+        </article>
+
+        <article id="m4">
+          <h3><span class="n">4</span> Cómo se usa</h3>
+          <ul>
+            <li><b>Pestañas</b> de arriba: Enfoque, Descanso y Largo.</li>
+            <li><b>Botón rosa</b>: empezar o pausar. El mochi abre los ojitos mientras trabaja ✿</li>
+            <li><b>↺</b> reinicia el bloque actual · <b>»</b> salta al siguiente.</li>
+            <li>Los <b>puntitos</b> muestran cuántos pomodoros llevas en el ciclo.</li>
+            <li>Al terminar un bloque suena un aviso, la ventana aparece al frente y pasa sola al siguiente bloque (tú decides cuándo empezarlo).</li>
+            <li><b>✦ ajustes</b>: minutos de enfoque, descanso, descanso largo y pomodoros por ciclo. Se recuerdan para la próxima vez.</li>
+            <li><b>◯ siempre visible</b>: deja la ventana encima de las demás.</li>
+          </ul>
+        </article>
+
+        <article id="m5">
+          <h3><span class="n">5</span> Atajos de teclado</h3>
+          <table>
+            <tr><th>Tecla</th><th>Acción</th></tr>
+            <tr><td><kbd>Espacio</kbd></td><td>Empezar / pausar</td></tr>
+            <tr><td><kbd>R</kbd></td><td>Reiniciar el bloque</td></tr>
+            <tr><td><kbd>S</kbd></td><td>Saltar al siguiente bloque</td></tr>
+            <tr><td><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td><td>Enfoque · Descanso · Descanso largo</td></tr>
+          </table>
+        </article>
+
+        <article id="m6">
+          <h3><span class="n">6</span> Desinstalar</h3>
+          <p>Borra la carpeta <code>MochiPomodoro</code>. Ya está: no instala nada en el sistema, así que no queda ningún rastro.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="seguridad">
+  <div class="wrap">
+    <span class="eyebrow">seguridad</span>
+    <h2 class="h2">¿Por qué esta descarga no es malware?</h2>
+    <p class="lead">Porque no tienes que creernos: todo lo que hace Mochi Pomodoro está a la vista. Es un solo archivo de texto de 381 líneas que puedes leer antes de abrirlo. Estos son nuestros sellos de transparencia, y cada uno lo puedes comprobar tú.</p>
+
+    <div class="seals">
+      <div class="seal">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Sello: Código abierto">
+          <defs><path id="sp0" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>
+          <circle cx="60" cy="60" r="57" fill="#FFE6EE"/>
+          <circle cx="60" cy="60" r="51" fill="none" stroke="#FF8FB1" stroke-width="1.5" stroke-dasharray="2 4"/>
+          <text font-family="Fredoka, sans-serif" font-size="8" font-weight="600" fill="#FF8FB1">
+            <textPath href="#sp0" textLength="252" lengthAdjust="spacing">VERIFICABLE · TRANSPARENTE · MOCHI ✿ POMODORO ·</textPath></text>
+          <circle cx="60" cy="60" r="30" fill="#fff" stroke="#FF8FB1" stroke-width="2"/>
+          <text x="60" y="68" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#FF8FB1">&lt;/&gt;</text>
+        </svg>
+        <b>Código abierto</b><span>Lo puedes leer completo</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Sello: Cero conexiones">
+          <defs><path id="sp1" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>
+          <circle cx="60" cy="60" r="57" fill="#DDF5F0"/>
+          <circle cx="60" cy="60" r="51" fill="none" stroke="#6FC7B6" stroke-width="1.5" stroke-dasharray="2 4"/>
+          <text font-family="Fredoka, sans-serif" font-size="8" font-weight="600" fill="#6FC7B6">
+            <textPath href="#sp1" textLength="252" lengthAdjust="spacing">VERIFICABLE · TRANSPARENTE · MOCHI ✿ POMODORO ·</textPath></text>
+          <circle cx="60" cy="60" r="30" fill="#fff" stroke="#6FC7B6" stroke-width="2"/>
+          <text x="60" y="68" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#6FC7B6">0</text>
+        </svg>
+        <b>Cero conexiones</b><span>Funciona sin internet</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Sello: Sin permisos">
+          <defs><path id="sp2" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>
+          <circle cx="60" cy="60" r="57" fill="#ECE6FD"/>
+          <circle cx="60" cy="60" r="51" fill="none" stroke="#A98EF0" stroke-width="1.5" stroke-dasharray="2 4"/>
+          <text font-family="Fredoka, sans-serif" font-size="8" font-weight="600" fill="#A98EF0">
+            <textPath href="#sp2" textLength="252" lengthAdjust="spacing">VERIFICABLE · TRANSPARENTE · MOCHI ✿ POMODORO ·</textPath></text>
+          <circle cx="60" cy="60" r="30" fill="#fff" stroke="#A98EF0" stroke-width="2"/>
+          <text x="60" y="68" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#A98EF0">✓</text>
+        </svg>
+        <b>Sin permisos</b><span>Nada de administrador</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Sello: Huella SHA-256">
+          <defs><path id="sp3" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>
+          <circle cx="60" cy="60" r="57" fill="#FFE6EE"/>
+          <circle cx="60" cy="60" r="51" fill="none" stroke="#FF8FB1" stroke-width="1.5" stroke-dasharray="2 4"/>
+          <text font-family="Fredoka, sans-serif" font-size="8" font-weight="600" fill="#FF8FB1">
+            <textPath href="#sp3" textLength="252" lengthAdjust="spacing">VERIFICABLE · TRANSPARENTE · MOCHI ✿ POMODORO ·</textPath></text>
+          <circle cx="60" cy="60" r="30" fill="#fff" stroke="#FF8FB1" stroke-width="2"/>
+          <text x="60" y="68" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#FF8FB1">#</text>
+        </svg>
+        <b>Huella SHA-256</b><span>Publicada y comprobable</span>
+      </div>
+      <div class="seal">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Sello: Sin instalador">
+          <defs><path id="sp4" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>
+          <circle cx="60" cy="60" r="57" fill="#DDF5F0"/>
+          <circle cx="60" cy="60" r="51" fill="none" stroke="#6FC7B6" stroke-width="1.5" stroke-dasharray="2 4"/>
+          <text font-family="Fredoka, sans-serif" font-size="8" font-weight="600" fill="#6FC7B6">
+            <textPath href="#sp4" textLength="252" lengthAdjust="spacing">VERIFICABLE · TRANSPARENTE · MOCHI ✿ POMODORO ·</textPath></text>
+          <circle cx="60" cy="60" r="30" fill="#fff" stroke="#6FC7B6" stroke-width="2"/>
+          <text x="60" y="68" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#6FC7B6">✿</text>
+        </svg>
+        <b>Sin instalador</b><span>Ni .exe, ni registro</span>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="card">
+        <h3>✓ Lo que hace</h3>
+        <ul class="checks">
+          <li>Abre una ventana con un temporizador.</li>
+          <li>Reproduce el sonido de aviso del sistema al terminar un bloque.</li>
+          <li>Guarda tus minutos en <code>mochi_settings.json</code>, dentro de su propia carpeta.</li>
+          <li>Usa solo la librería estándar de Python: <code>tkinter</code>, <code>json</code>, <code>math</code>, <code>time</code>, <code>pathlib</code>, <code>sys</code>, <code>winsound</code> (sonido) y <code>ctypes</code> (solo para que el texto se vea nítido en pantallas escaladas).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>✕ Lo que NO hace</h3>
+        <ul class="checks no">
+          <li>No se conecta a internet: no importa <code>socket</code>, <code>urllib</code>, <code>http</code> ni <code>requests</code>.</li>
+          <li>No pide permisos de administrador ni se instala.</li>
+          <li>No toca el registro de Windows ni se inicia solo con tu computadora.</li>
+          <li>No lee tus archivos, ni tu teclado fuera de su ventana, ni tu portapapeles.</li>
+          <li>No trae <code>.exe</code>, <code>.bat</code>, macros ni archivos ocultos.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="report" id="verificar">
+      <header><h3>Reporte de integridad · v1.0.0</h3><span>Huellas SHA-256 publicadas el 10 de noviembre de 2026</span></header>
+      <div class="rows">
+        <dl>
+          <div class="kv"><dt>MochiPomodoro.pyw</dt><dd class="mono">bcf5786c7762a41c24813c93d3425d91981bded0b206991114a8ce9e07263372</dd></div>
+          <div class="kv"><dt>LEEME.txt</dt><dd class="mono">b33927dceaabecdbd7e703b21013da8a26d25c5edceadfcf3c42f3d59931fbef</dd></div>
+          <div class="kv"><dt>Tamaño del programa</dt><dd>15,571 bytes · 381 líneas</dd></div>
+          <div class="kv"><dt>Conexiones de red</dt><dd>Ninguna</dd></div>
+          <div class="kv"><dt>Archivos que escribe</dt><dd><code>mochi_settings.json</code> (en su propia carpeta)</dd></div>
+          <div class="kv"><dt>Permisos que pide</dt><dd>Ninguno</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="split">
+      <div class="card">
+        <h3>Verifícalo tú en 3 pasos</h3>
+        <ol class="steps">
+          <li><b>Compara la huella.</b> Si un solo carácter del archivo cambiara, la huella sería totalmente distinta.
+            <pre>Get-FileHash .\MochiPomodoro.pyw -Algorithm SHA256</pre>
+            <span class="dl-meta">macOS/Linux: <code>shasum -a 256 MochiPomodoro.pyw</code></span></li>
+          <li><b>Escanéalo.</b> Sube el .zip a <a href="https://www.virustotal.com/gui/home/upload" rel="noopener" target="_blank">VirusTotal</a> (lo revisan más de 60 antivirus) o haz clic derecho → “Examinar con Microsoft Defender”.</li>
+          <li><b>Léelo.</b> Ábrelo con el Bloc de notas. Está comentado en español.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Sobre los avisos de Windows</h3>
+        <p>Como no hay <code>.exe</code>, Windows SmartScreen normalmente no muestra la pantalla azul de “Windows protegió su PC”. Si tu navegador pregunta si quieres conservar el .zip, es un aviso genérico para cualquier descarga de un sitio pequeño, no una detección.</p>
+        <p style="margin-top:10px">Regla de oro para cualquier descarga, incluida esta: bájala solo desde esta página oficial y desconfía de copias en otros sitios. Si la huella no coincide, no la abras.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <span class="eyebrow">preguntas</span>
+    <h2 class="h2">Preguntas frecuentes</h2>
+    <details><summary>¿Es gratis?</summary><p>Sí, totalmente. Sin anuncios, sin cuentas y sin versiones de pago.</p></details>
+    <details><summary>¿Por qué necesito Python?</summary><p>Porque así el programa es un archivo de texto que puedes leer, en lugar de un .exe cerrado. Es la forma más transparente de entregarlo.</p></details>
+    <details><summary>¿Funciona sin internet?</summary><p>Sí. Una vez descargado, nunca se conecta a nada.</p></details>
+    <details><summary>¿Dónde guarda mis ajustes?</summary><p>En <code>mochi_settings.json</code>, en la misma carpeta del programa. Si lo borras, vuelve a los valores de fábrica (25 / 5 / 15 minutos).</p></details>
+    <details><summary>La huella del .zip es distinta a la de otra persona, ¿pasa algo?</summary><p>Compara las huellas de los archivos de dentro (<code>MochiPomodoro.pyw</code> y <code>LEEME.txt</code>) con el reporte de integridad: esas son las que importan y siempre deben coincidir.</p></details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">mochi pomodoro v1.0.0 · hecho con cariño <span class="heart">♡</span> · ¡a concentrarse!</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+(() => {
+  // El .zip no existe en el servidor: se arma aquí, en memoria, solo al pulsar el botón.
+  const VERSION = "1.0.0";
+  const FILES = {
+    "MochiPomodoro/MochiPomodoro.pyw": "IiIiCk1vY2hpIFBvbW9kb3JvICAtICB0ZW1wb3JpemFkb3IgUG9tb2Rvcm8gZGUgZXNjcml0b3Jpbwo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KClZlcnNpb24gMS4wLjAKCkVzdGUgcHJvZ3JhbWEgZXMgVU4gU09MTyBBUkNISVZPIGRlIFB5dGhvbiBxdWUgcHVlZGVzIGxlZXIgY29tcGxldG8uCi0gU29sbyB1c2EgbGEgbGlicmVyaWEgZXN0YW5kYXIgZGUgUHl0aG9uICh0a2ludGVyLCBqc29uLCB0aW1lLCBtYXRoKS4KLSBOTyBzZSBjb25lY3RhIGEgaW50ZXJuZXQgKG5vIGltcG9ydGEgc29ja2V0LCB1cmxsaWIsIGh0dHAgbmkgcmVxdWVzdHMpLgotIE5PIHBpZGUgcGVybWlzb3MgZGUgYWRtaW5pc3RyYWRvciBuaSB0b2NhIGVsIHJlZ2lzdHJvIGRlIFdpbmRvd3MuCi0gRWwgdW5pY28gYXJjaGl2byBxdWUgZXNjcmliZSBlcyAibW9jaGlfc2V0dGluZ3MuanNvbiIsIGp1bnRvIGEgZXN0ZQogIGFyY2hpdm8sIHBhcmEgcmVjb3JkYXIgdHVzIG1pbnV0b3MuIFB1ZWRlcyBib3JyYXJsbyBjdWFuZG8gcXVpZXJhcy4KCkF0YWpvczogIEVzcGFjaW8gPSBlbXBlemFyL3BhdXNhciAgIFIgPSByZWluaWNpYXIgICBTID0gc2FsdGFyCiAgICAgICAgIDEgLyAyIC8gMyA9IEVuZm9xdWUgLyBEZXNjYW5zbyAvIERlc2NhbnNvIGxhcmdvCiIiIgoKaW1wb3J0IGpzb24KaW1wb3J0IG1hdGgKaW1wb3J0IHN5cwppbXBvcnQgdGltZQppbXBvcnQgdGtpbnRlciBhcyB0awpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKCnRyeTogICMgU29sbyBleGlzdGUgZW4gV2luZG93czsgc2UgdXNhIHBhcmEgZWwgc29uaWRpdG8gYWwgdGVybWluYXIuCiAgICBpbXBvcnQgd2luc291bmQKZXhjZXB0IEltcG9ydEVycm9yOgogICAgd2luc291bmQgPSBOb25lCgpBUFAgPSAiTW9jaGkgUG9tb2Rvcm8iClZFUlNJT04gPSAiMS4wLjAiClNFVFRJTkdTX0ZJTEUgPSBQYXRoKF9fZmlsZV9fKS5yZXNvbHZlKCkud2l0aF9uYW1lKCJtb2NoaV9zZXR0aW5ncy5qc29uIikKCkNPTE9SUyA9IHsKICAgICJiZyI6ICIjRkZGN0Y5IiwKICAgICJpbmsiOiAiIzRCM0E0NiIsCiAgICAibXV0ZWQiOiAiI0I0OUFBQSIsCiAgICAidHJhY2siOiAiI0Y3RTRFQiIsCiAgICAid2hpdGUiOiAiI0ZGRkZGRiIsCiAgICAiYmx1c2giOiAiI0ZGQjhDQiIsCiAgICAibGVhZiI6ICIjOENDQjlCIiwKfQpNT0RFUyA9IHsKICAgICJmb2N1cyI6IHsidGFiIjogIkVuZm9xdWUiLCAiY29sb3IiOiAiI0ZGOEZCMSIsICJzb2Z0IjogIiNGRkU2RUUiLCAibXNnIjogImEgY29uY2VudHJhcnNlICDinL8ifSwKICAgICJzaG9ydCI6IHsidGFiIjogIkRlc2NhbnNvIiwgImNvbG9yIjogIiM2RkM3QjYiLCAic29mdCI6ICIjRERGNUYwIiwgIm1zZyI6ICJlc3RpcmEgeSB0b21hIGFnw7xpdGEifSwKICAgICJsb25nIjogeyJ0YWIiOiAiTGFyZ28iLCAiY29sb3IiOiAiI0E5OEVGMCIsICJzb2Z0IjogIiNFQ0U2RkQiLCAibXNnIjogInRlIGxvIGdhbmFzdGUgIOKZoSJ9LAp9Ck9SREVSID0gWyJmb2N1cyIsICJzaG9ydCIsICJsb25nIl0KREVGQVVMVFMgPSB7ImZvY3VzIjogMjUsICJzaG9ydCI6IDUsICJsb25nIjogMTUsICJyb3VuZHMiOiA0LCAidG9wbW9zdCI6IEZhbHNlfQpMSU1JVFMgPSB7ImZvY3VzIjogKDEsIDEyMCksICJzaG9ydCI6ICgxLCA2MCksICJsb25nIjogKDEsIDkwKSwgInJvdW5kcyI6ICgyLCA4KX0KRk9OVCA9ICJTZWdvZSBVSSIgaWYgc3lzLnBsYXRmb3JtID09ICJ3aW4zMiIgZWxzZSAiSGVsdmV0aWNhIgpXLCBIID0gMzQwLCA1MDAKCgpkZWYgZW5hYmxlX2NyaXNwX3RleHQoKToKICAgICIiIkVuIFdpbmRvd3MgY29uIHBhbnRhbGxhcyBlc2NhbGFkYXMgZXZpdGEgcXVlIGVsIHRleHRvIHNlIHZlYSBib3Jyb3NvLiIiIgogICAgaWYgc3lzLnBsYXRmb3JtID09ICJ3aW4zMiI6CiAgICAgICAgdHJ5OgogICAgICAgICAgICBpbXBvcnQgY3R5cGVzCiAgICAgICAgICAgIGN0eXBlcy53aW5kbGwuc2hjb3JlLlNldFByb2Nlc3NEcGlBd2FyZW5lc3MoMSkKICAgICAgICBleGNlcHQgRXhjZXB0aW9uOgogICAgICAgICAgICBwYXNzCgoKY2xhc3MgTW9jaGlQb21vZG9ybzoKICAgIGRlZiBfX2luaXRfXyhzZWxmLCByb290KToKICAgICAgICBzZWxmLnJvb3QgPSByb290CiAgICAgICAgc2VsZi5zY2FsZSA9IG1heCgxLjAsIHJvb3Qud2luZm9fZnBpeGVscygiMWkiKSAvIDk2KQogICAgICAgIHNlbGYuY2ZnID0gc2VsZi5sb2FkX3NldHRpbmdzKCkKICAgICAgICBzZWxmLm1vZGUgPSAiZm9jdXMiCiAgICAgICAgc2VsZi5kb25lID0gMCAgICAgICAgICAjIHBvbW9kb3JvcyBkZWwgY2ljbG8gYWN0dWFsCiAgICAgICAgc2VsZi50b2RheSA9IDAgICAgICAgICAjIHBvbW9kb3JvcyBjb21wbGV0YWRvcyBkZXNkZSBxdWUgYWJyaXN0ZSBsYSBhcHAKICAgICAgICBzZWxmLnJ1bm5pbmcgPSBGYWxzZQogICAgICAgIHNlbGYucmVtYWluaW5nID0gc2VsZi5jZmdbImZvY3VzIl0gKiA2MC4wCiAgICAgICAgc2VsZi5lbmRfYXQgPSAwLjAKICAgICAgICBzZWxmLnBhcnR5X3VudGlsID0gMC4wCiAgICAgICAgc2VsZi5zZXR0aW5nc19vcGVuID0gRmFsc2UKCiAgICAgICAgcm9vdC50aXRsZShBUFApCiAgICAgICAgcm9vdC5jb25maWd1cmUoYmc9Q09MT1JTWyJiZyJdKQogICAgICAgIHJvb3QucmVzaXphYmxlKEZhbHNlLCBGYWxzZSkKICAgICAgICByb290LmF0dHJpYnV0ZXMoIi10b3Btb3N0Iiwgc2VsZi5jZmdbInRvcG1vc3QiXSkKICAgICAgICBzZWxmLnNldF9pY29uKCkKCiAgICAgICAgc2VsZi5jYW52YXMgPSB0ay5DYW52YXMocm9vdCwgd2lkdGg9c2VsZi5zKFcpLCBoZWlnaHQ9c2VsZi5zKEgpLCBiZz1DT0xPUlNbImJnIl0sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaGlnaGxpZ2h0dGhpY2tuZXNzPTAsIGJkPTApCiAgICAgICAgc2VsZi5jYW52YXMucGFjaygpCiAgICAgICAgc2VsZi5zZXR0aW5ncyA9IHRrLkZyYW1lKHJvb3QsIGJnPUNPTE9SU1siYmciXSkKICAgICAgICBzZWxmLmJ1aWxkX3NldHRpbmdzKCkKICAgICAgICBzZWxmLmJpbmRfZXZlbnRzKCkKICAgICAgICBzZWxmLnRpY2soKQoKICAgICMgLS0tLS0tLS0tLSB1dGlsaWRhZGVzIC0tLS0tLS0tLS0KICAgIGRlZiBzKHNlbGYsIHYpOgogICAgICAgIHJldHVybiBpbnQocm91bmQodiAqIHNlbGYuc2NhbGUpKQoKICAgIGRlZiBmb250KHNlbGYsIHB4LCB3ZWlnaHQ9Im5vcm1hbCIpOgogICAgICAgIHJldHVybiAoRk9OVCwgLXNlbGYucyhweCksIHdlaWdodCkKCiAgICBkZWYgcGlsbChzZWxmLCB4MSwgeTEsIHgyLCB5MiwgciwgKiprdyk6CiAgICAgICAgcyA9IHNlbGYucwogICAgICAgIHgxLCB5MSwgeDIsIHkyLCByID0gcyh4MSksIHMoeTEpLCBzKHgyKSwgcyh5MiksIHMocikKICAgICAgICBwdHMgPSBbeDEgKyByLCB5MSwgeDIgLSByLCB5MSwgeDIsIHkxLCB4MiwgeTEgKyByLCB4MiwgeTIgLSByLCB4MiwgeTIsCiAgICAgICAgICAgICAgIHgyIC0gciwgeTIsIHgxICsgciwgeTIsIHgxLCB5MiwgeDEsIHkyIC0gciwgeDEsIHkxICsgciwgeDEsIHkxXQogICAgICAgIHJldHVybiBzZWxmLmNhbnZhcy5jcmVhdGVfcG9seWdvbihwdHMsIHNtb290aD1UcnVlLCAqKmt3KQoKICAgIGRlZiBvdmFsKHNlbGYsIGN4LCBjeSwgcngsIHJ5LCAqKmt3KToKICAgICAgICBzID0gc2VsZi5zCiAgICAgICAgcmV0dXJuIHNlbGYuY2FudmFzLmNyZWF0ZV9vdmFsKHMoY3ggLSByeCksIHMoY3kgLSByeSksIHMoY3ggKyByeCksIHMoY3kgKyByeSksICoqa3cpCgogICAgZGVmIHRleHQoc2VsZiwgeCwgeSwgdHh0LCAqKmt3KToKICAgICAgICByZXR1cm4gc2VsZi5jYW52YXMuY3JlYXRlX3RleHQoc2VsZi5zKHgpLCBzZWxmLnMoeSksIHRleHQ9dHh0LCAqKmt3KQoKICAgIGRlZiBzZXRfaWNvbihzZWxmKToKICAgICAgICBzaXplID0gMzIKICAgICAgICBpbWcgPSB0ay5QaG90b0ltYWdlKHdpZHRoPXNpemUsIGhlaWdodD1zaXplKQogICAgICAgIGZvciB5IGluIHJhbmdlKHNpemUpOgogICAgICAgICAgICByb3cgPSBbXQogICAgICAgICAgICBmb3IgeCBpbiByYW5nZShzaXplKToKICAgICAgICAgICAgICAgIGR4LCBkeSA9IHggLSAxNS41LCB5IC0gMTcuNQogICAgICAgICAgICAgICAgaWYgZHggKiBkeCAvIDE5NiArIGR5ICogZHkgLyAxNDQgPD0gMToKICAgICAgICAgICAgICAgICAgICByb3cuYXBwZW5kKE1PREVTWyJmb2N1cyJdWyJjb2xvciJdKQogICAgICAgICAgICAgICAgZWxpZiBhYnMoeCAtIDE2KSA8IDQgYW5kIDIgPD0geSA8PSA2OgogICAgICAgICAgICAgICAgICAgIHJvdy5hcHBlbmQoQ09MT1JTWyJsZWFmIl0pCiAgICAgICAgICAgICAgICBlbHNlOgogICAgICAgICAgICAgICAgICAgIHJvdy5hcHBlbmQoQ09MT1JTWyJiZyJdKQogICAgICAgICAgICBpbWcucHV0KCJ7IiArICIgIi5qb2luKHJvdykgKyAifSIsIHRvPSgwLCB5KSkKICAgICAgICBzZWxmLmljb24gPSBpbWcKICAgICAgICBzZWxmLnJvb3QuaWNvbnBob3RvKFRydWUsIGltZykKCiAgICAjIC0tLS0tLS0tLS0gYWp1c3RlcyAtLS0tLS0tLS0tCiAgICBkZWYgbG9hZF9zZXR0aW5ncyhzZWxmKToKICAgICAgICBjZmcgPSBkaWN0KERFRkFVTFRTKQogICAgICAgIHRyeToKICAgICAgICAgICAgZGF0YSA9IGpzb24ubG9hZHMoU0VUVElOR1NfRklMRS5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikpCiAgICAgICAgICAgIGZvciBrLCAobG8sIGhpKSBpbiBMSU1JVFMuaXRlbXMoKToKICAgICAgICAgICAgICAgIGlmIGlzaW5zdGFuY2UoZGF0YS5nZXQoayksIGludCk6CiAgICAgICAgICAgICAgICAgICAgY2ZnW2tdID0gbWluKGhpLCBtYXgobG8sIGRhdGFba10pKQogICAgICAgICAgICBjZmdbInRvcG1vc3QiXSA9IGJvb2woZGF0YS5nZXQoInRvcG1vc3QiLCBGYWxzZSkpCiAgICAgICAgZXhjZXB0IChPU0Vycm9yLCBWYWx1ZUVycm9yKToKICAgICAgICAgICAgcGFzcwogICAgICAgIHJldHVybiBjZmcKCiAgICBkZWYgc2F2ZV9zZXR0aW5ncyhzZWxmKToKICAgICAgICB0cnk6CiAgICAgICAgICAgIFNFVFRJTkdTX0ZJTEUud3JpdGVfdGV4dChqc29uLmR1bXBzKHNlbGYuY2ZnLCBpbmRlbnQ9MiksIGVuY29kaW5nPSJ1dGYtOCIpCiAgICAgICAgZXhjZXB0IE9TRXJyb3I6CiAgICAgICAgICAgIHBhc3MgICMgY2FycGV0YSBkZSBzb2xvIGxlY3R1cmE6IHNpbXBsZW1lbnRlIG5vIHNlIGd1YXJkYQoKICAgIGRlZiBidWlsZF9zZXR0aW5ncyhzZWxmKToKICAgICAgICByb3dzID0gWygiRW5mb3F1ZSAobWluKSIsICJmb2N1cyIpLCAoIkRlc2NhbnNvIChtaW4pIiwgInNob3J0IiksCiAgICAgICAgICAgICAgICAoIkRlc2NhbnNvIGxhcmdvIChtaW4pIiwgImxvbmciKSwgKCJQb21vZG9yb3MgcG9yIGNpY2xvIiwgInJvdW5kcyIpXQogICAgICAgIHNlbGYuc2V0dGluZ192YXJzID0ge30KICAgICAgICBmb3IgaSwgKGxhYmVsLCBrZXkpIGluIGVudW1lcmF0ZShyb3dzKToKICAgICAgICAgICAgdGsuTGFiZWwoc2VsZi5zZXR0aW5ncywgdGV4dD1sYWJlbCwgYmc9Q09MT1JTWyJiZyJdLCBmZz1DT0xPUlNbImluayJdLAogICAgICAgICAgICAgICAgICAgICBmb250PXNlbGYuZm9udCgxMykpLmdyaWQocm93PWksIGNvbHVtbj0wLCBzdGlja3k9InciLCBwYWR4PShzZWxmLnMoMjgpLCBzZWxmLnMoMTApKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBhZHk9c2VsZi5zKDQpKQogICAgICAgICAgICB2YXIgPSB0ay5TdHJpbmdWYXIodmFsdWU9c3RyKHNlbGYuY2ZnW2tleV0pKQogICAgICAgICAgICBzZWxmLnNldHRpbmdfdmFyc1trZXldID0gdmFyCiAgICAgICAgICAgIGZvciBjb2wsIChzeW0sIHN0ZXApIGluIGVudW1lcmF0ZShbKCLiiJIiLCAtMSksIChOb25lLCAwKSwgKCIrIiwgMSldLCBzdGFydD0xKToKICAgICAgICAgICAgICAgIGlmIHN5bSBpcyBOb25lOgogICAgICAgICAgICAgICAgICAgIHRrLkxhYmVsKHNlbGYuc2V0dGluZ3MsIHRleHR2YXJpYWJsZT12YXIsIHdpZHRoPTMsIGJnPUNPTE9SU1siYmciXSwgZmc9Q09MT1JTWyJpbmsiXSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICBmb250PXNlbGYuZm9udCgxNCwgImJvbGQiKSkuZ3JpZChyb3c9aSwgY29sdW1uPWNvbCkKICAgICAgICAgICAgICAgICAgICBjb250aW51ZQogICAgICAgICAgICAgICAgYiA9IHRrLkxhYmVsKHNlbGYuc2V0dGluZ3MsIHRleHQ9c3ltLCB3aWR0aD0yLCBiZz1DT0xPUlNbInRyYWNrIl0sIGZnPUNPTE9SU1siaW5rIl0sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZm9udD1zZWxmLmZvbnQoMTQsICJib2xkIiksIGN1cnNvcj0iaGFuZDIiKQogICAgICAgICAgICAgICAgYi5ncmlkKHJvdz1pLCBjb2x1bW49Y29sLCBwYWR4PXNlbGYucygyKSkKICAgICAgICAgICAgICAgIGIuYmluZCgiPEJ1dHRvbi0xPiIsIGxhbWJkYSBlLCBrPWtleSwgZD1zdGVwOiBzZWxmLmNoYW5nZV9zZXR0aW5nKGssIGQpKQogICAgICAgIHRrLkxhYmVsKHNlbGYuc2V0dGluZ3MsIHRleHQ9IiIsIGJnPUNPTE9SU1siYmciXSkuZ3JpZChyb3c9bGVuKHJvd3MpLCBjb2x1bW49MCwgcGFkeT1zZWxmLnMoNCkpCgogICAgZGVmIGNoYW5nZV9zZXR0aW5nKHNlbGYsIGtleSwgZGVsdGEpOgogICAgICAgIGxvLCBoaSA9IExJTUlUU1trZXldCiAgICAgICAgc2VsZi5jZmdba2V5XSA9IG1pbihoaSwgbWF4KGxvLCBzZWxmLmNmZ1trZXldICsgZGVsdGEpKQogICAgICAgIHNlbGYuc2V0dGluZ192YXJzW2tleV0uc2V0KHN0cihzZWxmLmNmZ1trZXldKSkKICAgICAgICBpZiBrZXkgPT0gc2VsZi5tb2RlIGFuZCBub3Qgc2VsZi5ydW5uaW5nOgogICAgICAgICAgICBzZWxmLnJlbWFpbmluZyA9IHNlbGYuY2ZnW2tleV0gKiA2MC4wCiAgICAgICAgc2VsZi5zYXZlX3NldHRpbmdzKCkKICAgICAgICBzZWxmLnJlbmRlcigpCgogICAgZGVmIHRvZ2dsZV9zZXR0aW5ncyhzZWxmKToKICAgICAgICBzZWxmLnNldHRpbmdzX29wZW4gPSBub3Qgc2VsZi5zZXR0aW5nc19vcGVuCiAgICAgICAgaWYgc2VsZi5zZXR0aW5nc19vcGVuOgogICAgICAgICAgICBzZWxmLnNldHRpbmdzLnBhY2soZmlsbD0ieCIpCiAgICAgICAgZWxzZToKICAgICAgICAgICAgc2VsZi5zZXR0aW5ncy5wYWNrX2ZvcmdldCgpCiAgICAgICAgc2VsZi5yZW5kZXIoKQoKICAgIGRlZiB0b2dnbGVfcGluKHNlbGYpOgogICAgICAgIHNlbGYuY2ZnWyJ0b3Btb3N0Il0gPSBub3Qgc2VsZi5jZmdbInRvcG1vc3QiXQogICAgICAgIHNlbGYucm9vdC5hdHRyaWJ1dGVzKCItdG9wbW9zdCIsIHNlbGYuY2ZnWyJ0b3Btb3N0Il0pCiAgICAgICAgc2VsZi5zYXZlX3NldHRpbmdzKCkKICAgICAgICBzZWxmLnJlbmRlcigpCgogICAgIyAtLS0tLS0tLS0tIHRlbXBvcml6YWRvciAtLS0tLS0tLS0tCiAgICBkZWYgdG90YWwoc2VsZik6CiAgICAgICAgcmV0dXJuIHNlbGYuY2ZnW3NlbGYubW9kZV0gKiA2MC4wCgogICAgZGVmIHRvZ2dsZShzZWxmKToKICAgICAgICBpZiBzZWxmLnJ1bm5pbmc6CiAgICAgICAgICAgIHNlbGYucmVtYWluaW5nID0gbWF4KDAuMCwgc2VsZi5lbmRfYXQgLSB0aW1lLm1vbm90b25pYygpKQogICAgICAgICAgICBzZWxmLnJ1bm5pbmcgPSBGYWxzZQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHNlbGYuZW5kX2F0ID0gdGltZS5tb25vdG9uaWMoKSArIHNlbGYucmVtYWluaW5nCiAgICAgICAgICAgIHNlbGYucnVubmluZyA9IFRydWUKICAgICAgICBzZWxmLnJlbmRlcigpCgogICAgZGVmIHJlc2V0KHNlbGYpOgogICAgICAgIHNlbGYucnVubmluZyA9IEZhbHNlCiAgICAgICAgc2VsZi5yZW1haW5pbmcgPSBzZWxmLnRvdGFsKCkKICAgICAgICBzZWxmLnJlbmRlcigpCgogICAgZGVmIHNldF9tb2RlKHNlbGYsIG1vZGUpOgogICAgICAgIHNlbGYubW9kZSA9IG1vZGUKICAgICAgICBzZWxmLnJlc2V0KCkKCiAgICBkZWYgbmV4dF9tb2RlKHNlbGYsIGNvbXBsZXRlZCk6CiAgICAgICAgaWYgc2VsZi5tb2RlID09ICJmb2N1cyI6CiAgICAgICAgICAgIGlmIGNvbXBsZXRlZDoKICAgICAgICAgICAgICAgIHNlbGYuZG9uZSArPSAxCiAgICAgICAgICAgICAgICBzZWxmLnRvZGF5ICs9IDEKICAgICAgICAgICAgcmV0dXJuICJsb25nIiBpZiBzZWxmLmRvbmUgPj0gc2VsZi5jZmdbInJvdW5kcyJdIGVsc2UgInNob3J0IgogICAgICAgIGlmIHNlbGYubW9kZSA9PSAibG9uZyI6CiAgICAgICAgICAgIHNlbGYuZG9uZSA9IDAKICAgICAgICByZXR1cm4gImZvY3VzIgoKICAgIGRlZiBza2lwKHNlbGYpOgogICAgICAgIHNlbGYuc2V0X21vZGUoc2VsZi5uZXh0X21vZGUoY29tcGxldGVkPUZhbHNlKSkKCiAgICBkZWYgZmluaXNoKHNlbGYpOgogICAgICAgIHNlbGYucnVubmluZyA9IEZhbHNlCiAgICAgICAgc2VsZi5wYXJ0eV91bnRpbCA9IHRpbWUubW9ub3RvbmljKCkgKyA1CiAgICAgICAgc2VsZi5zZXRfbW9kZShzZWxmLm5leHRfbW9kZShjb21wbGV0ZWQ9VHJ1ZSkpCiAgICAgICAgc2VsZi5hbGVydCgpCgogICAgZGVmIGFsZXJ0KHNlbGYpOgogICAgICAgIGlmIHdpbnNvdW5kOgogICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICB3aW5zb3VuZC5QbGF5U291bmQoIlN5c3RlbUFzdGVyaXNrIiwgd2luc291bmQuU05EX0FMSUFTIHwgd2luc291bmQuU05EX0FTWU5DKQogICAgICAgICAgICBleGNlcHQgUnVudGltZUVycm9yOgogICAgICAgICAgICAgICAgc2VsZi5yb290LmJlbGwoKQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHNlbGYucm9vdC5iZWxsKCkKICAgICAgICBzZWxmLnJvb3QuZGVpY29uaWZ5KCkKICAgICAgICBzZWxmLnJvb3QubGlmdCgpCiAgICAgICAgc2VsZi5yb290LmF0dHJpYnV0ZXMoIi10b3Btb3N0IiwgVHJ1ZSkKICAgICAgICBzZWxmLnJvb3QuYWZ0ZXIoMTUwMCwgbGFtYmRhOiBzZWxmLnJvb3QuYXR0cmlidXRlcygiLXRvcG1vc3QiLCBzZWxmLmNmZ1sidG9wbW9zdCJdKSkKCiAgICBkZWYgdGljayhzZWxmKToKICAgICAgICBpZiBzZWxmLnJ1bm5pbmc6CiAgICAgICAgICAgIHNlbGYucmVtYWluaW5nID0gbWF4KDAuMCwgc2VsZi5lbmRfYXQgLSB0aW1lLm1vbm90b25pYygpKQogICAgICAgICAgICBpZiBzZWxmLnJlbWFpbmluZyA8PSAwOgogICAgICAgICAgICAgICAgc2VsZi5maW5pc2goKQogICAgICAgIHNlbGYucmVuZGVyKCkKICAgICAgICBzZWxmLnJvb3QuYWZ0ZXIoMTAwIGlmIHNlbGYucnVubmluZyBlbHNlIDI1MCwgc2VsZi50aWNrKQoKICAgICMgLS0tLS0tLS0tLSBkaWJ1am8gLS0tLS0tLS0tLQogICAgZGVmIGJpbmRfZXZlbnRzKHNlbGYpOgogICAgICAgIGMgPSBzZWxmLmNhbnZhcwogICAgICAgIGFjdGlvbnMgPSB7CiAgICAgICAgICAgICJ0YWJfZm9jdXMiOiBsYW1iZGE6IHNlbGYuc2V0X21vZGUoImZvY3VzIiksCiAgICAgICAgICAgICJ0YWJfc2hvcnQiOiBsYW1iZGE6IHNlbGYuc2V0X21vZGUoInNob3J0IiksCiAgICAgICAgICAgICJ0YWJfbG9uZyI6IGxhbWJkYTogc2VsZi5zZXRfbW9kZSgibG9uZyIpLAogICAgICAgICAgICAiYnRuX21haW4iOiBzZWxmLnRvZ2dsZSwKICAgICAgICAgICAgImJ0bl9yZXNldCI6IHNlbGYucmVzZXQsCiAgICAgICAgICAgICJidG5fc2tpcCI6IHNlbGYuc2tpcCwKICAgICAgICAgICAgImxua19zZXR0aW5ncyI6IHNlbGYudG9nZ2xlX3NldHRpbmdzLAogICAgICAgICAgICAibG5rX3BpbiI6IHNlbGYudG9nZ2xlX3BpbiwKICAgICAgICB9CiAgICAgICAgZm9yIHRhZywgZm4gaW4gYWN0aW9ucy5pdGVtcygpOgogICAgICAgICAgICBjLnRhZ19iaW5kKHRhZywgIjxCdXR0b24tMT4iLCBsYW1iZGEgZSwgZj1mbjogZigpKQogICAgICAgICAgICBjLnRhZ19iaW5kKHRhZywgIjxFbnRlcj4iLCBsYW1iZGEgZTogYy5jb25maWcoY3Vyc29yPSJoYW5kMiIpKQogICAgICAgICAgICBjLnRhZ19iaW5kKHRhZywgIjxMZWF2ZT4iLCBsYW1iZGEgZTogYy5jb25maWcoY3Vyc29yPSIiKSkKICAgICAgICByID0gc2VsZi5yb290CiAgICAgICAgci5iaW5kKCI8c3BhY2U+IiwgbGFtYmRhIGU6IHNlbGYudG9nZ2xlKCkpCiAgICAgICAgci5iaW5kKCI8S2V5UHJlc3Mtcj4iLCBsYW1iZGEgZTogc2VsZi5yZXNldCgpKQogICAgICAgIHIuYmluZCgiPEtleVByZXNzLXM+IiwgbGFtYmRhIGU6IHNlbGYuc2tpcCgpKQogICAgICAgIGZvciBpLCBtIGluIGVudW1lcmF0ZShPUkRFUiwgc3RhcnQ9MSk6CiAgICAgICAgICAgIHIuYmluZChmIjxLZXlQcmVzcy17aX0+IiwgbGFtYmRhIGUsIG09bTogc2VsZi5zZXRfbW9kZShtKSkKCiAgICBkZWYgcmVuZGVyKHNlbGYpOgogICAgICAgIGMgPSBzZWxmLmNhbnZhcwogICAgICAgIGMuZGVsZXRlKCJhbGwiKQogICAgICAgIG0gPSBNT0RFU1tzZWxmLm1vZGVdCiAgICAgICAgbm93ID0gdGltZS5tb25vdG9uaWMoKQoKICAgICAgICAjIHBlc3Rhw7FhcwogICAgICAgIHggPSAxOAogICAgICAgIGZvciBrZXkgaW4gT1JERVI6CiAgICAgICAgICAgIGFjdGl2ZSA9IGtleSA9PSBzZWxmLm1vZGUKICAgICAgICAgICAgdGFnID0gZiJ0YWJfe2tleX0iCiAgICAgICAgICAgIHNlbGYucGlsbCh4LCAxOCwgeCArIDk2LCA1MCwgMTYsIGZpbGw9TU9ERVNba2V5XVsiY29sb3IiXSBpZiBhY3RpdmUgZWxzZSBDT0xPUlNbInRyYWNrIl0sCiAgICAgICAgICAgICAgICAgICAgICBvdXRsaW5lPSIiLCB0YWdzPXRhZykKICAgICAgICAgICAgc2VsZi50ZXh0KHggKyA0OCwgMzQsIE1PREVTW2tleV1bInRhYiJdLCBmaWxsPUNPTE9SU1sid2hpdGUiXSBpZiBhY3RpdmUgZWxzZSBDT0xPUlNbIm11dGVkIl0sCiAgICAgICAgICAgICAgICAgICAgICBmb250PXNlbGYuZm9udCgxMywgImJvbGQiKSwgdGFncz10YWcpCiAgICAgICAgICAgIHggKz0gMTA0CgogICAgICAgICMgYW5pbGxvIGRlIHByb2dyZXNvCiAgICAgICAgY3gsIGN5LCByYWQgPSAxNzAsIDIwNSwgMTE4CiAgICAgICAgZnJhYyA9IHNlbGYucmVtYWluaW5nIC8gc2VsZi50b3RhbCgpIGlmIHNlbGYudG90YWwoKSBlbHNlIDAKICAgICAgICBzZWxmLm92YWwoY3gsIGN5LCByYWQsIHJhZCwgb3V0bGluZT1DT0xPUlNbInRyYWNrIl0sIHdpZHRoPXNlbGYucygxNCkpCiAgICAgICAgaWYgZnJhYyA+IDAuMDAxOgogICAgICAgICAgICBleHQgPSAtMzU5Ljk5ICogZnJhYwogICAgICAgICAgICBjLmNyZWF0ZV9hcmMoc2VsZi5zKGN4IC0gcmFkKSwgc2VsZi5zKGN5IC0gcmFkKSwgc2VsZi5zKGN4ICsgcmFkKSwgc2VsZi5zKGN5ICsgcmFkKSwKICAgICAgICAgICAgICAgICAgICAgICAgIHN0YXJ0PTkwLCBleHRlbnQ9ZXh0LCBzdHlsZT0iYXJjIiwgb3V0bGluZT1tWyJjb2xvciJdLCB3aWR0aD1zZWxmLnMoMTQpKQogICAgICAgICAgICBzZWxmLm92YWwoY3gsIGN5IC0gcmFkLCA3LCA3LCBmaWxsPW1bImNvbG9yIl0sIG91dGxpbmU9IiIpCiAgICAgICAgICAgIGFuZyA9IG1hdGgucmFkaWFucyg5MCArIGV4dCkKICAgICAgICAgICAgaHgsIGh5ID0gY3ggKyByYWQgKiBtYXRoLmNvcyhhbmcpLCBjeSAtIHJhZCAqIG1hdGguc2luKGFuZykKICAgICAgICAgICAgc2VsZi5vdmFsKGh4LCBoeSwgMTEsIDExLCBmaWxsPUNPTE9SU1sid2hpdGUiXSwgb3V0bGluZT1tWyJjb2xvciJdLCB3aWR0aD1zZWxmLnMoNCkpCgogICAgICAgICMgbW9jaGkKICAgICAgICBib2IgPSBtYXRoLnNpbihub3cgKiA0KSAqIDIuNSBpZiBzZWxmLnJ1bm5pbmcgZWxzZSAwCiAgICAgICAgbXkgPSAxNTAgKyBib2IKICAgICAgICBzZWxmLm92YWwoY3gsIG15ICsgMzAsIDM0LCA1LCBmaWxsPUNPTE9SU1sidHJhY2siXSwgb3V0bGluZT0iIikKICAgICAgICBzZWxmLm92YWwoY3gsIG15LCA0MiwgMjcsIGZpbGw9bVsic29mdCJdLCBvdXRsaW5lPW1bImNvbG9yIl0sIHdpZHRoPXNlbGYucygyKSkKICAgICAgICBzZWxmLm92YWwoY3ggLSA3LCBteSAtIDMwLCA4LCA0LjUsIGZpbGw9Q09MT1JTWyJsZWFmIl0sIG91dGxpbmU9IiIpCiAgICAgICAgc2VsZi5vdmFsKGN4ICsgNywgbXkgLSAzMSwgOCwgNC41LCBmaWxsPUNPTE9SU1sibGVhZiJdLCBvdXRsaW5lPSIiKQogICAgICAgIGMuY3JlYXRlX2xpbmUoc2VsZi5zKGN4KSwgc2VsZi5zKG15IC0gMjYpLCBzZWxmLnMoY3gpLCBzZWxmLnMobXkgLSAzNCksIGZpbGw9Q09MT1JTWyJsZWFmIl0sCiAgICAgICAgICAgICAgICAgICAgICB3aWR0aD1zZWxmLnMoMi41KSwgY2Fwc3R5bGU9InJvdW5kIikKICAgICAgICBzZWxmLm92YWwoY3ggLSAyMiwgbXkgKyA2LCA3LCA0LCBmaWxsPUNPTE9SU1siYmx1c2giXSwgb3V0bGluZT0iIikKICAgICAgICBzZWxmLm92YWwoY3ggKyAyMiwgbXkgKyA2LCA3LCA0LCBmaWxsPUNPTE9SU1siYmx1c2giXSwgb3V0bGluZT0iIikKICAgICAgICBwYXJ0eSA9IG5vdyA8IHNlbGYucGFydHlfdW50aWwKICAgICAgICBpbmsgPSBDT0xPUlNbImluayJdCiAgICAgICAgZm9yIGV4IGluIChjeCAtIDEzLCBjeCArIDEzKToKICAgICAgICAgICAgaWYgc2VsZi5ydW5uaW5nIGFuZCBpbnQobm93ICogMTApICUgNDAgIT0gMDoKICAgICAgICAgICAgICAgIHNlbGYub3ZhbChleCwgbXkgLSAyLCAzLjUsIDQuNSwgZmlsbD1pbmssIG91dGxpbmU9IiIpCiAgICAgICAgICAgIGVsc2U6ICAjIG9qaXRvcyBjZXJyYWRvcyBeIF4gKGVuIHBhdXNhLCBvIHBhcnBhZGVhbmRvKQogICAgICAgICAgICAgICAgYy5jcmVhdGVfbGluZShzZWxmLnMoZXggLSA1KSwgc2VsZi5zKG15KSwgc2VsZi5zKGV4KSwgc2VsZi5zKG15IC0gNSksIHNlbGYucyhleCArIDUpLCBzZWxmLnMobXkpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICBmaWxsPWluaywgd2lkdGg9c2VsZi5zKDIpLCBjYXBzdHlsZT0icm91bmQiLCBqb2luc3R5bGU9InJvdW5kIikKICAgICAgICBjLmNyZWF0ZV9hcmMoc2VsZi5zKGN4IC0gNyksIHNlbGYucyhteSAtIDEpLCBzZWxmLnMoY3gpLCBzZWxmLnMobXkgKyA3KSwgc3RhcnQ9MTgwLCBleHRlbnQ9MTgwLAogICAgICAgICAgICAgICAgICAgICBzdHlsZT0iYXJjIiwgb3V0bGluZT1pbmssIHdpZHRoPXNlbGYucygxLjYpKQogICAgICAgIGMuY3JlYXRlX2FyYyhzZWxmLnMoY3gpLCBzZWxmLnMobXkgLSAxKSwgc2VsZi5zKGN4ICsgNyksIHNlbGYucyhteSArIDcpLCBzdGFydD0xODAsIGV4dGVudD0xODAsCiAgICAgICAgICAgICAgICAgICAgIHN0eWxlPSJhcmMiLCBvdXRsaW5lPWluaywgd2lkdGg9c2VsZi5zKDEuNikpCiAgICAgICAgaWYgcGFydHk6CiAgICAgICAgICAgIGZvciBpLCAoc3gsIHN5KSBpbiBlbnVtZXJhdGUoWyhjeCAtIDYyLCBteSAtIDIyKSwgKGN4ICsgNjAsIG15IC0gMTgpLCAoY3ggLSA1MiwgbXkgKyAyMCksIChjeCArIDU0LCBteSArIDIyKV0pOgogICAgICAgICAgICAgICAgdHdpbmtsZSA9IDEgKyAwLjM1ICogbWF0aC5zaW4obm93ICogOCArIGkpCiAgICAgICAgICAgICAgICBzZWxmLnRleHQoc3gsIHN5LCAi4pymIiwgZmlsbD1tWyJjb2xvciJdLCBmb250PXNlbGYuZm9udCgxNCAqIHR3aW5rbGUsICJib2xkIikpCgogICAgICAgICMgdGllbXBvCiAgICAgICAgc2VjcyA9IGludChtYXRoLmNlaWwoc2VsZi5yZW1haW5pbmcpKQogICAgICAgIGNsb2NrID0gZiJ7c2VjcyAvLyA2MDowMmR9OntzZWNzICUgNjA6MDJkfSIKICAgICAgICBzZWxmLnRleHQoY3gsIDIyOCwgY2xvY2ssIGZpbGw9aW5rLCBmb250PXNlbGYuZm9udCg0NiwgImJvbGQiKSkKICAgICAgICBzZWxmLnRleHQoY3gsIDI2OCwgIsKhdGVybWluYXN0ZSEg4pmhIiBpZiBwYXJ0eSBlbHNlIG1bIm1zZyJdLCBmaWxsPUNPTE9SU1sibXV0ZWQiXSwgZm9udD1zZWxmLmZvbnQoMTMpKQogICAgICAgIHNlbGYucm9vdC50aXRsZShmIntjbG9ja30gwrcge0FQUH0iIGlmIHNlbGYucnVubmluZyBlbHNlIEFQUCkKCiAgICAgICAgIyBwdW50aXRvcyBkZWwgY2ljbG8KICAgICAgICBuID0gc2VsZi5jZmdbInJvdW5kcyJdCiAgICAgICAgc3RhcnQgPSBjeCAtIChuIC0gMSkgKiAxMAogICAgICAgIGZvciBpIGluIHJhbmdlKG4pOgogICAgICAgICAgICBmaWxsZWQgPSBpIDwgc2VsZi5kb25lCiAgICAgICAgICAgIHNlbGYub3ZhbChzdGFydCArIGkgKiAyMCwgMzUyLCA1LCA1LCBmaWxsPU1PREVTWyJmb2N1cyJdWyJjb2xvciJdIGlmIGZpbGxlZCBlbHNlIENPTE9SU1sidHJhY2siXSwKICAgICAgICAgICAgICAgICAgICAgIG91dGxpbmU9IiIpCiAgICAgICAgc2VsZi50ZXh0KGN4LCAzNzQsIGYiaG95OiB7c2VsZi50b2RheX0gcG9tb2Rvcm97J3MnIGlmIHNlbGYudG9kYXkgIT0gMSBlbHNlICcnfSIsCiAgICAgICAgICAgICAgICAgIGZpbGw9Q09MT1JTWyJtdXRlZCJdLCBmb250PXNlbGYuZm9udCgxMikpCgogICAgICAgICMgYm90b25lcwogICAgICAgIGJ5ID0gNDI1CiAgICAgICAgc2VsZi5vdmFsKDc2LCBieSwgMjQsIDI0LCBmaWxsPUNPTE9SU1sid2hpdGUiXSwgb3V0bGluZT1DT0xPUlNbInRyYWNrIl0sIHdpZHRoPXNlbGYucygyKSwgdGFncz0iYnRuX3Jlc2V0IikKICAgICAgICBzZWxmLnRleHQoNzYsIGJ5LCAi4oa6IiwgZmlsbD1pbmssIGZvbnQ9c2VsZi5mb250KDIwLCAiYm9sZCIpLCB0YWdzPSJidG5fcmVzZXQiKQogICAgICAgIHNlbGYucGlsbCgxMTQsIGJ5IC0gMjYsIDIyNiwgYnkgKyAyNiwgMjYsIGZpbGw9bVsiY29sb3IiXSwgb3V0bGluZT0iIiwgdGFncz0iYnRuX21haW4iKQogICAgICAgIGxhYmVsID0gIuKdmuKdmiAgcGF1c2EiIGlmIHNlbGYucnVubmluZyBlbHNlICLilrYgIGVtcGV6YXIiCiAgICAgICAgc2VsZi50ZXh0KDE3MCwgYnksIGxhYmVsLCBmaWxsPUNPTE9SU1sid2hpdGUiXSwgZm9udD1zZWxmLmZvbnQoMTUsICJib2xkIiksIHRhZ3M9ImJ0bl9tYWluIikKICAgICAgICBzZWxmLm92YWwoMjY0LCBieSwgMjQsIDI0LCBmaWxsPUNPTE9SU1sid2hpdGUiXSwgb3V0bGluZT1DT0xPUlNbInRyYWNrIl0sIHdpZHRoPXNlbGYucygyKSwgdGFncz0iYnRuX3NraXAiKQogICAgICAgIHNlbGYudGV4dCgyNjQsIGJ5LCAiwrsiLCBmaWxsPWluaywgZm9udD1zZWxmLmZvbnQoMjIsICJib2xkIiksIHRhZ3M9ImJ0bl9za2lwIikKCiAgICAgICAgIyBwaWUKICAgICAgICBzZWxmLnRleHQoMTE1LCA0ODIsICLinKYgYWp1c3RlcyIgKyAoIiDilrQiIGlmIHNlbGYuc2V0dGluZ3Nfb3BlbiBlbHNlICIg4pa+IiksCiAgICAgICAgICAgICAgICAgIGZpbGw9aW5rIGlmIHNlbGYuc2V0dGluZ3Nfb3BlbiBlbHNlIENPTE9SU1sibXV0ZWQiXSwgZm9udD1zZWxmLmZvbnQoMTIpLCB0YWdzPSJsbmtfc2V0dGluZ3MiKQogICAgICAgIHBpbiA9ICLil4kgc2llbXByZSB2aXNpYmxlIiBpZiBzZWxmLmNmZ1sidG9wbW9zdCJdIGVsc2UgIuKXiyBzaWVtcHJlIHZpc2libGUiCiAgICAgICAgc2VsZi50ZXh0KDIzMiwgNDgyLCBwaW4sIGZpbGw9aW5rIGlmIHNlbGYuY2ZnWyJ0b3Btb3N0Il0gZWxzZSBDT0xPUlNbIm11dGVkIl0sIGZvbnQ9c2VsZi5mb250KDEyKSwKICAgICAgICAgICAgICAgICAgdGFncz0ibG5rX3BpbiIpCgoKZGVmIG1haW4oKToKICAgIGVuYWJsZV9jcmlzcF90ZXh0KCkKICAgIHJvb3QgPSB0ay5UaygpCiAgICBNb2NoaVBvbW9kb3JvKHJvb3QpCiAgICByb290Lm1haW5sb29wKCkKCgppZiBfX25hbWVfXyA9PSAiX19tYWluX18iOgogICAgbWFpbigpCg==",
+    "MochiPomodoro/LEEME.txt": "ICDinL8gIE1PQ0hJIFBPTU9ET1JPICDCtyAgdjEuMC4wICDinL8KICBUZW1wb3JpemFkb3IgUG9tb2Rvcm8gZGUgZXNjcml0b3JpbwogIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCsK/UVXDiSBFUz8KICBVbiB0ZW1wb3JpemFkb3IgUG9tb2Rvcm86IHRyYWJhamFzIDI1IG1pbnV0b3MsIGRlc2NhbnNhcyA1LAogIHkgY2FkYSA0IHBvbW9kb3JvcyB0ZSB0b21hcyB1biBkZXNjYW5zbyBsYXJnbyBkZSAxNSBtaW51dG9zLgogIFRvZG9zIGxvcyB0aWVtcG9zIHNlIHB1ZWRlbiBjYW1iaWFyIGVuICJhanVzdGVzIi4KCgpRVcOJIENPTlRJRU5FIEVTVEUgLlpJUAogIE1vY2hpUG9tb2Rvcm8ucHl3IC4uLi4gZWwgcHJvZ3JhbWEgKHVuIHNvbG8gYXJjaGl2byBkZSB0ZXh0bywgcHVlZGVzIGxlZXJsbykKICBMRUVNRS50eHQgLi4uLi4uLi4uLi4uIGVzdGUgbWFudWFsCgoKUkVRVUlTSVRPOiBQWVRIT04gMy44IE8gTUFZT1IgKGdyYXRpcykKICBXaW5kb3dzOgogICAgMS4gRW50cmEgYSBodHRwczovL3d3dy5weXRob24ub3JnL2Rvd25sb2Fkcy8geSBkZXNjYXJnYSBQeXRob24uCiAgICAyLiBFbiBlbCBpbnN0YWxhZG9yIG1hcmNhIGxhIGNhc2lsbGEgIkFkZCBweXRob24uZXhlIHRvIFBBVEgiLgogICAgMy4gRGVqYSBtYXJjYWRhIGxhIG9wY2nDs24gInRjbC90ayBhbmQgSURMRSIgKHZpZW5lIG1hcmNhZGEgcG9yIGRlZmVjdG8pLgogIG1hY09TOgogICAgSW5zdGFsYSBQeXRob24gZGVzZGUgcHl0aG9uLm9yZyAoaW5jbHV5ZSB0a2ludGVyKS4KICBMaW51eDoKICAgIHN1ZG8gYXB0IGluc3RhbGwgcHl0aG9uMyBweXRob24zLXRrICAgKERlYmlhbi9VYnVudHUpCgoKQ8OTTU8gQUJSSVJMTwogIDEuIERlc2NvbXByaW1lIGVsIC56aXAgKGNsaWMgZGVyZWNobyA+ICJFeHRyYWVyIHRvZG8uLi4iKS4KICAyLiBFbnRyYSBhIGxhIGNhcnBldGEgTW9jaGlQb21vZG9yby4KICAzLiBXaW5kb3dzOiBkb2JsZSBjbGljIGVuIE1vY2hpUG9tb2Rvcm8ucHl3CiAgICAgbWFjT1MvTGludXg6IGFicmUgdW5hIHRlcm1pbmFsIGVuIGxhIGNhcnBldGEgeSBlc2NyaWJlCiAgICAgICAgICAgICAgICAgIHB5dGhvbjMgTW9jaGlQb21vZG9yby5weXcKCiAgwr9Eb2JsZSBjbGljIG5vIGhhY2UgbmFkYSBlbiBXaW5kb3dzPwogICAgQ2xpYyBkZXJlY2hvIGVuIGVsIGFyY2hpdm8gPiBBYnJpciBjb24gPiBQeXRob24uCiAgICBPIGFicmUgUG93ZXJTaGVsbCBlbiBsYSBjYXJwZXRhIHkgZXNjcmliZTogIHB5dGhvbiBNb2NoaVBvbW9kb3JvLnB5dwoKCkPDk01PIFNFIFVTQQogIMK3IFBlc3Rhw7FhcyBkZSBhcnJpYmE6IEVuZm9xdWUgLyBEZXNjYW5zbyAvIExhcmdvLgogIMK3IEJvdMOzbiByb3NhOiBlbXBlemFyIG8gcGF1c2FyLgogIMK3IOKGuiAgcmVpbmljaWEgZWwgdGllbXBvIGFjdHVhbC4KICDCtyDCuyAgc2FsdGEgYWwgc2lndWllbnRlIGJsb3F1ZS4KICDCtyBMb3MgcHVudGl0b3MgbXVlc3RyYW4gY3XDoW50b3MgcG9tb2Rvcm9zIGxsZXZhcyBlbiBlbCBjaWNsby4KICDCtyBBbCB0ZXJtaW5hciB1biBibG9xdWUgc3VlbmEgdW4gYXZpc28sIGxhIHZlbnRhbmEgYXBhcmVjZSBhbCBmcmVudGUKICAgIHkgcGFzYSBzb2xhIGFsIHNpZ3VpZW50ZSBibG9xdWUgKHTDuiBkZWNpZGVzIGN1w6FuZG8gZW1wZXphcmxvKS4KICDCtyAiYWp1c3RlcyI6IGNhbWJpYSBtaW51dG9zIGRlIGVuZm9xdWUsIGRlc2NhbnNvLCBkZXNjYW5zbyBsYXJnbwogICAgeSBjdcOhbnRvcyBwb21vZG9yb3MgaGF5IGFudGVzIGRlbCBkZXNjYW5zbyBsYXJnby4KICDCtyAic2llbXByZSB2aXNpYmxlIjogZGVqYSBsYSB2ZW50YW5hIGVuY2ltYSBkZSBsYXMgZGVtw6FzLgogIMK3IE1pZW50cmFzIGNvcnJlLCBlbCB0aWVtcG8gYXBhcmVjZSBlbiBsYSBiYXJyYSBkZSB0YXJlYXMuCgogIEF0YWpvcyBkZSB0ZWNsYWRvCiAgICBFc3BhY2lvIC4uLi4uLiBlbXBlemFyIC8gcGF1c2FyCiAgICBSIC4uLi4uLi4uLi4uLiByZWluaWNpYXIKICAgIFMgLi4uLi4uLi4uLi4uIHNhbHRhcgogICAgMSAvIDIgLyAzIC4uLi4gRW5mb3F1ZSAvIERlc2NhbnNvIC8gTGFyZ28KCgpTRUdVUklEQUQgWSBQUklWQUNJREFECiAgwrcgTm8gZXMgdW4gLmV4ZTogZXMgY8OzZGlnbyBQeXRob24gZW4gdGV4dG8gcGxhbm8uIMOBYnJlbG8gY29uIGVsIEJsb2MKICAgIGRlIG5vdGFzIHkgbGVlIHRvZG8gbG8gcXVlIGhhY2UsIHNvbiB1bmFzIDM4MCBsw61uZWFzLgogIMK3IE5vIHVzYSBpbnRlcm5ldC4gTm8gaW1wb3J0YSBuaW5nw7puIG3Ds2R1bG8gZGUgcmVkLgogIMK3IE5vIG5lY2VzaXRhIHBlcm1pc29zIGRlIGFkbWluaXN0cmFkb3Igbmkgc2UgaW5zdGFsYS4KICDCtyBObyB0b2NhIGVsIHJlZ2lzdHJvIGRlIFdpbmRvd3Mgbmkgc2UgZWplY3V0YSBhbCBpbmljaWFyIGVsIGVxdWlwby4KICDCtyBTb2xvIGVzY3JpYmUgdW4gYXJjaGl2bzogbW9jaGlfc2V0dGluZ3MuanNvbiAodHVzIG1pbnV0b3MpLCBlbiBlc3RhCiAgICBtaXNtYSBjYXJwZXRhLiBQdWVkZXMgYm9ycmFybG8gY3VhbmRvIHF1aWVyYXMuCiAgwrcgVmVyaWZpY2EgcXVlIHR1IGFyY2hpdm8gbm8gZnVlIG1vZGlmaWNhZG8gY29tcGFyYW5kbyBzdSBodWVsbGEKICAgIFNIQS0yNTYgY29uIGxhIHB1YmxpY2FkYSBlbiBsYSBww6FnaW5hIGRlIGRlc2NhcmdhOgogICAgICAgIFBvd2VyU2hlbGw6ICBHZXQtRmlsZUhhc2ggLlxNb2NoaVBvbW9kb3JvLnB5dyAtQWxnb3JpdGhtIFNIQTI1NgogICAgICAgIG1hY09TL0xpbnV4OiBzaGFzdW0gLWEgMjU2IE1vY2hpUG9tb2Rvcm8ucHl3CgoKREVTSU5TVEFMQVIKICBCb3JyYSBsYSBjYXJwZXRhIE1vY2hpUG9tb2Rvcm8uIExpc3RvLCBubyBxdWVkYSBuYWRhIG3DoXMuCgoKICBIZWNobyBjb24gY2FyacOxbyDimaEgIMK3ICDCoWEgY29uY2VudHJhcnNlIQo="
+  };
+  const FIXED_DATE = new Date("2026-11-10T12:00:00");
+  const btn = document.getElementById("dlBtn");
+  const label = document.getElementById("dlLabel");
+
+  const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
+
+  btn.addEventListener("click", async () => {
+    if (typeof JSZip === "undefined") { label.textContent = "Revisa tu conexión e intenta de nuevo"; return; }
+    btn.disabled = true;
+    label.textContent = "Preparando tu mochi…";
+    try {
+      const zip = new JSZip();
+      for (const [path, b64] of Object.entries(FILES)) zip.file(path, b64, { base64: true, date: FIXED_DATE });
+      const bytes = await zip.generateAsync({ type: "uint8array", compression: "DEFLATE", compressionOptions: { level: 9 } });
+      const name = `MochiPomodoro-v${VERSION}.zip`;
+      const url = URL.createObjectURL(new Blob([bytes], { type: "application/zip" }));
+      const a = Object.assign(document.createElement("a"), { href: url, download: name });
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+
+      document.getElementById("zipName").textContent = name;
+      document.getElementById("zipHash").textContent =
+        (crypto.subtle ? hex(await crypto.subtle.digest("SHA-256", bytes)) : "abre la página por https para ver la huella");
+      document.getElementById("doneCard").classList.add("show");
+      label.textContent = "Descargar otra vez";
+    } catch (err) {
+      console.error(err);
+      label.textContent = "Ups, intenta de nuevo";
+    } finally {
+      btn.disabled = false;
+    }
+  });
+
+  // Vista previa animada (solo decorativa)
+  const arc = document.getElementById("arc"), clock = document.getElementById("mockClock"), title = document.getElementById("mockTitle");
+  const C = 741.4, TOTAL = 25 * 60;
+  let left = TOTAL - 1;
+  const fmt = s => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
+  const draw = () => { arc.style.strokeDashoffset = C * (1 - left / TOTAL); clock.textContent = fmt(left); title.textContent = `${fmt(left)} · Mochi Pomodoro`; };
+  draw();
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { left = left > 0 ? left - 1 : TOTAL; draw(); }, 1000);
+
+  // Mensajito discreto en la esquina tras 20 segundos en la página
+  setTimeout(() => {
+    const n = Object.assign(document.createElement("div"), { className: "nudge", textContent: "Hola, ¿lo estás pensando mucho? ✿" });
+    n.setAttribute("role", "status");
+    document.body.appendChild(n);
+    requestAnimationFrame(() => requestAnimationFrame(() => n.classList.add("show")));
+  }, 20000);
+})();
+</script>
+</body>
+</html>
