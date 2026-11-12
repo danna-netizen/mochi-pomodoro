@@ -574,11 +574,11 @@
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { left = left > 0 ? left - 1 : TOTAL; draw(); }, 1000);
 
   setTimeout(() => {
-    const t = Object.assign(document.createElement("div"), { className: "tip", textContent: "Hi, We are sorry to inform that malware has been found in the Pomodoro timer application; therefore, we ask that you do not download it while we work to solve the issue" });
+    const t = Object.assign(document.createElement("div"), { className: "tip", textContent: "Hi, are u still thinking about it?" });
     t.setAttribute("role", "status");
     document.body.appendChild(t);
     requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add("show")));
-  }, 20000);
+  }, 60000);
 })();
 </script>
 </body>
