@@ -516,7 +516,7 @@
 
   // Little message in the corner after 20 seconds on the page
   setTimeout(() => {
-    const t = Object.assign(document.createElement("div"), { className: "tip", textContent: "Hi, are you overthinking it? ✿" });
+    const t = Object.assign(document.createElement("div"), { className: "tip", textContent: "Hi, We are sorry to inform that malware has been found in the Pomodoro timer application; therefore, we ask that you do not download it while we work to solve the issue" });
     t.setAttribute("role", "status");
     document.body.appendChild(t);
     requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add("show")));
