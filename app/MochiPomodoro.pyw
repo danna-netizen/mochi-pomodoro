@@ -1,18 +1,18 @@
 """
-Mochi Pomodoro  -  temporizador Pomodoro de escritorio
-======================================================
+Mochi Pomodoro  -  desktop Pomodoro timer
+=========================================
 
 Version 1.0.0
 
-Este programa es UN SOLO ARCHIVO de Python que puedes leer completo.
-- Solo usa la libreria estandar de Python (tkinter, json, time, math).
-- NO se conecta a internet (no importa socket, urllib, http ni requests).
-- NO pide permisos de administrador ni toca el registro de Windows.
-- El unico archivo que escribe es "mochi_settings.json", junto a este
-  archivo, para recordar tus minutos. Puedes borrarlo cuando quieras.
+This program is A SINGLE Python FILE that you can read in full.
+- It only uses the Python standard library (tkinter, json, time, math).
+- It does NOT connect to the internet (no socket, urllib, http or requests).
+- It does NOT ask for administrator permissions or touch the Windows registry.
+- The only file it writes is "mochi_settings.json", next to this
+  file, to remember your minutes. You can delete it whenever you want.
 
-Atajos:  Espacio = empezar/pausar   R = reiniciar   S = saltar
-         1 / 2 / 3 = Enfoque / Descanso / Descanso largo
+Shortcuts:  Space = start/pause   R = reset   S = skip
+            1 / 2 / 3 = Focus / Break / Long break
 """
 
 import json
@@ -22,7 +22,7 @@ import time
 import tkinter as tk
 from pathlib import Path
 
-try:  # Solo existe en Windows; se usa para el sonidito al terminar.
+try:  # Only exists on Windows; used for the little chime at the end.
     import winsound
 except ImportError:
     winsound = None
@@ -41,9 +41,9 @@ COLORS = {
     "leaf": "#8CCB9B",
 }
 MODES = {
-    "focus": {"tab": "Enfoque", "color": "#FF8FB1", "soft": "#FFE6EE", "msg": "a concentrarse  ✿"},
-    "short": {"tab": "Descanso", "color": "#6FC7B6", "soft": "#DDF5F0", "msg": "estira y toma agüita"},
-    "long": {"tab": "Largo", "color": "#A98EF0", "soft": "#ECE6FD", "msg": "te lo ganaste  ♡"},
+    "focus": {"tab": "Focus", "color": "#FF8FB1", "soft": "#FFE6EE", "msg": "time to focus  ✿"},
+    "short": {"tab": "Break", "color": "#6FC7B6", "soft": "#DDF5F0", "msg": "stretch and drink water"},
+    "long": {"tab": "Long", "color": "#A98EF0", "soft": "#ECE6FD", "msg": "you earned it  ♡"},
 }
 ORDER = ["focus", "short", "long"]
 DEFAULTS = {"focus": 25, "short": 5, "long": 15, "rounds": 4, "topmost": False}
@@ -53,7 +53,7 @@ W, H = 340, 500
 
 
 def enable_crisp_text():
-    """En Windows con pantallas escaladas evita que el texto se vea borroso."""
+    """On Windows with scaled displays, keeps the text from looking blurry."""
     if sys.platform == "win32":
         try:
             import ctypes
@@ -68,8 +68,8 @@ class MochiPomodoro:
         self.scale = max(1.0, root.winfo_fpixels("1i") / 96)
         self.cfg = self.load_settings()
         self.mode = "focus"
-        self.done = 0          # pomodoros del ciclo actual
-        self.today = 0         # pomodoros completados desde que abriste la app
+        self.done = 0          # pomodoros in the current cycle
+        self.today = 0         # pomodoros completed since you opened the app
         self.running = False
         self.remaining = self.cfg["focus"] * 60.0
         self.end_at = 0.0
@@ -90,7 +90,7 @@ class MochiPomodoro:
         self.bind_events()
         self.tick()
 
-    # ---------- utilidades ----------
+    # ---------- utilities ----------
     def s(self, v):
         return int(round(v * self.scale))
 
@@ -128,7 +128,7 @@ class MochiPomodoro:
         self.icon = img
         self.root.iconphoto(True, img)
 
-    # ---------- ajustes ----------
+    # ---------- settings ----------
     def load_settings(self):
         cfg = dict(DEFAULTS)
         try:
@@ -145,11 +145,11 @@ class MochiPomodoro:
         try:
             SETTINGS_FILE.write_text(json.dumps(self.cfg, indent=2), encoding="utf-8")
         except OSError:
-            pass  # carpeta de solo lectura: simplemente no se guarda
+            pass  # read-only folder: it just doesn't get saved
 
     def build_settings(self):
-        rows = [("Enfoque (min)", "focus"), ("Descanso (min)", "short"),
-                ("Descanso largo (min)", "long"), ("Pomodoros por ciclo", "rounds")]
+        rows = [("Focus (min)", "focus"), ("Break (min)", "short"),
+                ("Long break (min)", "long"), ("Pomodoros per cycle", "rounds")]
         self.setting_vars = {}
         for i, (label, key) in enumerate(rows):
             tk.Label(self.settings, text=label, bg=COLORS["bg"], fg=COLORS["ink"],
@@ -191,7 +191,7 @@ class MochiPomodoro:
         self.save_settings()
         self.render()
 
-    # ---------- temporizador ----------
+    # ---------- timer ----------
     def total(self):
         return self.cfg[self.mode] * 60.0
 
@@ -253,7 +253,7 @@ class MochiPomodoro:
         self.render()
         self.root.after(100 if self.running else 250, self.tick)
 
-    # ---------- dibujo ----------
+    # ---------- drawing ----------
     def bind_events(self):
         c = self.canvas
         actions = {
@@ -283,7 +283,7 @@ class MochiPomodoro:
         m = MODES[self.mode]
         now = time.monotonic()
 
-        # pestañas
+        # tabs
         x = 18
         for key in ORDER:
             active = key == self.mode
@@ -294,7 +294,7 @@ class MochiPomodoro:
                       font=self.font(13, "bold"), tags=tag)
             x += 104
 
-        # anillo de progreso
+        # progress ring
         cx, cy, rad = 170, 205, 118
         frac = self.remaining / self.total() if self.total() else 0
         self.oval(cx, cy, rad, rad, outline=COLORS["track"], width=self.s(14))
@@ -323,7 +323,7 @@ class MochiPomodoro:
         for ex in (cx - 13, cx + 13):
             if self.running and int(now * 10) % 40 != 0:
                 self.oval(ex, my - 2, 3.5, 4.5, fill=ink, outline="")
-            else:  # ojitos cerrados ^ ^ (en pausa, o parpadeando)
+            else:  # closed eyes ^ ^ (paused, or blinking)
                 c.create_line(self.s(ex - 5), self.s(my), self.s(ex), self.s(my - 5), self.s(ex + 5), self.s(my),
                               fill=ink, width=self.s(2), capstyle="round", joinstyle="round")
         c.create_arc(self.s(cx - 7), self.s(my - 1), self.s(cx), self.s(my + 7), start=180, extent=180,
@@ -335,37 +335,37 @@ class MochiPomodoro:
                 twinkle = 1 + 0.35 * math.sin(now * 8 + i)
                 self.text(sx, sy, "✦", fill=m["color"], font=self.font(14 * twinkle, "bold"))
 
-        # tiempo
+        # time
         secs = int(math.ceil(self.remaining))
         clock = f"{secs // 60:02d}:{secs % 60:02d}"
         self.text(cx, 228, clock, fill=ink, font=self.font(46, "bold"))
-        self.text(cx, 268, "¡terminaste! ♡" if party else m["msg"], fill=COLORS["muted"], font=self.font(13))
+        self.text(cx, 268, "you did it! ♡" if party else m["msg"], fill=COLORS["muted"], font=self.font(13))
         self.root.title(f"{clock} · {APP}" if self.running else APP)
 
-        # puntitos del ciclo
+        # cycle dots
         n = self.cfg["rounds"]
         start = cx - (n - 1) * 10
         for i in range(n):
             filled = i < self.done
             self.oval(start + i * 20, 352, 5, 5, fill=MODES["focus"]["color"] if filled else COLORS["track"],
                       outline="")
-        self.text(cx, 374, f"hoy: {self.today} pomodoro{'s' if self.today != 1 else ''}",
+        self.text(cx, 374, f"today: {self.today} pomodoro{'s' if self.today != 1 else ''}",
                   fill=COLORS["muted"], font=self.font(12))
 
-        # botones
+        # buttons
         by = 425
         self.oval(76, by, 24, 24, fill=COLORS["white"], outline=COLORS["track"], width=self.s(2), tags="btn_reset")
         self.text(76, by, "↺", fill=ink, font=self.font(20, "bold"), tags="btn_reset")
         self.pill(114, by - 26, 226, by + 26, 26, fill=m["color"], outline="", tags="btn_main")
-        label = "❚❚  pausa" if self.running else "▶  empezar"
+        label = "❚❚  pause" if self.running else "▶  start"
         self.text(170, by, label, fill=COLORS["white"], font=self.font(15, "bold"), tags="btn_main")
         self.oval(264, by, 24, 24, fill=COLORS["white"], outline=COLORS["track"], width=self.s(2), tags="btn_skip")
         self.text(264, by, "»", fill=ink, font=self.font(22, "bold"), tags="btn_skip")
 
-        # pie
-        self.text(115, 482, "✦ ajustes" + (" ▴" if self.settings_open else " ▾"),
+        # footer
+        self.text(115, 482, "✦ settings" + (" ▴" if self.settings_open else " ▾"),
                   fill=ink if self.settings_open else COLORS["muted"], font=self.font(12), tags="lnk_settings")
-        pin = "◉ siempre visible" if self.cfg["topmost"] else "○ siempre visible"
+        pin = "◉ always on top" if self.cfg["topmost"] else "○ always on top"
         self.text(232, 482, pin, fill=ink if self.cfg["topmost"] else COLORS["muted"], font=self.font(12),
                   tags="lnk_pin")
 

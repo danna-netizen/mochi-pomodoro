@@ -1,11 +1,11 @@
 """
-Genera pomodoro/index.html a partir de page.template.html y los archivos de app/.
+Builds index.html from page.template.html and the files in app/.
 
-Uso:  python build.py
+Usage:  python build.py
 
-Vuelve a correrlo cada vez que cambies MochiPomodoro.pyw o LEEME.txt:
-mete los archivos dentro de la página (en base64) y recalcula las huellas
-SHA-256 que se muestran en la sección de seguridad.
+Run it again every time you change MochiPomodoro.pyw or README.txt:
+it embeds the files in the page (as base64) and recalculates the SHA-256
+fingerprints shown in the security section.
 """
 import base64
 import datetime
@@ -18,21 +18,21 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 APP = HERE / "app"
 PY = APP / "MochiPomodoro.pyw"
-TXT = APP / "LEEME.txt"
+TXT = APP / "README.txt"
 
 SEALS = [
-    ("#FF8FB1", "#FFE6EE", "&lt;/&gt;", "Código abierto", "Lo puedes leer completo"),
-    ("#6FC7B6", "#DDF5F0", "0", "Cero conexiones", "Funciona sin internet"),
-    ("#A98EF0", "#ECE6FD", "✓", "Sin permisos", "Nada de administrador"),
-    ("#FF8FB1", "#FFE6EE", "#", "Huella SHA-256", "Publicada y comprobable"),
-    ("#6FC7B6", "#DDF5F0", "✿", "Sin instalador", "Ni .exe, ni registro"),
+    ("#FF8FB1", "#FFE6EE", "&lt;/&gt;", "Open source", "You can read all of it"),
+    ("#6FC7B6", "#DDF5F0", "0", "Zero connections", "Works offline"),
+    ("#A98EF0", "#ECE6FD", "✓", "No permissions", "No admin needed"),
+    ("#FF8FB1", "#FFE6EE", "#", "SHA-256 fingerprint", "Published and checkable"),
+    ("#6FC7B6", "#DDF5F0", "✿", "No installer", "No .exe, no registry"),
 ]
 
 
 def seal_svg(i, color, soft, glyph, title, sub):
-    ring = "VERIFICABLE · TRANSPARENTE · MOCHI ✿ POMODORO ·"
+    ring = "VERIFIABLE · TRANSPARENT · MOCHI ✿ POMODORO ·"
     return f"""<div class="seal">
-        <svg viewBox="0 0 120 120" role="img" aria-label="Sello: {title}">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Seal: {title}">
           <defs><path id="sp{i}" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>
           <circle cx="60" cy="60" r="57" fill="{soft}"/>
           <circle cx="60" cy="60" r="51" fill="none" stroke="{color}" stroke-width="1.5" stroke-dasharray="2 4"/>
@@ -46,11 +46,11 @@ def seal_svg(i, color, soft, glyph, title, sub):
 
 
 def zip_kb(py_bytes, txt_bytes):
-    """Tamaño real del .zip (comprimido) que armará la página."""
+    """Real size of the (compressed) .zip the page will build."""
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as z:
         z.writestr("MochiPomodoro/MochiPomodoro.pyw", py_bytes)
-        z.writestr("MochiPomodoro/LEEME.txt", txt_bytes)
+        z.writestr("MochiPomodoro/README.txt", txt_bytes)
     return max(1, round(len(buf.getvalue()) / 1024))
 
 
@@ -58,8 +58,8 @@ def main():
     py_bytes, txt_bytes = PY.read_bytes(), TXT.read_bytes()
     version = re.search(r'^VERSION = "([^"]+)"', py_bytes.decode("utf-8"), re.M).group(1)
     today = datetime.date.today()
-    months = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
-              "septiembre", "octubre", "noviembre", "diciembre"]
+    months = ["January", "February", "March", "April", "May", "June", "July", "August",
+              "September", "October", "November", "December"]
 
     values = {
         "VERSION": version,
@@ -70,7 +70,7 @@ def main():
         "SIZE_PY": f"{len(py_bytes):,}",
         "SIZE_KB": zip_kb(py_bytes, txt_bytes),
         "LINES": py_bytes.decode("utf-8").count("\n"),
-        "DATE": f"el {today.day} de {months[today.month - 1]} de {today.year}",
+        "DATE": f"on {months[today.month - 1]} {today.day}, {today.year}",
         "DATE_ISO": today.isoformat(),
         "SEALS": "\n      ".join(seal_svg(i, *s) for i, s in enumerate(SEALS)),
     }
@@ -79,9 +79,9 @@ def main():
         html = html.replace("{{" + key + "}}", str(val))
     leftover = re.findall(r"\{\{[A-Z_]+\}\}", html)
     if leftover:
-        raise SystemExit(f"Faltan valores para: {leftover}")
+        raise SystemExit(f"Missing values for: {leftover}")
     (HERE / "index.html").write_text(html, encoding="utf-8", newline="\n")
-    print(f"index.html listo  ·  v{version}  ·  SHA-256 .pyw {values['SHA_PY'][:16]}…")
+    print(f"index.html ready  ·  v{version}  ·  SHA-256 .pyw {values['SHA_PY'][:16]}…")
 
 
 if __name__ == "__main__":

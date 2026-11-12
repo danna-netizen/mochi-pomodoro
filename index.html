@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mochi Pomodoro</title>
-<meta name="description" content="Temporizador Pomodoro de escritorio, kawaii y minimalista. Gratis, sin internet, código abierto.">
+<meta name="description" content="A cute, minimalist desktop Pomodoro timer. Free, offline, open source.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
@@ -217,9 +217,9 @@
       mochi pomodoro
     </a>
     <ul>
-      <li class="hide-sm"><a href="#features">qué es</a></li>
+      <li class="hide-sm"><a href="#features">what it is</a></li>
       <li><a href="#manual">manual</a></li>
-      <li><a href="#seguridad">seguridad</a></li>
+      <li><a href="#security">security</a></li>
       <li class="hide-sm"><a href="#faq">faq</a></li>
     </ul>
   </div>
@@ -228,32 +228,32 @@
 <header class="hero" id="top">
   <div class="wrap">
     <div>
-      <span class="chip"><i></i> v1.0.0 · gratis · sin anuncios</span>
-      <h1>Concéntrate <em>bonito</em>,<br>un pomodoro a la vez.</h1>
-      <p class="lead">Mochi Pomodoro es un temporizador de escritorio pequeñito y tierno: 25 minutos de enfoque, 5 de descanso, y un mochi que te acompaña. Sin cuentas, sin internet, sin distracciones.</p>
+      <span class="chip"><i></i> v1.0.0 · free · no ads</span>
+      <h1>Focus <em>sweetly</em>,<br>one pomodoro at a time.</h1>
+      <p class="lead">Mochi Pomodoro is a tiny, cute desktop timer: 25 minutes of focus, 5 of rest, and a mochi to keep you company. No accounts, no internet, no distractions.</p>
 
       <div class="dl">
         <button class="btn" id="dlBtn" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>
-          <span id="dlLabel">Descargar para escritorio</span>
+          <span id="dlLabel">Download for desktop</span>
         </button>
-        <div class="dl-meta"><b>.zip · 6 KB</b><br>Windows · macOS · Linux · requiere Python 3</div>
+        <div class="dl-meta"><b>.zip · 6 KB</b><br>Windows · macOS · Linux · requires Python 3</div>
       </div>
 
       <div class="done-card" id="doneCard" role="status" aria-live="polite">
-        <h3>✿ ¡Listo! Tu descarga empezó</h3>
-        <p>Huella SHA-256 de <span class="mono" id="zipName"></span> (generada en tu navegador):</p>
+        <h3>✿ Done! Your download has started</h3>
+        <p>SHA-256 fingerprint of <span class="mono" id="zipName"></span> (generated in your browser):</p>
         <code class="hash mono" id="zipHash">—</code>
-        <p>Sigue el <a href="#manual">manual</a> para abrirlo. ¿Quieres comprobar que es seguro? Mira <a href="#verificar">cómo verificarlo</a>.</p>
+        <p>Follow the <a href="#manual">manual</a> to open it. Want to check that it’s safe? See <a href="#verify">how to verify it</a>.</p>
       </div>
     </div>
 
-    <div class="mock" aria-label="Vista previa de la aplicación">
+    <div class="mock" aria-label="App preview">
       <span class="sparkle" style="top:70px;left:22px">✦</span>
       <span class="sparkle" style="top:120px;right:20px;animation-delay:.8s">✦</span>
       <div class="mock-bar"><i></i><i></i><i></i><span id="mockTitle">24:59 · Mochi Pomodoro</span></div>
       <div class="mock-body">
-        <div class="tabs"><span class="on">Enfoque</span><span>Descanso</span><span>Largo</span></div>
+        <div class="tabs"><span class="on">Focus</span><span>Break</span><span>Long</span></div>
         <svg class="ring" viewBox="0 0 300 290" aria-hidden="true">
           <circle cx="150" cy="140" r="118" fill="none" stroke="#F7E4EB" stroke-width="14"/>
           <circle id="arc" cx="150" cy="140" r="118" fill="none" stroke="#FF8FB1" stroke-width="14" stroke-linecap="round"
@@ -268,10 +268,10 @@
             <path d="M143 85 q3.5 5 7 0 q3.5 5 7 0" fill="none" stroke="#4B3A46" stroke-width="1.6" stroke-linecap="round"/>
           </g>
           <text id="mockClock" x="150" y="168" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="46" fill="#4B3A46">24:59</text>
-          <text x="150" y="200" text-anchor="middle" font-family="Nunito, sans-serif" font-size="13" fill="#B49AAA">a concentrarse ✿</text>
+          <text x="150" y="200" text-anchor="middle" font-family="Nunito, sans-serif" font-size="13" fill="#B49AAA">time to focus ✿</text>
           <g fill="#F7E4EB"><circle cx="120" cy="276" r="5" fill="#FF8FB1"/><circle cx="140" cy="276" r="5" fill="#FF8FB1"/><circle cx="160" cy="276" r="5"/><circle cx="180" cy="276" r="5"/></g>
         </svg>
-        <div class="mock-ctrl"><i>↺</i><b>❚❚ pausa</b><i>»</i></div>
+        <div class="mock-ctrl"><i>↺</i><b>❚❚ pause</b><i>»</i></div>
       </div>
     </div>
   </div>
@@ -279,228 +279,228 @@
 
 <section id="features">
   <div class="wrap">
-    <span class="eyebrow">qué es</span>
-    <h2 class="h2">Pequeño, tierno y sin ruido.</h2>
-    <p class="lead">La técnica Pomodoro divide tu trabajo en bloques de enfoque con descansos cortos. Mochi Pomodoro lo hace fácil y bonito, directo en tu escritorio.</p>
+    <span class="eyebrow">what it is</span>
+    <h2 class="h2">Small, cute and quiet.</h2>
+    <p class="lead">The Pomodoro technique splits your work into focus blocks with short breaks. Mochi Pomodoro makes it easy and pretty, right on your desktop.</p>
     <div class="grid">
-      <div class="card"><div class="ico p">◷</div><h3>Ciclos automáticos</h3><p>Enfoque → descanso → enfoque… y cada 4 pomodoros, un descanso largo.</p></div>
-      <div class="card"><div class="ico m">♪</div><h3>Aviso suave</h3><p>Un sonidito y la ventana aparece al frente cuando termina cada bloque.</p></div>
-      <div class="card"><div class="ico l">✦</div><h3>A tu medida</h3><p>Cambia los minutos y deja la ventana “siempre visible” si quieres.</p></div>
-      <div class="card"><div class="ico p">♡</div><h3>Privado de verdad</h3><p>Funciona 100% sin internet. Nada sale de tu computadora.</p></div>
+      <div class="card"><div class="ico p">◷</div><h3>Automatic cycles</h3><p>Focus → break → focus… and every 4 pomodoros, a long break.</p></div>
+      <div class="card"><div class="ico m">♪</div><h3>Gentle alert</h3><p>A soft chime, and the window pops to the front when each block ends.</p></div>
+      <div class="card"><div class="ico l">✦</div><h3>Made to fit you</h3><p>Change the minutes and keep the window “always on top” if you like.</p></div>
+      <div class="card"><div class="ico p">♡</div><h3>Truly private</h3><p>Works 100% offline. Nothing leaves your computer.</p></div>
     </div>
   </div>
 </section>
 
 <section id="manual">
   <div class="wrap">
-    <span class="eyebrow">manual de uso</span>
-    <h2 class="h2">De la descarga a tu primer pomodoro.</h2>
-    <p class="lead">Este mismo manual viene dentro del .zip como <code>LEEME.txt</code>.</p>
+    <span class="eyebrow">user manual</span>
+    <h2 class="h2">From download to your first pomodoro.</h2>
+    <p class="lead">This same manual comes inside the .zip as <code>README.txt</code>.</p>
 
     <div class="manual">
       <aside class="toc">
-        <b>contenido</b>
+        <b>contents</b>
         <ol>
-          <li><a href="#m1">Requisitos</a></li>
-          <li><a href="#m2">Instalar Python</a></li>
-          <li><a href="#m3">Abrir Mochi Pomodoro</a></li>
-          <li><a href="#m4">Cómo se usa</a></li>
-          <li><a href="#m5">Atajos de teclado</a></li>
-          <li><a href="#m6">Desinstalar</a></li>
+          <li><a href="#m1">Requirements</a></li>
+          <li><a href="#m2">Install Python</a></li>
+          <li><a href="#m3">Open Mochi Pomodoro</a></li>
+          <li><a href="#m4">How to use it</a></li>
+          <li><a href="#m5">Keyboard shortcuts</a></li>
+          <li><a href="#m6">Uninstall</a></li>
         </ol>
       </aside>
 
       <div class="doc">
         <article id="m1">
-          <h3><span class="n">1</span> Requisitos</h3>
+          <h3><span class="n">1</span> Requirements</h3>
           <ul>
-            <li>Windows 10/11, macOS o Linux.</li>
-            <li><b>Python 3.8 o mayor</b> (gratis). Mochi Pomodoro está escrito en Python, por eso no es un <code>.exe</code>.</li>
-            <li>Menos de 1 MB de espacio. No necesita internet para funcionar.</li>
+            <li>Windows 10/11, macOS or Linux.</li>
+            <li><b>Python 3.8 or newer</b> (free). Mochi Pomodoro is written in Python, which is why it isn’t an <code>.exe</code>.</li>
+            <li>Less than 1 MB of space. No internet needed to run.</li>
           </ul>
-          <p>El .zip contiene:</p>
+          <p>The .zip contains:</p>
           <table>
-            <tr><th>Archivo</th><th>Qué es</th></tr>
-            <tr><td><code>MochiPomodoro.pyw</code></td><td>El programa. Es un archivo de texto: puedes abrirlo con el Bloc de notas y leerlo.</td></tr>
-            <tr><td><code>LEEME.txt</code></td><td>Este manual.</td></tr>
+            <tr><th>File</th><th>What it is</th></tr>
+            <tr><td><code>MochiPomodoro.pyw</code></td><td>The program. It’s a text file: you can open it with Notepad and read it.</td></tr>
+            <tr><td><code>README.txt</code></td><td>This manual.</td></tr>
           </table>
         </article>
 
         <article id="m2">
-          <h3><span class="n">2</span> Instalar Python (solo la primera vez)</h3>
+          <h3><span class="n">2</span> Install Python (first time only)</h3>
           <div class="os">
-            <div><b>Windows</b>Descárgalo de <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a>. En el instalador marca <b>“Add python.exe to PATH”</b> y deja activado “tcl/tk and IDLE”.</div>
-            <div><b>macOS</b>Instálalo desde <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a> (ya incluye tkinter, la parte que dibuja la ventana).</div>
-            <div><b>Linux</b>En Debian/Ubuntu:<br><code>sudo apt install python3 python3-tk</code></div>
+            <div><b>Windows</b>Download it from <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a>. In the installer, check <b>“Add python.exe to PATH”</b> and leave “tcl/tk and IDLE” enabled.</div>
+            <div><b>macOS</b>Install it from <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a> (it already includes tkinter, the part that draws the window).</div>
+            <div><b>Linux</b>On Debian/Ubuntu:<br><code>sudo apt install python3 python3-tk</code></div>
           </div>
-          <div class="note"><b>¿Ya tienes Python?</b> Abre una terminal y escribe <code>python --version</code>. Si ves 3.8 o mayor, te puedes saltar este paso.</div>
+          <div class="note"><b>Already have Python?</b> Open a terminal and type <code>python --version</code>. If you see 3.8 or newer, you can skip this step.</div>
         </article>
 
         <article id="m3">
-          <h3><span class="n">3</span> Abrir Mochi Pomodoro</h3>
+          <h3><span class="n">3</span> Open Mochi Pomodoro</h3>
           <ol>
-            <li>Pulsa <b>Descargar</b> arriba. Se guardará <code>MochiPomodoro-v1.0.0.zip</code>.</li>
-            <li>Clic derecho sobre el .zip → <b>Extraer todo…</b></li>
-            <li>Entra a la carpeta <code>MochiPomodoro</code> y haz <b>doble clic</b> en <code>MochiPomodoro.pyw</code>.</li>
+            <li>Press <b>Download</b> above. It will save <code>MochiPomodoro-v1.0.0.zip</code>.</li>
+            <li>Right-click the .zip → <b>Extract All…</b></li>
+            <li>Open the <code>MochiPomodoro</code> folder and <b>double-click</b> <code>MochiPomodoro.pyw</code>.</li>
           </ol>
-          <p>En macOS o Linux, abre una terminal en esa carpeta y escribe:</p>
+          <p>On macOS or Linux, open a terminal in that folder and type:</p>
           <pre>python3 MochiPomodoro.pyw</pre>
-          <div class="note"><b>¿Doble clic no hace nada?</b> Clic derecho → Abrir con → Python. O abre PowerShell en la carpeta y escribe <code>python MochiPomodoro.pyw</code>.</div>
+          <div class="note"><b>Double-click does nothing?</b> Right-click → Open with → Python. Or open PowerShell in the folder and type <code>python MochiPomodoro.pyw</code>.</div>
         </article>
 
         <article id="m4">
-          <h3><span class="n">4</span> Cómo se usa</h3>
+          <h3><span class="n">4</span> How to use it</h3>
           <ul>
-            <li><b>Pestañas</b> de arriba: Enfoque, Descanso y Largo.</li>
-            <li><b>Botón rosa</b>: empezar o pausar. El mochi abre los ojitos mientras trabaja ✿</li>
-            <li><b>↺</b> reinicia el bloque actual · <b>»</b> salta al siguiente.</li>
-            <li>Los <b>puntitos</b> muestran cuántos pomodoros llevas en el ciclo.</li>
-            <li>Al terminar un bloque suena un aviso, la ventana aparece al frente y pasa sola al siguiente bloque (tú decides cuándo empezarlo).</li>
-            <li><b>✦ ajustes</b>: minutos de enfoque, descanso, descanso largo y pomodoros por ciclo. Se recuerdan para la próxima vez.</li>
-            <li><b>◯ siempre visible</b>: deja la ventana encima de las demás.</li>
+            <li><b>Tabs</b> at the top: Focus, Break and Long.</li>
+            <li><b>Pink button</b>: start or pause. The mochi opens its little eyes while it works ✿</li>
+            <li><b>↺</b> resets the current block · <b>»</b> skips to the next one.</li>
+            <li>The <b>little dots</b> show how many pomodoros you’ve done in the cycle.</li>
+            <li>When a block ends, a chime plays, the window comes to the front and it moves on to the next block by itself (you decide when to start it).</li>
+            <li><b>✦ settings</b>: focus, break and long break minutes, and pomodoros per cycle. They’re remembered for next time.</li>
+            <li><b>◯ always on top</b>: keeps the window above all others.</li>
           </ul>
         </article>
 
         <article id="m5">
-          <h3><span class="n">5</span> Atajos de teclado</h3>
+          <h3><span class="n">5</span> Keyboard shortcuts</h3>
           <table>
-            <tr><th>Tecla</th><th>Acción</th></tr>
-            <tr><td><kbd>Espacio</kbd></td><td>Empezar / pausar</td></tr>
-            <tr><td><kbd>R</kbd></td><td>Reiniciar el bloque</td></tr>
-            <tr><td><kbd>S</kbd></td><td>Saltar al siguiente bloque</td></tr>
-            <tr><td><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td><td>Enfoque · Descanso · Descanso largo</td></tr>
+            <tr><th>Key</th><th>Action</th></tr>
+            <tr><td><kbd>Space</kbd></td><td>Start / pause</td></tr>
+            <tr><td><kbd>R</kbd></td><td>Reset the block</td></tr>
+            <tr><td><kbd>S</kbd></td><td>Skip to the next block</td></tr>
+            <tr><td><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td><td>Focus · Break · Long break</td></tr>
           </table>
         </article>
 
         <article id="m6">
-          <h3><span class="n">6</span> Desinstalar</h3>
-          <p>Borra la carpeta <code>MochiPomodoro</code>. Ya está: no instala nada en el sistema, así que no queda ningún rastro.</p>
+          <h3><span class="n">6</span> Uninstall</h3>
+          <p>Delete the <code>MochiPomodoro</code> folder. That’s it: it doesn’t install anything on your system, so no trace is left.</p>
         </article>
       </div>
     </div>
   </div>
 </section>
 
-<section class="sec" id="seguridad">
+<section class="sec" id="security">
   <div class="wrap">
-    <span class="eyebrow">seguridad</span>
-    <h2 class="h2">¿Por qué esta descarga no es malware?</h2>
-    <p class="lead">Porque no tienes que creernos: todo lo que hace Mochi Pomodoro está a la vista. Es un solo archivo de texto de 381 líneas que puedes leer antes de abrirlo. Estos son nuestros sellos de transparencia, y cada uno lo puedes comprobar tú.</p>
+    <span class="eyebrow">security</span>
+    <h2 class="h2">Why isn’t this download malware?</h2>
+    <p class="lead">Because you don’t have to take our word for it: everything Mochi Pomodoro does is out in the open. It’s a single 381-line text file you can read before opening it. These are our transparency seals, and you can check each one yourself.</p>
 
     <div class="seals">
       <div class="seal">
-        <svg viewBox="0 0 120 120" role="img" aria-label="Sello: Código abierto">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Seal: Open source">
           <defs><path id="sp0" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>
           <circle cx="60" cy="60" r="57" fill="#FFE6EE"/>
           <circle cx="60" cy="60" r="51" fill="none" stroke="#FF8FB1" stroke-width="1.5" stroke-dasharray="2 4"/>
           <text font-family="Fredoka, sans-serif" font-size="8" font-weight="600" fill="#FF8FB1">
-            <textPath href="#sp0" textLength="252" lengthAdjust="spacing">VERIFICABLE · TRANSPARENTE · MOCHI ✿ POMODORO ·</textPath></text>
+            <textPath href="#sp0" textLength="252" lengthAdjust="spacing">VERIFIABLE · TRANSPARENT · MOCHI ✿ POMODORO ·</textPath></text>
           <circle cx="60" cy="60" r="30" fill="#fff" stroke="#FF8FB1" stroke-width="2"/>
           <text x="60" y="68" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#FF8FB1">&lt;/&gt;</text>
         </svg>
-        <b>Código abierto</b><span>Lo puedes leer completo</span>
+        <b>Open source</b><span>You can read all of it</span>
       </div>
       <div class="seal">
-        <svg viewBox="0 0 120 120" role="img" aria-label="Sello: Cero conexiones">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Seal: Zero connections">
           <defs><path id="sp1" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>
           <circle cx="60" cy="60" r="57" fill="#DDF5F0"/>
           <circle cx="60" cy="60" r="51" fill="none" stroke="#6FC7B6" stroke-width="1.5" stroke-dasharray="2 4"/>
           <text font-family="Fredoka, sans-serif" font-size="8" font-weight="600" fill="#6FC7B6">
-            <textPath href="#sp1" textLength="252" lengthAdjust="spacing">VERIFICABLE · TRANSPARENTE · MOCHI ✿ POMODORO ·</textPath></text>
+            <textPath href="#sp1" textLength="252" lengthAdjust="spacing">VERIFIABLE · TRANSPARENT · MOCHI ✿ POMODORO ·</textPath></text>
           <circle cx="60" cy="60" r="30" fill="#fff" stroke="#6FC7B6" stroke-width="2"/>
           <text x="60" y="68" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#6FC7B6">0</text>
         </svg>
-        <b>Cero conexiones</b><span>Funciona sin internet</span>
+        <b>Zero connections</b><span>Works offline</span>
       </div>
       <div class="seal">
-        <svg viewBox="0 0 120 120" role="img" aria-label="Sello: Sin permisos">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Seal: No permissions">
           <defs><path id="sp2" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>
           <circle cx="60" cy="60" r="57" fill="#ECE6FD"/>
           <circle cx="60" cy="60" r="51" fill="none" stroke="#A98EF0" stroke-width="1.5" stroke-dasharray="2 4"/>
           <text font-family="Fredoka, sans-serif" font-size="8" font-weight="600" fill="#A98EF0">
-            <textPath href="#sp2" textLength="252" lengthAdjust="spacing">VERIFICABLE · TRANSPARENTE · MOCHI ✿ POMODORO ·</textPath></text>
+            <textPath href="#sp2" textLength="252" lengthAdjust="spacing">VERIFIABLE · TRANSPARENT · MOCHI ✿ POMODORO ·</textPath></text>
           <circle cx="60" cy="60" r="30" fill="#fff" stroke="#A98EF0" stroke-width="2"/>
           <text x="60" y="68" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#A98EF0">✓</text>
         </svg>
-        <b>Sin permisos</b><span>Nada de administrador</span>
+        <b>No permissions</b><span>No admin needed</span>
       </div>
       <div class="seal">
-        <svg viewBox="0 0 120 120" role="img" aria-label="Sello: Huella SHA-256">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Seal: SHA-256 fingerprint">
           <defs><path id="sp3" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>
           <circle cx="60" cy="60" r="57" fill="#FFE6EE"/>
           <circle cx="60" cy="60" r="51" fill="none" stroke="#FF8FB1" stroke-width="1.5" stroke-dasharray="2 4"/>
           <text font-family="Fredoka, sans-serif" font-size="8" font-weight="600" fill="#FF8FB1">
-            <textPath href="#sp3" textLength="252" lengthAdjust="spacing">VERIFICABLE · TRANSPARENTE · MOCHI ✿ POMODORO ·</textPath></text>
+            <textPath href="#sp3" textLength="252" lengthAdjust="spacing">VERIFIABLE · TRANSPARENT · MOCHI ✿ POMODORO ·</textPath></text>
           <circle cx="60" cy="60" r="30" fill="#fff" stroke="#FF8FB1" stroke-width="2"/>
           <text x="60" y="68" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#FF8FB1">#</text>
         </svg>
-        <b>Huella SHA-256</b><span>Publicada y comprobable</span>
+        <b>SHA-256 fingerprint</b><span>Published and checkable</span>
       </div>
       <div class="seal">
-        <svg viewBox="0 0 120 120" role="img" aria-label="Sello: Sin instalador">
+        <svg viewBox="0 0 120 120" role="img" aria-label="Seal: No installer">
           <defs><path id="sp4" d="M60,60 m-41,0 a41,41 0 1,1 82,0 a41,41 0 1,1 -82,0"/></defs>
           <circle cx="60" cy="60" r="57" fill="#DDF5F0"/>
           <circle cx="60" cy="60" r="51" fill="none" stroke="#6FC7B6" stroke-width="1.5" stroke-dasharray="2 4"/>
           <text font-family="Fredoka, sans-serif" font-size="8" font-weight="600" fill="#6FC7B6">
-            <textPath href="#sp4" textLength="252" lengthAdjust="spacing">VERIFICABLE · TRANSPARENTE · MOCHI ✿ POMODORO ·</textPath></text>
+            <textPath href="#sp4" textLength="252" lengthAdjust="spacing">VERIFIABLE · TRANSPARENT · MOCHI ✿ POMODORO ·</textPath></text>
           <circle cx="60" cy="60" r="30" fill="#fff" stroke="#6FC7B6" stroke-width="2"/>
           <text x="60" y="68" text-anchor="middle" font-family="Fredoka, sans-serif" font-size="22" font-weight="600" fill="#6FC7B6">✿</text>
         </svg>
-        <b>Sin instalador</b><span>Ni .exe, ni registro</span>
+        <b>No installer</b><span>No .exe, no registry</span>
       </div>
     </div>
 
     <div class="split">
       <div class="card">
-        <h3>✓ Lo que hace</h3>
+        <h3>✓ What it does</h3>
         <ul class="checks">
-          <li>Abre una ventana con un temporizador.</li>
-          <li>Reproduce el sonido de aviso del sistema al terminar un bloque.</li>
-          <li>Guarda tus minutos en <code>mochi_settings.json</code>, dentro de su propia carpeta.</li>
-          <li>Usa solo la librería estándar de Python: <code>tkinter</code>, <code>json</code>, <code>math</code>, <code>time</code>, <code>pathlib</code>, <code>sys</code>, <code>winsound</code> (sonido) y <code>ctypes</code> (solo para que el texto se vea nítido en pantallas escaladas).</li>
+          <li>Opens a window with a timer.</li>
+          <li>Plays the system alert sound when a block ends.</li>
+          <li>Saves your minutes in <code>mochi_settings.json</code>, inside its own folder.</li>
+          <li>Uses only the Python standard library: <code>tkinter</code>, <code>json</code>, <code>math</code>, <code>time</code>, <code>pathlib</code>, <code>sys</code>, <code>winsound</code> (sound) and <code>ctypes</code> (only to keep text sharp on scaled displays).</li>
         </ul>
       </div>
       <div class="card">
-        <h3>✕ Lo que NO hace</h3>
+        <h3>✕ What it does NOT do</h3>
         <ul class="checks no">
-          <li>No se conecta a internet: no importa <code>socket</code>, <code>urllib</code>, <code>http</code> ni <code>requests</code>.</li>
-          <li>No pide permisos de administrador ni se instala.</li>
-          <li>No toca el registro de Windows ni se inicia solo con tu computadora.</li>
-          <li>No lee tus archivos, ni tu teclado fuera de su ventana, ni tu portapapeles.</li>
-          <li>No trae <code>.exe</code>, <code>.bat</code>, macros ni archivos ocultos.</li>
+          <li>It doesn’t connect to the internet: it doesn’t import <code>socket</code>, <code>urllib</code>, <code>http</code> or <code>requests</code>.</li>
+          <li>It doesn’t ask for administrator permissions or install itself.</li>
+          <li>It doesn’t touch the Windows registry or start with your computer.</li>
+          <li>It doesn’t read your files, your keyboard outside its window, or your clipboard.</li>
+          <li>It doesn’t include any <code>.exe</code>, <code>.bat</code>, macros or hidden files.</li>
         </ul>
       </div>
     </div>
 
-    <div class="report" id="verificar">
-      <header><h3>Reporte de integridad · v1.0.0</h3><span>Huellas SHA-256 publicadas el 10 de noviembre de 2026</span></header>
+    <div class="report" id="verify">
+      <header><h3>Integrity report · v1.0.0</h3><span>SHA-256 fingerprints published on November 12, 2026</span></header>
       <div class="rows">
         <dl>
-          <div class="kv"><dt>MochiPomodoro.pyw</dt><dd class="mono">bcf5786c7762a41c24813c93d3425d91981bded0b206991114a8ce9e07263372</dd></div>
-          <div class="kv"><dt>LEEME.txt</dt><dd class="mono">b33927dceaabecdbd7e703b21013da8a26d25c5edceadfcf3c42f3d59931fbef</dd></div>
-          <div class="kv"><dt>Tamaño del programa</dt><dd>15,571 bytes · 381 líneas</dd></div>
-          <div class="kv"><dt>Conexiones de red</dt><dd>Ninguna</dd></div>
-          <div class="kv"><dt>Archivos que escribe</dt><dd><code>mochi_settings.json</code> (en su propia carpeta)</dd></div>
-          <div class="kv"><dt>Permisos que pide</dt><dd>Ninguno</dd></div>
+          <div class="kv"><dt>MochiPomodoro.pyw</dt><dd class="mono">4ade35b4ac86841720dc144e6fb93185195fa2e69cd513233c84baa5eca123c8</dd></div>
+          <div class="kv"><dt>README.txt</dt><dd class="mono">cbe2605d504c4975ff9a771b07afa9ca6d0705cb6986d76abebb22520e8873eb</dd></div>
+          <div class="kv"><dt>Program size</dt><dd>15,483 bytes · 381 lines</dd></div>
+          <div class="kv"><dt>Network connections</dt><dd>None</dd></div>
+          <div class="kv"><dt>Files it writes</dt><dd><code>mochi_settings.json</code> (in its own folder)</dd></div>
+          <div class="kv"><dt>Permissions it asks for</dt><dd>None</dd></div>
         </dl>
       </div>
     </div>
 
     <div class="split">
       <div class="card">
-        <h3>Verifícalo tú en 3 pasos</h3>
+        <h3>Verify it yourself in 3 steps</h3>
         <ol class="steps">
-          <li><b>Compara la huella.</b> Si un solo carácter del archivo cambiara, la huella sería totalmente distinta.
+          <li><b>Compare the fingerprint.</b> If a single character of the file changed, the fingerprint would be completely different.
             <pre>Get-FileHash .\MochiPomodoro.pyw -Algorithm SHA256</pre>
             <span class="dl-meta">macOS/Linux: <code>shasum -a 256 MochiPomodoro.pyw</code></span></li>
-          <li><b>Escanéalo.</b> Sube el .zip a <a href="https://www.virustotal.com/gui/home/upload" rel="noopener" target="_blank">VirusTotal</a> (lo revisan más de 60 antivirus) o haz clic derecho → “Examinar con Microsoft Defender”.</li>
-          <li><b>Léelo.</b> Ábrelo con el Bloc de notas. Está comentado en español.</li>
+          <li><b>Scan it.</b> Upload the .zip to <a href="https://www.virustotal.com/gui/home/upload" rel="noopener" target="_blank">VirusTotal</a> (over 60 antivirus engines check it) or right-click → “Scan with Microsoft Defender”.</li>
+          <li><b>Read it.</b> Open it with Notepad. It’s commented in English.</li>
         </ol>
       </div>
       <div class="card">
-        <h3>Sobre los avisos de Windows</h3>
-        <p>Como no hay <code>.exe</code>, Windows SmartScreen normalmente no muestra la pantalla azul de “Windows protegió su PC”. Si tu navegador pregunta si quieres conservar el .zip, es un aviso genérico para cualquier descarga de un sitio pequeño, no una detección.</p>
-        <p style="margin-top:10px">Regla de oro para cualquier descarga, incluida esta: bájala solo desde esta página oficial y desconfía de copias en otros sitios. Si la huella no coincide, no la abras.</p>
+        <h3>About Windows warnings</h3>
+        <p>Since there’s no <code>.exe</code>, Windows SmartScreen usually won’t show the blue “Windows protected your PC” screen. If your browser asks whether you want to keep the .zip, that’s a generic warning for any download from a small site, not a detection.</p>
+        <p style="margin-top:10px">Golden rule for any download, this one included: only get it from this official page and be wary of copies on other sites. If the fingerprint doesn’t match, don’t open it.</p>
       </div>
     </div>
   </div>
@@ -508,39 +508,39 @@
 
 <section id="faq">
   <div class="wrap">
-    <span class="eyebrow">preguntas</span>
-    <h2 class="h2">Preguntas frecuentes</h2>
-    <details><summary>¿Es gratis?</summary><p>Sí, totalmente. Sin anuncios, sin cuentas y sin versiones de pago.</p></details>
-    <details><summary>¿Por qué necesito Python?</summary><p>Porque así el programa es un archivo de texto que puedes leer, en lugar de un .exe cerrado. Es la forma más transparente de entregarlo.</p></details>
-    <details><summary>¿Funciona sin internet?</summary><p>Sí. Una vez descargado, nunca se conecta a nada.</p></details>
-    <details><summary>¿Dónde guarda mis ajustes?</summary><p>En <code>mochi_settings.json</code>, en la misma carpeta del programa. Si lo borras, vuelve a los valores de fábrica (25 / 5 / 15 minutos).</p></details>
-    <details><summary>La huella del .zip es distinta a la de otra persona, ¿pasa algo?</summary><p>Compara las huellas de los archivos de dentro (<code>MochiPomodoro.pyw</code> y <code>LEEME.txt</code>) con el reporte de integridad: esas son las que importan y siempre deben coincidir.</p></details>
+    <span class="eyebrow">questions</span>
+    <h2 class="h2">Frequently asked questions</h2>
+    <details><summary>Is it free?</summary><p>Yes, completely. No ads, no accounts and no paid versions.</p></details>
+    <details><summary>Why do I need Python?</summary><p>Because that way the program is a text file you can read, instead of a closed .exe. It’s the most transparent way to deliver it.</p></details>
+    <details><summary>Does it work offline?</summary><p>Yes. Once downloaded, it never connects to anything.</p></details>
+    <details><summary>Where are my settings saved?</summary><p>In <code>mochi_settings.json</code>, in the same folder as the program. If you delete it, it goes back to the defaults (25 / 5 / 15 minutes).</p></details>
+    <details><summary>My .zip fingerprint is different from someone else’s, is that a problem?</summary><p>Compare the fingerprints of the files inside (<code>MochiPomodoro.pyw</code> and <code>README.txt</code>) with the integrity report: those are the ones that matter and they should always match.</p></details>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">mochi pomodoro v1.0.0 · hecho con cariño <span class="heart">♡</span> · ¡a concentrarse!</div>
+  <div class="wrap">mochi pomodoro v1.0.0 · made with love <span class="heart">♡</span> · time to focus!</div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 (() => {
-  // El .zip no existe en el servidor: se arma aquí, en memoria, solo al pulsar el botón.
+  // The .zip does not exist on the server: it is built here, in memory, only when the button is pressed.
   const VERSION = "1.0.0";
   const FILES = {
-    "MochiPomodoro/MochiPomodoro.pyw": "IiIiCk1vY2hpIFBvbW9kb3JvICAtICB0ZW1wb3JpemFkb3IgUG9tb2Rvcm8gZGUgZXNjcml0b3Jpbwo9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KClZlcnNpb24gMS4wLjAKCkVzdGUgcHJvZ3JhbWEgZXMgVU4gU09MTyBBUkNISVZPIGRlIFB5dGhvbiBxdWUgcHVlZGVzIGxlZXIgY29tcGxldG8uCi0gU29sbyB1c2EgbGEgbGlicmVyaWEgZXN0YW5kYXIgZGUgUHl0aG9uICh0a2ludGVyLCBqc29uLCB0aW1lLCBtYXRoKS4KLSBOTyBzZSBjb25lY3RhIGEgaW50ZXJuZXQgKG5vIGltcG9ydGEgc29ja2V0LCB1cmxsaWIsIGh0dHAgbmkgcmVxdWVzdHMpLgotIE5PIHBpZGUgcGVybWlzb3MgZGUgYWRtaW5pc3RyYWRvciBuaSB0b2NhIGVsIHJlZ2lzdHJvIGRlIFdpbmRvd3MuCi0gRWwgdW5pY28gYXJjaGl2byBxdWUgZXNjcmliZSBlcyAibW9jaGlfc2V0dGluZ3MuanNvbiIsIGp1bnRvIGEgZXN0ZQogIGFyY2hpdm8sIHBhcmEgcmVjb3JkYXIgdHVzIG1pbnV0b3MuIFB1ZWRlcyBib3JyYXJsbyBjdWFuZG8gcXVpZXJhcy4KCkF0YWpvczogIEVzcGFjaW8gPSBlbXBlemFyL3BhdXNhciAgIFIgPSByZWluaWNpYXIgICBTID0gc2FsdGFyCiAgICAgICAgIDEgLyAyIC8gMyA9IEVuZm9xdWUgLyBEZXNjYW5zbyAvIERlc2NhbnNvIGxhcmdvCiIiIgoKaW1wb3J0IGpzb24KaW1wb3J0IG1hdGgKaW1wb3J0IHN5cwppbXBvcnQgdGltZQppbXBvcnQgdGtpbnRlciBhcyB0awpmcm9tIHBhdGhsaWIgaW1wb3J0IFBhdGgKCnRyeTogICMgU29sbyBleGlzdGUgZW4gV2luZG93czsgc2UgdXNhIHBhcmEgZWwgc29uaWRpdG8gYWwgdGVybWluYXIuCiAgICBpbXBvcnQgd2luc291bmQKZXhjZXB0IEltcG9ydEVycm9yOgogICAgd2luc291bmQgPSBOb25lCgpBUFAgPSAiTW9jaGkgUG9tb2Rvcm8iClZFUlNJT04gPSAiMS4wLjAiClNFVFRJTkdTX0ZJTEUgPSBQYXRoKF9fZmlsZV9fKS5yZXNvbHZlKCkud2l0aF9uYW1lKCJtb2NoaV9zZXR0aW5ncy5qc29uIikKCkNPTE9SUyA9IHsKICAgICJiZyI6ICIjRkZGN0Y5IiwKICAgICJpbmsiOiAiIzRCM0E0NiIsCiAgICAibXV0ZWQiOiAiI0I0OUFBQSIsCiAgICAidHJhY2siOiAiI0Y3RTRFQiIsCiAgICAid2hpdGUiOiAiI0ZGRkZGRiIsCiAgICAiYmx1c2giOiAiI0ZGQjhDQiIsCiAgICAibGVhZiI6ICIjOENDQjlCIiwKfQpNT0RFUyA9IHsKICAgICJmb2N1cyI6IHsidGFiIjogIkVuZm9xdWUiLCAiY29sb3IiOiAiI0ZGOEZCMSIsICJzb2Z0IjogIiNGRkU2RUUiLCAibXNnIjogImEgY29uY2VudHJhcnNlICDinL8ifSwKICAgICJzaG9ydCI6IHsidGFiIjogIkRlc2NhbnNvIiwgImNvbG9yIjogIiM2RkM3QjYiLCAic29mdCI6ICIjRERGNUYwIiwgIm1zZyI6ICJlc3RpcmEgeSB0b21hIGFnw7xpdGEifSwKICAgICJsb25nIjogeyJ0YWIiOiAiTGFyZ28iLCAiY29sb3IiOiAiI0E5OEVGMCIsICJzb2Z0IjogIiNFQ0U2RkQiLCAibXNnIjogInRlIGxvIGdhbmFzdGUgIOKZoSJ9LAp9Ck9SREVSID0gWyJmb2N1cyIsICJzaG9ydCIsICJsb25nIl0KREVGQVVMVFMgPSB7ImZvY3VzIjogMjUsICJzaG9ydCI6IDUsICJsb25nIjogMTUsICJyb3VuZHMiOiA0LCAidG9wbW9zdCI6IEZhbHNlfQpMSU1JVFMgPSB7ImZvY3VzIjogKDEsIDEyMCksICJzaG9ydCI6ICgxLCA2MCksICJsb25nIjogKDEsIDkwKSwgInJvdW5kcyI6ICgyLCA4KX0KRk9OVCA9ICJTZWdvZSBVSSIgaWYgc3lzLnBsYXRmb3JtID09ICJ3aW4zMiIgZWxzZSAiSGVsdmV0aWNhIgpXLCBIID0gMzQwLCA1MDAKCgpkZWYgZW5hYmxlX2NyaXNwX3RleHQoKToKICAgICIiIkVuIFdpbmRvd3MgY29uIHBhbnRhbGxhcyBlc2NhbGFkYXMgZXZpdGEgcXVlIGVsIHRleHRvIHNlIHZlYSBib3Jyb3NvLiIiIgogICAgaWYgc3lzLnBsYXRmb3JtID09ICJ3aW4zMiI6CiAgICAgICAgdHJ5OgogICAgICAgICAgICBpbXBvcnQgY3R5cGVzCiAgICAgICAgICAgIGN0eXBlcy53aW5kbGwuc2hjb3JlLlNldFByb2Nlc3NEcGlBd2FyZW5lc3MoMSkKICAgICAgICBleGNlcHQgRXhjZXB0aW9uOgogICAgICAgICAgICBwYXNzCgoKY2xhc3MgTW9jaGlQb21vZG9ybzoKICAgIGRlZiBfX2luaXRfXyhzZWxmLCByb290KToKICAgICAgICBzZWxmLnJvb3QgPSByb290CiAgICAgICAgc2VsZi5zY2FsZSA9IG1heCgxLjAsIHJvb3Qud2luZm9fZnBpeGVscygiMWkiKSAvIDk2KQogICAgICAgIHNlbGYuY2ZnID0gc2VsZi5sb2FkX3NldHRpbmdzKCkKICAgICAgICBzZWxmLm1vZGUgPSAiZm9jdXMiCiAgICAgICAgc2VsZi5kb25lID0gMCAgICAgICAgICAjIHBvbW9kb3JvcyBkZWwgY2ljbG8gYWN0dWFsCiAgICAgICAgc2VsZi50b2RheSA9IDAgICAgICAgICAjIHBvbW9kb3JvcyBjb21wbGV0YWRvcyBkZXNkZSBxdWUgYWJyaXN0ZSBsYSBhcHAKICAgICAgICBzZWxmLnJ1bm5pbmcgPSBGYWxzZQogICAgICAgIHNlbGYucmVtYWluaW5nID0gc2VsZi5jZmdbImZvY3VzIl0gKiA2MC4wCiAgICAgICAgc2VsZi5lbmRfYXQgPSAwLjAKICAgICAgICBzZWxmLnBhcnR5X3VudGlsID0gMC4wCiAgICAgICAgc2VsZi5zZXR0aW5nc19vcGVuID0gRmFsc2UKCiAgICAgICAgcm9vdC50aXRsZShBUFApCiAgICAgICAgcm9vdC5jb25maWd1cmUoYmc9Q09MT1JTWyJiZyJdKQogICAgICAgIHJvb3QucmVzaXphYmxlKEZhbHNlLCBGYWxzZSkKICAgICAgICByb290LmF0dHJpYnV0ZXMoIi10b3Btb3N0Iiwgc2VsZi5jZmdbInRvcG1vc3QiXSkKICAgICAgICBzZWxmLnNldF9pY29uKCkKCiAgICAgICAgc2VsZi5jYW52YXMgPSB0ay5DYW52YXMocm9vdCwgd2lkdGg9c2VsZi5zKFcpLCBoZWlnaHQ9c2VsZi5zKEgpLCBiZz1DT0xPUlNbImJnIl0sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaGlnaGxpZ2h0dGhpY2tuZXNzPTAsIGJkPTApCiAgICAgICAgc2VsZi5jYW52YXMucGFjaygpCiAgICAgICAgc2VsZi5zZXR0aW5ncyA9IHRrLkZyYW1lKHJvb3QsIGJnPUNPTE9SU1siYmciXSkKICAgICAgICBzZWxmLmJ1aWxkX3NldHRpbmdzKCkKICAgICAgICBzZWxmLmJpbmRfZXZlbnRzKCkKICAgICAgICBzZWxmLnRpY2soKQoKICAgICMgLS0tLS0tLS0tLSB1dGlsaWRhZGVzIC0tLS0tLS0tLS0KICAgIGRlZiBzKHNlbGYsIHYpOgogICAgICAgIHJldHVybiBpbnQocm91bmQodiAqIHNlbGYuc2NhbGUpKQoKICAgIGRlZiBmb250KHNlbGYsIHB4LCB3ZWlnaHQ9Im5vcm1hbCIpOgogICAgICAgIHJldHVybiAoRk9OVCwgLXNlbGYucyhweCksIHdlaWdodCkKCiAgICBkZWYgcGlsbChzZWxmLCB4MSwgeTEsIHgyLCB5MiwgciwgKiprdyk6CiAgICAgICAgcyA9IHNlbGYucwogICAgICAgIHgxLCB5MSwgeDIsIHkyLCByID0gcyh4MSksIHMoeTEpLCBzKHgyKSwgcyh5MiksIHMocikKICAgICAgICBwdHMgPSBbeDEgKyByLCB5MSwgeDIgLSByLCB5MSwgeDIsIHkxLCB4MiwgeTEgKyByLCB4MiwgeTIgLSByLCB4MiwgeTIsCiAgICAgICAgICAgICAgIHgyIC0gciwgeTIsIHgxICsgciwgeTIsIHgxLCB5MiwgeDEsIHkyIC0gciwgeDEsIHkxICsgciwgeDEsIHkxXQogICAgICAgIHJldHVybiBzZWxmLmNhbnZhcy5jcmVhdGVfcG9seWdvbihwdHMsIHNtb290aD1UcnVlLCAqKmt3KQoKICAgIGRlZiBvdmFsKHNlbGYsIGN4LCBjeSwgcngsIHJ5LCAqKmt3KToKICAgICAgICBzID0gc2VsZi5zCiAgICAgICAgcmV0dXJuIHNlbGYuY2FudmFzLmNyZWF0ZV9vdmFsKHMoY3ggLSByeCksIHMoY3kgLSByeSksIHMoY3ggKyByeCksIHMoY3kgKyByeSksICoqa3cpCgogICAgZGVmIHRleHQoc2VsZiwgeCwgeSwgdHh0LCAqKmt3KToKICAgICAgICByZXR1cm4gc2VsZi5jYW52YXMuY3JlYXRlX3RleHQoc2VsZi5zKHgpLCBzZWxmLnMoeSksIHRleHQ9dHh0LCAqKmt3KQoKICAgIGRlZiBzZXRfaWNvbihzZWxmKToKICAgICAgICBzaXplID0gMzIKICAgICAgICBpbWcgPSB0ay5QaG90b0ltYWdlKHdpZHRoPXNpemUsIGhlaWdodD1zaXplKQogICAgICAgIGZvciB5IGluIHJhbmdlKHNpemUpOgogICAgICAgICAgICByb3cgPSBbXQogICAgICAgICAgICBmb3IgeCBpbiByYW5nZShzaXplKToKICAgICAgICAgICAgICAgIGR4LCBkeSA9IHggLSAxNS41LCB5IC0gMTcuNQogICAgICAgICAgICAgICAgaWYgZHggKiBkeCAvIDE5NiArIGR5ICogZHkgLyAxNDQgPD0gMToKICAgICAgICAgICAgICAgICAgICByb3cuYXBwZW5kKE1PREVTWyJmb2N1cyJdWyJjb2xvciJdKQogICAgICAgICAgICAgICAgZWxpZiBhYnMoeCAtIDE2KSA8IDQgYW5kIDIgPD0geSA8PSA2OgogICAgICAgICAgICAgICAgICAgIHJvdy5hcHBlbmQoQ09MT1JTWyJsZWFmIl0pCiAgICAgICAgICAgICAgICBlbHNlOgogICAgICAgICAgICAgICAgICAgIHJvdy5hcHBlbmQoQ09MT1JTWyJiZyJdKQogICAgICAgICAgICBpbWcucHV0KCJ7IiArICIgIi5qb2luKHJvdykgKyAifSIsIHRvPSgwLCB5KSkKICAgICAgICBzZWxmLmljb24gPSBpbWcKICAgICAgICBzZWxmLnJvb3QuaWNvbnBob3RvKFRydWUsIGltZykKCiAgICAjIC0tLS0tLS0tLS0gYWp1c3RlcyAtLS0tLS0tLS0tCiAgICBkZWYgbG9hZF9zZXR0aW5ncyhzZWxmKToKICAgICAgICBjZmcgPSBkaWN0KERFRkFVTFRTKQogICAgICAgIHRyeToKICAgICAgICAgICAgZGF0YSA9IGpzb24ubG9hZHMoU0VUVElOR1NfRklMRS5yZWFkX3RleHQoZW5jb2Rpbmc9InV0Zi04IikpCiAgICAgICAgICAgIGZvciBrLCAobG8sIGhpKSBpbiBMSU1JVFMuaXRlbXMoKToKICAgICAgICAgICAgICAgIGlmIGlzaW5zdGFuY2UoZGF0YS5nZXQoayksIGludCk6CiAgICAgICAgICAgICAgICAgICAgY2ZnW2tdID0gbWluKGhpLCBtYXgobG8sIGRhdGFba10pKQogICAgICAgICAgICBjZmdbInRvcG1vc3QiXSA9IGJvb2woZGF0YS5nZXQoInRvcG1vc3QiLCBGYWxzZSkpCiAgICAgICAgZXhjZXB0IChPU0Vycm9yLCBWYWx1ZUVycm9yKToKICAgICAgICAgICAgcGFzcwogICAgICAgIHJldHVybiBjZmcKCiAgICBkZWYgc2F2ZV9zZXR0aW5ncyhzZWxmKToKICAgICAgICB0cnk6CiAgICAgICAgICAgIFNFVFRJTkdTX0ZJTEUud3JpdGVfdGV4dChqc29uLmR1bXBzKHNlbGYuY2ZnLCBpbmRlbnQ9MiksIGVuY29kaW5nPSJ1dGYtOCIpCiAgICAgICAgZXhjZXB0IE9TRXJyb3I6CiAgICAgICAgICAgIHBhc3MgICMgY2FycGV0YSBkZSBzb2xvIGxlY3R1cmE6IHNpbXBsZW1lbnRlIG5vIHNlIGd1YXJkYQoKICAgIGRlZiBidWlsZF9zZXR0aW5ncyhzZWxmKToKICAgICAgICByb3dzID0gWygiRW5mb3F1ZSAobWluKSIsICJmb2N1cyIpLCAoIkRlc2NhbnNvIChtaW4pIiwgInNob3J0IiksCiAgICAgICAgICAgICAgICAoIkRlc2NhbnNvIGxhcmdvIChtaW4pIiwgImxvbmciKSwgKCJQb21vZG9yb3MgcG9yIGNpY2xvIiwgInJvdW5kcyIpXQogICAgICAgIHNlbGYuc2V0dGluZ192YXJzID0ge30KICAgICAgICBmb3IgaSwgKGxhYmVsLCBrZXkpIGluIGVudW1lcmF0ZShyb3dzKToKICAgICAgICAgICAgdGsuTGFiZWwoc2VsZi5zZXR0aW5ncywgdGV4dD1sYWJlbCwgYmc9Q09MT1JTWyJiZyJdLCBmZz1DT0xPUlNbImluayJdLAogICAgICAgICAgICAgICAgICAgICBmb250PXNlbGYuZm9udCgxMykpLmdyaWQocm93PWksIGNvbHVtbj0wLCBzdGlja3k9InciLCBwYWR4PShzZWxmLnMoMjgpLCBzZWxmLnMoMTApKSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHBhZHk9c2VsZi5zKDQpKQogICAgICAgICAgICB2YXIgPSB0ay5TdHJpbmdWYXIodmFsdWU9c3RyKHNlbGYuY2ZnW2tleV0pKQogICAgICAgICAgICBzZWxmLnNldHRpbmdfdmFyc1trZXldID0gdmFyCiAgICAgICAgICAgIGZvciBjb2wsIChzeW0sIHN0ZXApIGluIGVudW1lcmF0ZShbKCLiiJIiLCAtMSksIChOb25lLCAwKSwgKCIrIiwgMSldLCBzdGFydD0xKToKICAgICAgICAgICAgICAgIGlmIHN5bSBpcyBOb25lOgogICAgICAgICAgICAgICAgICAgIHRrLkxhYmVsKHNlbGYuc2V0dGluZ3MsIHRleHR2YXJpYWJsZT12YXIsIHdpZHRoPTMsIGJnPUNPTE9SU1siYmciXSwgZmc9Q09MT1JTWyJpbmsiXSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICBmb250PXNlbGYuZm9udCgxNCwgImJvbGQiKSkuZ3JpZChyb3c9aSwgY29sdW1uPWNvbCkKICAgICAgICAgICAgICAgICAgICBjb250aW51ZQogICAgICAgICAgICAgICAgYiA9IHRrLkxhYmVsKHNlbGYuc2V0dGluZ3MsIHRleHQ9c3ltLCB3aWR0aD0yLCBiZz1DT0xPUlNbInRyYWNrIl0sIGZnPUNPTE9SU1siaW5rIl0sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZm9udD1zZWxmLmZvbnQoMTQsICJib2xkIiksIGN1cnNvcj0iaGFuZDIiKQogICAgICAgICAgICAgICAgYi5ncmlkKHJvdz1pLCBjb2x1bW49Y29sLCBwYWR4PXNlbGYucygyKSkKICAgICAgICAgICAgICAgIGIuYmluZCgiPEJ1dHRvbi0xPiIsIGxhbWJkYSBlLCBrPWtleSwgZD1zdGVwOiBzZWxmLmNoYW5nZV9zZXR0aW5nKGssIGQpKQogICAgICAgIHRrLkxhYmVsKHNlbGYuc2V0dGluZ3MsIHRleHQ9IiIsIGJnPUNPTE9SU1siYmciXSkuZ3JpZChyb3c9bGVuKHJvd3MpLCBjb2x1bW49MCwgcGFkeT1zZWxmLnMoNCkpCgogICAgZGVmIGNoYW5nZV9zZXR0aW5nKHNlbGYsIGtleSwgZGVsdGEpOgogICAgICAgIGxvLCBoaSA9IExJTUlUU1trZXldCiAgICAgICAgc2VsZi5jZmdba2V5XSA9IG1pbihoaSwgbWF4KGxvLCBzZWxmLmNmZ1trZXldICsgZGVsdGEpKQogICAgICAgIHNlbGYuc2V0dGluZ192YXJzW2tleV0uc2V0KHN0cihzZWxmLmNmZ1trZXldKSkKICAgICAgICBpZiBrZXkgPT0gc2VsZi5tb2RlIGFuZCBub3Qgc2VsZi5ydW5uaW5nOgogICAgICAgICAgICBzZWxmLnJlbWFpbmluZyA9IHNlbGYuY2ZnW2tleV0gKiA2MC4wCiAgICAgICAgc2VsZi5zYXZlX3NldHRpbmdzKCkKICAgICAgICBzZWxmLnJlbmRlcigpCgogICAgZGVmIHRvZ2dsZV9zZXR0aW5ncyhzZWxmKToKICAgICAgICBzZWxmLnNldHRpbmdzX29wZW4gPSBub3Qgc2VsZi5zZXR0aW5nc19vcGVuCiAgICAgICAgaWYgc2VsZi5zZXR0aW5nc19vcGVuOgogICAgICAgICAgICBzZWxmLnNldHRpbmdzLnBhY2soZmlsbD0ieCIpCiAgICAgICAgZWxzZToKICAgICAgICAgICAgc2VsZi5zZXR0aW5ncy5wYWNrX2ZvcmdldCgpCiAgICAgICAgc2VsZi5yZW5kZXIoKQoKICAgIGRlZiB0b2dnbGVfcGluKHNlbGYpOgogICAgICAgIHNlbGYuY2ZnWyJ0b3Btb3N0Il0gPSBub3Qgc2VsZi5jZmdbInRvcG1vc3QiXQogICAgICAgIHNlbGYucm9vdC5hdHRyaWJ1dGVzKCItdG9wbW9zdCIsIHNlbGYuY2ZnWyJ0b3Btb3N0Il0pCiAgICAgICAgc2VsZi5zYXZlX3NldHRpbmdzKCkKICAgICAgICBzZWxmLnJlbmRlcigpCgogICAgIyAtLS0tLS0tLS0tIHRlbXBvcml6YWRvciAtLS0tLS0tLS0tCiAgICBkZWYgdG90YWwoc2VsZik6CiAgICAgICAgcmV0dXJuIHNlbGYuY2ZnW3NlbGYubW9kZV0gKiA2MC4wCgogICAgZGVmIHRvZ2dsZShzZWxmKToKICAgICAgICBpZiBzZWxmLnJ1bm5pbmc6CiAgICAgICAgICAgIHNlbGYucmVtYWluaW5nID0gbWF4KDAuMCwgc2VsZi5lbmRfYXQgLSB0aW1lLm1vbm90b25pYygpKQogICAgICAgICAgICBzZWxmLnJ1bm5pbmcgPSBGYWxzZQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHNlbGYuZW5kX2F0ID0gdGltZS5tb25vdG9uaWMoKSArIHNlbGYucmVtYWluaW5nCiAgICAgICAgICAgIHNlbGYucnVubmluZyA9IFRydWUKICAgICAgICBzZWxmLnJlbmRlcigpCgogICAgZGVmIHJlc2V0KHNlbGYpOgogICAgICAgIHNlbGYucnVubmluZyA9IEZhbHNlCiAgICAgICAgc2VsZi5yZW1haW5pbmcgPSBzZWxmLnRvdGFsKCkKICAgICAgICBzZWxmLnJlbmRlcigpCgogICAgZGVmIHNldF9tb2RlKHNlbGYsIG1vZGUpOgogICAgICAgIHNlbGYubW9kZSA9IG1vZGUKICAgICAgICBzZWxmLnJlc2V0KCkKCiAgICBkZWYgbmV4dF9tb2RlKHNlbGYsIGNvbXBsZXRlZCk6CiAgICAgICAgaWYgc2VsZi5tb2RlID09ICJmb2N1cyI6CiAgICAgICAgICAgIGlmIGNvbXBsZXRlZDoKICAgICAgICAgICAgICAgIHNlbGYuZG9uZSArPSAxCiAgICAgICAgICAgICAgICBzZWxmLnRvZGF5ICs9IDEKICAgICAgICAgICAgcmV0dXJuICJsb25nIiBpZiBzZWxmLmRvbmUgPj0gc2VsZi5jZmdbInJvdW5kcyJdIGVsc2UgInNob3J0IgogICAgICAgIGlmIHNlbGYubW9kZSA9PSAibG9uZyI6CiAgICAgICAgICAgIHNlbGYuZG9uZSA9IDAKICAgICAgICByZXR1cm4gImZvY3VzIgoKICAgIGRlZiBza2lwKHNlbGYpOgogICAgICAgIHNlbGYuc2V0X21vZGUoc2VsZi5uZXh0X21vZGUoY29tcGxldGVkPUZhbHNlKSkKCiAgICBkZWYgZmluaXNoKHNlbGYpOgogICAgICAgIHNlbGYucnVubmluZyA9IEZhbHNlCiAgICAgICAgc2VsZi5wYXJ0eV91bnRpbCA9IHRpbWUubW9ub3RvbmljKCkgKyA1CiAgICAgICAgc2VsZi5zZXRfbW9kZShzZWxmLm5leHRfbW9kZShjb21wbGV0ZWQ9VHJ1ZSkpCiAgICAgICAgc2VsZi5hbGVydCgpCgogICAgZGVmIGFsZXJ0KHNlbGYpOgogICAgICAgIGlmIHdpbnNvdW5kOgogICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICB3aW5zb3VuZC5QbGF5U291bmQoIlN5c3RlbUFzdGVyaXNrIiwgd2luc291bmQuU05EX0FMSUFTIHwgd2luc291bmQuU05EX0FTWU5DKQogICAgICAgICAgICBleGNlcHQgUnVudGltZUVycm9yOgogICAgICAgICAgICAgICAgc2VsZi5yb290LmJlbGwoKQogICAgICAgIGVsc2U6CiAgICAgICAgICAgIHNlbGYucm9vdC5iZWxsKCkKICAgICAgICBzZWxmLnJvb3QuZGVpY29uaWZ5KCkKICAgICAgICBzZWxmLnJvb3QubGlmdCgpCiAgICAgICAgc2VsZi5yb290LmF0dHJpYnV0ZXMoIi10b3Btb3N0IiwgVHJ1ZSkKICAgICAgICBzZWxmLnJvb3QuYWZ0ZXIoMTUwMCwgbGFtYmRhOiBzZWxmLnJvb3QuYXR0cmlidXRlcygiLXRvcG1vc3QiLCBzZWxmLmNmZ1sidG9wbW9zdCJdKSkKCiAgICBkZWYgdGljayhzZWxmKToKICAgICAgICBpZiBzZWxmLnJ1bm5pbmc6CiAgICAgICAgICAgIHNlbGYucmVtYWluaW5nID0gbWF4KDAuMCwgc2VsZi5lbmRfYXQgLSB0aW1lLm1vbm90b25pYygpKQogICAgICAgICAgICBpZiBzZWxmLnJlbWFpbmluZyA8PSAwOgogICAgICAgICAgICAgICAgc2VsZi5maW5pc2goKQogICAgICAgIHNlbGYucmVuZGVyKCkKICAgICAgICBzZWxmLnJvb3QuYWZ0ZXIoMTAwIGlmIHNlbGYucnVubmluZyBlbHNlIDI1MCwgc2VsZi50aWNrKQoKICAgICMgLS0tLS0tLS0tLSBkaWJ1am8gLS0tLS0tLS0tLQogICAgZGVmIGJpbmRfZXZlbnRzKHNlbGYpOgogICAgICAgIGMgPSBzZWxmLmNhbnZhcwogICAgICAgIGFjdGlvbnMgPSB7CiAgICAgICAgICAgICJ0YWJfZm9jdXMiOiBsYW1iZGE6IHNlbGYuc2V0X21vZGUoImZvY3VzIiksCiAgICAgICAgICAgICJ0YWJfc2hvcnQiOiBsYW1iZGE6IHNlbGYuc2V0X21vZGUoInNob3J0IiksCiAgICAgICAgICAgICJ0YWJfbG9uZyI6IGxhbWJkYTogc2VsZi5zZXRfbW9kZSgibG9uZyIpLAogICAgICAgICAgICAiYnRuX21haW4iOiBzZWxmLnRvZ2dsZSwKICAgICAgICAgICAgImJ0bl9yZXNldCI6IHNlbGYucmVzZXQsCiAgICAgICAgICAgICJidG5fc2tpcCI6IHNlbGYuc2tpcCwKICAgICAgICAgICAgImxua19zZXR0aW5ncyI6IHNlbGYudG9nZ2xlX3NldHRpbmdzLAogICAgICAgICAgICAibG5rX3BpbiI6IHNlbGYudG9nZ2xlX3BpbiwKICAgICAgICB9CiAgICAgICAgZm9yIHRhZywgZm4gaW4gYWN0aW9ucy5pdGVtcygpOgogICAgICAgICAgICBjLnRhZ19iaW5kKHRhZywgIjxCdXR0b24tMT4iLCBsYW1iZGEgZSwgZj1mbjogZigpKQogICAgICAgICAgICBjLnRhZ19iaW5kKHRhZywgIjxFbnRlcj4iLCBsYW1iZGEgZTogYy5jb25maWcoY3Vyc29yPSJoYW5kMiIpKQogICAgICAgICAgICBjLnRhZ19iaW5kKHRhZywgIjxMZWF2ZT4iLCBsYW1iZGEgZTogYy5jb25maWcoY3Vyc29yPSIiKSkKICAgICAgICByID0gc2VsZi5yb290CiAgICAgICAgci5iaW5kKCI8c3BhY2U+IiwgbGFtYmRhIGU6IHNlbGYudG9nZ2xlKCkpCiAgICAgICAgci5iaW5kKCI8S2V5UHJlc3Mtcj4iLCBsYW1iZGEgZTogc2VsZi5yZXNldCgpKQogICAgICAgIHIuYmluZCgiPEtleVByZXNzLXM+IiwgbGFtYmRhIGU6IHNlbGYuc2tpcCgpKQogICAgICAgIGZvciBpLCBtIGluIGVudW1lcmF0ZShPUkRFUiwgc3RhcnQ9MSk6CiAgICAgICAgICAgIHIuYmluZChmIjxLZXlQcmVzcy17aX0+IiwgbGFtYmRhIGUsIG09bTogc2VsZi5zZXRfbW9kZShtKSkKCiAgICBkZWYgcmVuZGVyKHNlbGYpOgogICAgICAgIGMgPSBzZWxmLmNhbnZhcwogICAgICAgIGMuZGVsZXRlKCJhbGwiKQogICAgICAgIG0gPSBNT0RFU1tzZWxmLm1vZGVdCiAgICAgICAgbm93ID0gdGltZS5tb25vdG9uaWMoKQoKICAgICAgICAjIHBlc3Rhw7FhcwogICAgICAgIHggPSAxOAogICAgICAgIGZvciBrZXkgaW4gT1JERVI6CiAgICAgICAgICAgIGFjdGl2ZSA9IGtleSA9PSBzZWxmLm1vZGUKICAgICAgICAgICAgdGFnID0gZiJ0YWJfe2tleX0iCiAgICAgICAgICAgIHNlbGYucGlsbCh4LCAxOCwgeCArIDk2LCA1MCwgMTYsIGZpbGw9TU9ERVNba2V5XVsiY29sb3IiXSBpZiBhY3RpdmUgZWxzZSBDT0xPUlNbInRyYWNrIl0sCiAgICAgICAgICAgICAgICAgICAgICBvdXRsaW5lPSIiLCB0YWdzPXRhZykKICAgICAgICAgICAgc2VsZi50ZXh0KHggKyA0OCwgMzQsIE1PREVTW2tleV1bInRhYiJdLCBmaWxsPUNPTE9SU1sid2hpdGUiXSBpZiBhY3RpdmUgZWxzZSBDT0xPUlNbIm11dGVkIl0sCiAgICAgICAgICAgICAgICAgICAgICBmb250PXNlbGYuZm9udCgxMywgImJvbGQiKSwgdGFncz10YWcpCiAgICAgICAgICAgIHggKz0gMTA0CgogICAgICAgICMgYW5pbGxvIGRlIHByb2dyZXNvCiAgICAgICAgY3gsIGN5LCByYWQgPSAxNzAsIDIwNSwgMTE4CiAgICAgICAgZnJhYyA9IHNlbGYucmVtYWluaW5nIC8gc2VsZi50b3RhbCgpIGlmIHNlbGYudG90YWwoKSBlbHNlIDAKICAgICAgICBzZWxmLm92YWwoY3gsIGN5LCByYWQsIHJhZCwgb3V0bGluZT1DT0xPUlNbInRyYWNrIl0sIHdpZHRoPXNlbGYucygxNCkpCiAgICAgICAgaWYgZnJhYyA+IDAuMDAxOgogICAgICAgICAgICBleHQgPSAtMzU5Ljk5ICogZnJhYwogICAgICAgICAgICBjLmNyZWF0ZV9hcmMoc2VsZi5zKGN4IC0gcmFkKSwgc2VsZi5zKGN5IC0gcmFkKSwgc2VsZi5zKGN4ICsgcmFkKSwgc2VsZi5zKGN5ICsgcmFkKSwKICAgICAgICAgICAgICAgICAgICAgICAgIHN0YXJ0PTkwLCBleHRlbnQ9ZXh0LCBzdHlsZT0iYXJjIiwgb3V0bGluZT1tWyJjb2xvciJdLCB3aWR0aD1zZWxmLnMoMTQpKQogICAgICAgICAgICBzZWxmLm92YWwoY3gsIGN5IC0gcmFkLCA3LCA3LCBmaWxsPW1bImNvbG9yIl0sIG91dGxpbmU9IiIpCiAgICAgICAgICAgIGFuZyA9IG1hdGgucmFkaWFucyg5MCArIGV4dCkKICAgICAgICAgICAgaHgsIGh5ID0gY3ggKyByYWQgKiBtYXRoLmNvcyhhbmcpLCBjeSAtIHJhZCAqIG1hdGguc2luKGFuZykKICAgICAgICAgICAgc2VsZi5vdmFsKGh4LCBoeSwgMTEsIDExLCBmaWxsPUNPTE9SU1sid2hpdGUiXSwgb3V0bGluZT1tWyJjb2xvciJdLCB3aWR0aD1zZWxmLnMoNCkpCgogICAgICAgICMgbW9jaGkKICAgICAgICBib2IgPSBtYXRoLnNpbihub3cgKiA0KSAqIDIuNSBpZiBzZWxmLnJ1bm5pbmcgZWxzZSAwCiAgICAgICAgbXkgPSAxNTAgKyBib2IKICAgICAgICBzZWxmLm92YWwoY3gsIG15ICsgMzAsIDM0LCA1LCBmaWxsPUNPTE9SU1sidHJhY2siXSwgb3V0bGluZT0iIikKICAgICAgICBzZWxmLm92YWwoY3gsIG15LCA0MiwgMjcsIGZpbGw9bVsic29mdCJdLCBvdXRsaW5lPW1bImNvbG9yIl0sIHdpZHRoPXNlbGYucygyKSkKICAgICAgICBzZWxmLm92YWwoY3ggLSA3LCBteSAtIDMwLCA4LCA0LjUsIGZpbGw9Q09MT1JTWyJsZWFmIl0sIG91dGxpbmU9IiIpCiAgICAgICAgc2VsZi5vdmFsKGN4ICsgNywgbXkgLSAzMSwgOCwgNC41LCBmaWxsPUNPTE9SU1sibGVhZiJdLCBvdXRsaW5lPSIiKQogICAgICAgIGMuY3JlYXRlX2xpbmUoc2VsZi5zKGN4KSwgc2VsZi5zKG15IC0gMjYpLCBzZWxmLnMoY3gpLCBzZWxmLnMobXkgLSAzNCksIGZpbGw9Q09MT1JTWyJsZWFmIl0sCiAgICAgICAgICAgICAgICAgICAgICB3aWR0aD1zZWxmLnMoMi41KSwgY2Fwc3R5bGU9InJvdW5kIikKICAgICAgICBzZWxmLm92YWwoY3ggLSAyMiwgbXkgKyA2LCA3LCA0LCBmaWxsPUNPTE9SU1siYmx1c2giXSwgb3V0bGluZT0iIikKICAgICAgICBzZWxmLm92YWwoY3ggKyAyMiwgbXkgKyA2LCA3LCA0LCBmaWxsPUNPTE9SU1siYmx1c2giXSwgb3V0bGluZT0iIikKICAgICAgICBwYXJ0eSA9IG5vdyA8IHNlbGYucGFydHlfdW50aWwKICAgICAgICBpbmsgPSBDT0xPUlNbImluayJdCiAgICAgICAgZm9yIGV4IGluIChjeCAtIDEzLCBjeCArIDEzKToKICAgICAgICAgICAgaWYgc2VsZi5ydW5uaW5nIGFuZCBpbnQobm93ICogMTApICUgNDAgIT0gMDoKICAgICAgICAgICAgICAgIHNlbGYub3ZhbChleCwgbXkgLSAyLCAzLjUsIDQuNSwgZmlsbD1pbmssIG91dGxpbmU9IiIpCiAgICAgICAgICAgIGVsc2U6ICAjIG9qaXRvcyBjZXJyYWRvcyBeIF4gKGVuIHBhdXNhLCBvIHBhcnBhZGVhbmRvKQogICAgICAgICAgICAgICAgYy5jcmVhdGVfbGluZShzZWxmLnMoZXggLSA1KSwgc2VsZi5zKG15KSwgc2VsZi5zKGV4KSwgc2VsZi5zKG15IC0gNSksIHNlbGYucyhleCArIDUpLCBzZWxmLnMobXkpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICBmaWxsPWluaywgd2lkdGg9c2VsZi5zKDIpLCBjYXBzdHlsZT0icm91bmQiLCBqb2luc3R5bGU9InJvdW5kIikKICAgICAgICBjLmNyZWF0ZV9hcmMoc2VsZi5zKGN4IC0gNyksIHNlbGYucyhteSAtIDEpLCBzZWxmLnMoY3gpLCBzZWxmLnMobXkgKyA3KSwgc3RhcnQ9MTgwLCBleHRlbnQ9MTgwLAogICAgICAgICAgICAgICAgICAgICBzdHlsZT0iYXJjIiwgb3V0bGluZT1pbmssIHdpZHRoPXNlbGYucygxLjYpKQogICAgICAgIGMuY3JlYXRlX2FyYyhzZWxmLnMoY3gpLCBzZWxmLnMobXkgLSAxKSwgc2VsZi5zKGN4ICsgNyksIHNlbGYucyhteSArIDcpLCBzdGFydD0xODAsIGV4dGVudD0xODAsCiAgICAgICAgICAgICAgICAgICAgIHN0eWxlPSJhcmMiLCBvdXRsaW5lPWluaywgd2lkdGg9c2VsZi5zKDEuNikpCiAgICAgICAgaWYgcGFydHk6CiAgICAgICAgICAgIGZvciBpLCAoc3gsIHN5KSBpbiBlbnVtZXJhdGUoWyhjeCAtIDYyLCBteSAtIDIyKSwgKGN4ICsgNjAsIG15IC0gMTgpLCAoY3ggLSA1MiwgbXkgKyAyMCksIChjeCArIDU0LCBteSArIDIyKV0pOgogICAgICAgICAgICAgICAgdHdpbmtsZSA9IDEgKyAwLjM1ICogbWF0aC5zaW4obm93ICogOCArIGkpCiAgICAgICAgICAgICAgICBzZWxmLnRleHQoc3gsIHN5LCAi4pymIiwgZmlsbD1tWyJjb2xvciJdLCBmb250PXNlbGYuZm9udCgxNCAqIHR3aW5rbGUsICJib2xkIikpCgogICAgICAgICMgdGllbXBvCiAgICAgICAgc2VjcyA9IGludChtYXRoLmNlaWwoc2VsZi5yZW1haW5pbmcpKQogICAgICAgIGNsb2NrID0gZiJ7c2VjcyAvLyA2MDowMmR9OntzZWNzICUgNjA6MDJkfSIKICAgICAgICBzZWxmLnRleHQoY3gsIDIyOCwgY2xvY2ssIGZpbGw9aW5rLCBmb250PXNlbGYuZm9udCg0NiwgImJvbGQiKSkKICAgICAgICBzZWxmLnRleHQoY3gsIDI2OCwgIsKhdGVybWluYXN0ZSEg4pmhIiBpZiBwYXJ0eSBlbHNlIG1bIm1zZyJdLCBmaWxsPUNPTE9SU1sibXV0ZWQiXSwgZm9udD1zZWxmLmZvbnQoMTMpKQogICAgICAgIHNlbGYucm9vdC50aXRsZShmIntjbG9ja30gwrcge0FQUH0iIGlmIHNlbGYucnVubmluZyBlbHNlIEFQUCkKCiAgICAgICAgIyBwdW50aXRvcyBkZWwgY2ljbG8KICAgICAgICBuID0gc2VsZi5jZmdbInJvdW5kcyJdCiAgICAgICAgc3RhcnQgPSBjeCAtIChuIC0gMSkgKiAxMAogICAgICAgIGZvciBpIGluIHJhbmdlKG4pOgogICAgICAgICAgICBmaWxsZWQgPSBpIDwgc2VsZi5kb25lCiAgICAgICAgICAgIHNlbGYub3ZhbChzdGFydCArIGkgKiAyMCwgMzUyLCA1LCA1LCBmaWxsPU1PREVTWyJmb2N1cyJdWyJjb2xvciJdIGlmIGZpbGxlZCBlbHNlIENPTE9SU1sidHJhY2siXSwKICAgICAgICAgICAgICAgICAgICAgIG91dGxpbmU9IiIpCiAgICAgICAgc2VsZi50ZXh0KGN4LCAzNzQsIGYiaG95OiB7c2VsZi50b2RheX0gcG9tb2Rvcm97J3MnIGlmIHNlbGYudG9kYXkgIT0gMSBlbHNlICcnfSIsCiAgICAgICAgICAgICAgICAgIGZpbGw9Q09MT1JTWyJtdXRlZCJdLCBmb250PXNlbGYuZm9udCgxMikpCgogICAgICAgICMgYm90b25lcwogICAgICAgIGJ5ID0gNDI1CiAgICAgICAgc2VsZi5vdmFsKDc2LCBieSwgMjQsIDI0LCBmaWxsPUNPTE9SU1sid2hpdGUiXSwgb3V0bGluZT1DT0xPUlNbInRyYWNrIl0sIHdpZHRoPXNlbGYucygyKSwgdGFncz0iYnRuX3Jlc2V0IikKICAgICAgICBzZWxmLnRleHQoNzYsIGJ5LCAi4oa6IiwgZmlsbD1pbmssIGZvbnQ9c2VsZi5mb250KDIwLCAiYm9sZCIpLCB0YWdzPSJidG5fcmVzZXQiKQogICAgICAgIHNlbGYucGlsbCgxMTQsIGJ5IC0gMjYsIDIyNiwgYnkgKyAyNiwgMjYsIGZpbGw9bVsiY29sb3IiXSwgb3V0bGluZT0iIiwgdGFncz0iYnRuX21haW4iKQogICAgICAgIGxhYmVsID0gIuKdmuKdmiAgcGF1c2EiIGlmIHNlbGYucnVubmluZyBlbHNlICLilrYgIGVtcGV6YXIiCiAgICAgICAgc2VsZi50ZXh0KDE3MCwgYnksIGxhYmVsLCBmaWxsPUNPTE9SU1sid2hpdGUiXSwgZm9udD1zZWxmLmZvbnQoMTUsICJib2xkIiksIHRhZ3M9ImJ0bl9tYWluIikKICAgICAgICBzZWxmLm92YWwoMjY0LCBieSwgMjQsIDI0LCBmaWxsPUNPTE9SU1sid2hpdGUiXSwgb3V0bGluZT1DT0xPUlNbInRyYWNrIl0sIHdpZHRoPXNlbGYucygyKSwgdGFncz0iYnRuX3NraXAiKQogICAgICAgIHNlbGYudGV4dCgyNjQsIGJ5LCAiwrsiLCBmaWxsPWluaywgZm9udD1zZWxmLmZvbnQoMjIsICJib2xkIiksIHRhZ3M9ImJ0bl9za2lwIikKCiAgICAgICAgIyBwaWUKICAgICAgICBzZWxmLnRleHQoMTE1LCA0ODIsICLinKYgYWp1c3RlcyIgKyAoIiDilrQiIGlmIHNlbGYuc2V0dGluZ3Nfb3BlbiBlbHNlICIg4pa+IiksCiAgICAgICAgICAgICAgICAgIGZpbGw9aW5rIGlmIHNlbGYuc2V0dGluZ3Nfb3BlbiBlbHNlIENPTE9SU1sibXV0ZWQiXSwgZm9udD1zZWxmLmZvbnQoMTIpLCB0YWdzPSJsbmtfc2V0dGluZ3MiKQogICAgICAgIHBpbiA9ICLil4kgc2llbXByZSB2aXNpYmxlIiBpZiBzZWxmLmNmZ1sidG9wbW9zdCJdIGVsc2UgIuKXiyBzaWVtcHJlIHZpc2libGUiCiAgICAgICAgc2VsZi50ZXh0KDIzMiwgNDgyLCBwaW4sIGZpbGw9aW5rIGlmIHNlbGYuY2ZnWyJ0b3Btb3N0Il0gZWxzZSBDT0xPUlNbIm11dGVkIl0sIGZvbnQ9c2VsZi5mb250KDEyKSwKICAgICAgICAgICAgICAgICAgdGFncz0ibG5rX3BpbiIpCgoKZGVmIG1haW4oKToKICAgIGVuYWJsZV9jcmlzcF90ZXh0KCkKICAgIHJvb3QgPSB0ay5UaygpCiAgICBNb2NoaVBvbW9kb3JvKHJvb3QpCiAgICByb290Lm1haW5sb29wKCkKCgppZiBfX25hbWVfXyA9PSAiX19tYWluX18iOgogICAgbWFpbigpCg==",
-    "MochiPomodoro/LEEME.txt": "ICDinL8gIE1PQ0hJIFBPTU9ET1JPICDCtyAgdjEuMC4wICDinL8KICBUZW1wb3JpemFkb3IgUG9tb2Rvcm8gZGUgZXNjcml0b3JpbwogIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KCsK/UVXDiSBFUz8KICBVbiB0ZW1wb3JpemFkb3IgUG9tb2Rvcm86IHRyYWJhamFzIDI1IG1pbnV0b3MsIGRlc2NhbnNhcyA1LAogIHkgY2FkYSA0IHBvbW9kb3JvcyB0ZSB0b21hcyB1biBkZXNjYW5zbyBsYXJnbyBkZSAxNSBtaW51dG9zLgogIFRvZG9zIGxvcyB0aWVtcG9zIHNlIHB1ZWRlbiBjYW1iaWFyIGVuICJhanVzdGVzIi4KCgpRVcOJIENPTlRJRU5FIEVTVEUgLlpJUAogIE1vY2hpUG9tb2Rvcm8ucHl3IC4uLi4gZWwgcHJvZ3JhbWEgKHVuIHNvbG8gYXJjaGl2byBkZSB0ZXh0bywgcHVlZGVzIGxlZXJsbykKICBMRUVNRS50eHQgLi4uLi4uLi4uLi4uIGVzdGUgbWFudWFsCgoKUkVRVUlTSVRPOiBQWVRIT04gMy44IE8gTUFZT1IgKGdyYXRpcykKICBXaW5kb3dzOgogICAgMS4gRW50cmEgYSBodHRwczovL3d3dy5weXRob24ub3JnL2Rvd25sb2Fkcy8geSBkZXNjYXJnYSBQeXRob24uCiAgICAyLiBFbiBlbCBpbnN0YWxhZG9yIG1hcmNhIGxhIGNhc2lsbGEgIkFkZCBweXRob24uZXhlIHRvIFBBVEgiLgogICAgMy4gRGVqYSBtYXJjYWRhIGxhIG9wY2nDs24gInRjbC90ayBhbmQgSURMRSIgKHZpZW5lIG1hcmNhZGEgcG9yIGRlZmVjdG8pLgogIG1hY09TOgogICAgSW5zdGFsYSBQeXRob24gZGVzZGUgcHl0aG9uLm9yZyAoaW5jbHV5ZSB0a2ludGVyKS4KICBMaW51eDoKICAgIHN1ZG8gYXB0IGluc3RhbGwgcHl0aG9uMyBweXRob24zLXRrICAgKERlYmlhbi9VYnVudHUpCgoKQ8OTTU8gQUJSSVJMTwogIDEuIERlc2NvbXByaW1lIGVsIC56aXAgKGNsaWMgZGVyZWNobyA+ICJFeHRyYWVyIHRvZG8uLi4iKS4KICAyLiBFbnRyYSBhIGxhIGNhcnBldGEgTW9jaGlQb21vZG9yby4KICAzLiBXaW5kb3dzOiBkb2JsZSBjbGljIGVuIE1vY2hpUG9tb2Rvcm8ucHl3CiAgICAgbWFjT1MvTGludXg6IGFicmUgdW5hIHRlcm1pbmFsIGVuIGxhIGNhcnBldGEgeSBlc2NyaWJlCiAgICAgICAgICAgICAgICAgIHB5dGhvbjMgTW9jaGlQb21vZG9yby5weXcKCiAgwr9Eb2JsZSBjbGljIG5vIGhhY2UgbmFkYSBlbiBXaW5kb3dzPwogICAgQ2xpYyBkZXJlY2hvIGVuIGVsIGFyY2hpdm8gPiBBYnJpciBjb24gPiBQeXRob24uCiAgICBPIGFicmUgUG93ZXJTaGVsbCBlbiBsYSBjYXJwZXRhIHkgZXNjcmliZTogIHB5dGhvbiBNb2NoaVBvbW9kb3JvLnB5dwoKCkPDk01PIFNFIFVTQQogIMK3IFBlc3Rhw7FhcyBkZSBhcnJpYmE6IEVuZm9xdWUgLyBEZXNjYW5zbyAvIExhcmdvLgogIMK3IEJvdMOzbiByb3NhOiBlbXBlemFyIG8gcGF1c2FyLgogIMK3IOKGuiAgcmVpbmljaWEgZWwgdGllbXBvIGFjdHVhbC4KICDCtyDCuyAgc2FsdGEgYWwgc2lndWllbnRlIGJsb3F1ZS4KICDCtyBMb3MgcHVudGl0b3MgbXVlc3RyYW4gY3XDoW50b3MgcG9tb2Rvcm9zIGxsZXZhcyBlbiBlbCBjaWNsby4KICDCtyBBbCB0ZXJtaW5hciB1biBibG9xdWUgc3VlbmEgdW4gYXZpc28sIGxhIHZlbnRhbmEgYXBhcmVjZSBhbCBmcmVudGUKICAgIHkgcGFzYSBzb2xhIGFsIHNpZ3VpZW50ZSBibG9xdWUgKHTDuiBkZWNpZGVzIGN1w6FuZG8gZW1wZXphcmxvKS4KICDCtyAiYWp1c3RlcyI6IGNhbWJpYSBtaW51dG9zIGRlIGVuZm9xdWUsIGRlc2NhbnNvLCBkZXNjYW5zbyBsYXJnbwogICAgeSBjdcOhbnRvcyBwb21vZG9yb3MgaGF5IGFudGVzIGRlbCBkZXNjYW5zbyBsYXJnby4KICDCtyAic2llbXByZSB2aXNpYmxlIjogZGVqYSBsYSB2ZW50YW5hIGVuY2ltYSBkZSBsYXMgZGVtw6FzLgogIMK3IE1pZW50cmFzIGNvcnJlLCBlbCB0aWVtcG8gYXBhcmVjZSBlbiBsYSBiYXJyYSBkZSB0YXJlYXMuCgogIEF0YWpvcyBkZSB0ZWNsYWRvCiAgICBFc3BhY2lvIC4uLi4uLiBlbXBlemFyIC8gcGF1c2FyCiAgICBSIC4uLi4uLi4uLi4uLiByZWluaWNpYXIKICAgIFMgLi4uLi4uLi4uLi4uIHNhbHRhcgogICAgMSAvIDIgLyAzIC4uLi4gRW5mb3F1ZSAvIERlc2NhbnNvIC8gTGFyZ28KCgpTRUdVUklEQUQgWSBQUklWQUNJREFECiAgwrcgTm8gZXMgdW4gLmV4ZTogZXMgY8OzZGlnbyBQeXRob24gZW4gdGV4dG8gcGxhbm8uIMOBYnJlbG8gY29uIGVsIEJsb2MKICAgIGRlIG5vdGFzIHkgbGVlIHRvZG8gbG8gcXVlIGhhY2UsIHNvbiB1bmFzIDM4MCBsw61uZWFzLgogIMK3IE5vIHVzYSBpbnRlcm5ldC4gTm8gaW1wb3J0YSBuaW5nw7puIG3Ds2R1bG8gZGUgcmVkLgogIMK3IE5vIG5lY2VzaXRhIHBlcm1pc29zIGRlIGFkbWluaXN0cmFkb3Igbmkgc2UgaW5zdGFsYS4KICDCtyBObyB0b2NhIGVsIHJlZ2lzdHJvIGRlIFdpbmRvd3Mgbmkgc2UgZWplY3V0YSBhbCBpbmljaWFyIGVsIGVxdWlwby4KICDCtyBTb2xvIGVzY3JpYmUgdW4gYXJjaGl2bzogbW9jaGlfc2V0dGluZ3MuanNvbiAodHVzIG1pbnV0b3MpLCBlbiBlc3RhCiAgICBtaXNtYSBjYXJwZXRhLiBQdWVkZXMgYm9ycmFybG8gY3VhbmRvIHF1aWVyYXMuCiAgwrcgVmVyaWZpY2EgcXVlIHR1IGFyY2hpdm8gbm8gZnVlIG1vZGlmaWNhZG8gY29tcGFyYW5kbyBzdSBodWVsbGEKICAgIFNIQS0yNTYgY29uIGxhIHB1YmxpY2FkYSBlbiBsYSBww6FnaW5hIGRlIGRlc2NhcmdhOgogICAgICAgIFBvd2VyU2hlbGw6ICBHZXQtRmlsZUhhc2ggLlxNb2NoaVBvbW9kb3JvLnB5dyAtQWxnb3JpdGhtIFNIQTI1NgogICAgICAgIG1hY09TL0xpbnV4OiBzaGFzdW0gLWEgMjU2IE1vY2hpUG9tb2Rvcm8ucHl3CgoKREVTSU5TVEFMQVIKICBCb3JyYSBsYSBjYXJwZXRhIE1vY2hpUG9tb2Rvcm8uIExpc3RvLCBubyBxdWVkYSBuYWRhIG3DoXMuCgoKICBIZWNobyBjb24gY2FyacOxbyDimaEgIMK3ICDCoWEgY29uY2VudHJhcnNlIQo="
+    "MochiPomodoro/MochiPomodoro.pyw": "IiIiCk1vY2hpIFBvbW9kb3JvICAtICBkZXNrdG9wIFBvbW9kb3JvIHRpbWVyCj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CgpWZXJzaW9uIDEuMC4wCgpUaGlzIHByb2dyYW0gaXMgQSBTSU5HTEUgUHl0aG9uIEZJTEUgdGhhdCB5b3UgY2FuIHJlYWQgaW4gZnVsbC4KLSBJdCBvbmx5IHVzZXMgdGhlIFB5dGhvbiBzdGFuZGFyZCBsaWJyYXJ5ICh0a2ludGVyLCBqc29uLCB0aW1lLCBtYXRoKS4KLSBJdCBkb2VzIE5PVCBjb25uZWN0IHRvIHRoZSBpbnRlcm5ldCAobm8gc29ja2V0LCB1cmxsaWIsIGh0dHAgb3IgcmVxdWVzdHMpLgotIEl0IGRvZXMgTk9UIGFzayBmb3IgYWRtaW5pc3RyYXRvciBwZXJtaXNzaW9ucyBvciB0b3VjaCB0aGUgV2luZG93cyByZWdpc3RyeS4KLSBUaGUgb25seSBmaWxlIGl0IHdyaXRlcyBpcyAibW9jaGlfc2V0dGluZ3MuanNvbiIsIG5leHQgdG8gdGhpcwogIGZpbGUsIHRvIHJlbWVtYmVyIHlvdXIgbWludXRlcy4gWW91IGNhbiBkZWxldGUgaXQgd2hlbmV2ZXIgeW91IHdhbnQuCgpTaG9ydGN1dHM6ICBTcGFjZSA9IHN0YXJ0L3BhdXNlICAgUiA9IHJlc2V0ICAgUyA9IHNraXAKICAgICAgICAgICAgMSAvIDIgLyAzID0gRm9jdXMgLyBCcmVhayAvIExvbmcgYnJlYWsKIiIiCgppbXBvcnQganNvbgppbXBvcnQgbWF0aAppbXBvcnQgc3lzCmltcG9ydCB0aW1lCmltcG9ydCB0a2ludGVyIGFzIHRrCmZyb20gcGF0aGxpYiBpbXBvcnQgUGF0aAoKdHJ5OiAgIyBPbmx5IGV4aXN0cyBvbiBXaW5kb3dzOyB1c2VkIGZvciB0aGUgbGl0dGxlIGNoaW1lIGF0IHRoZSBlbmQuCiAgICBpbXBvcnQgd2luc291bmQKZXhjZXB0IEltcG9ydEVycm9yOgogICAgd2luc291bmQgPSBOb25lCgpBUFAgPSAiTW9jaGkgUG9tb2Rvcm8iClZFUlNJT04gPSAiMS4wLjAiClNFVFRJTkdTX0ZJTEUgPSBQYXRoKF9fZmlsZV9fKS5yZXNvbHZlKCkud2l0aF9uYW1lKCJtb2NoaV9zZXR0aW5ncy5qc29uIikKCkNPTE9SUyA9IHsKICAgICJiZyI6ICIjRkZGN0Y5IiwKICAgICJpbmsiOiAiIzRCM0E0NiIsCiAgICAibXV0ZWQiOiAiI0I0OUFBQSIsCiAgICAidHJhY2siOiAiI0Y3RTRFQiIsCiAgICAid2hpdGUiOiAiI0ZGRkZGRiIsCiAgICAiYmx1c2giOiAiI0ZGQjhDQiIsCiAgICAibGVhZiI6ICIjOENDQjlCIiwKfQpNT0RFUyA9IHsKICAgICJmb2N1cyI6IHsidGFiIjogIkZvY3VzIiwgImNvbG9yIjogIiNGRjhGQjEiLCAic29mdCI6ICIjRkZFNkVFIiwgIm1zZyI6ICJ0aW1lIHRvIGZvY3VzICDinL8ifSwKICAgICJzaG9ydCI6IHsidGFiIjogIkJyZWFrIiwgImNvbG9yIjogIiM2RkM3QjYiLCAic29mdCI6ICIjRERGNUYwIiwgIm1zZyI6ICJzdHJldGNoIGFuZCBkcmluayB3YXRlciJ9LAogICAgImxvbmciOiB7InRhYiI6ICJMb25nIiwgImNvbG9yIjogIiNBOThFRjAiLCAic29mdCI6ICIjRUNFNkZEIiwgIm1zZyI6ICJ5b3UgZWFybmVkIGl0ICDimaEifSwKfQpPUkRFUiA9IFsiZm9jdXMiLCAic2hvcnQiLCAibG9uZyJdCkRFRkFVTFRTID0geyJmb2N1cyI6IDI1LCAic2hvcnQiOiA1LCAibG9uZyI6IDE1LCAicm91bmRzIjogNCwgInRvcG1vc3QiOiBGYWxzZX0KTElNSVRTID0geyJmb2N1cyI6ICgxLCAxMjApLCAic2hvcnQiOiAoMSwgNjApLCAibG9uZyI6ICgxLCA5MCksICJyb3VuZHMiOiAoMiwgOCl9CkZPTlQgPSAiU2Vnb2UgVUkiIGlmIHN5cy5wbGF0Zm9ybSA9PSAid2luMzIiIGVsc2UgIkhlbHZldGljYSIKVywgSCA9IDM0MCwgNTAwCgoKZGVmIGVuYWJsZV9jcmlzcF90ZXh0KCk6CiAgICAiIiJPbiBXaW5kb3dzIHdpdGggc2NhbGVkIGRpc3BsYXlzLCBrZWVwcyB0aGUgdGV4dCBmcm9tIGxvb2tpbmcgYmx1cnJ5LiIiIgogICAgaWYgc3lzLnBsYXRmb3JtID09ICJ3aW4zMiI6CiAgICAgICAgdHJ5OgogICAgICAgICAgICBpbXBvcnQgY3R5cGVzCiAgICAgICAgICAgIGN0eXBlcy53aW5kbGwuc2hjb3JlLlNldFByb2Nlc3NEcGlBd2FyZW5lc3MoMSkKICAgICAgICBleGNlcHQgRXhjZXB0aW9uOgogICAgICAgICAgICBwYXNzCgoKY2xhc3MgTW9jaGlQb21vZG9ybzoKICAgIGRlZiBfX2luaXRfXyhzZWxmLCByb290KToKICAgICAgICBzZWxmLnJvb3QgPSByb290CiAgICAgICAgc2VsZi5zY2FsZSA9IG1heCgxLjAsIHJvb3Qud2luZm9fZnBpeGVscygiMWkiKSAvIDk2KQogICAgICAgIHNlbGYuY2ZnID0gc2VsZi5sb2FkX3NldHRpbmdzKCkKICAgICAgICBzZWxmLm1vZGUgPSAiZm9jdXMiCiAgICAgICAgc2VsZi5kb25lID0gMCAgICAgICAgICAjIHBvbW9kb3JvcyBpbiB0aGUgY3VycmVudCBjeWNsZQogICAgICAgIHNlbGYudG9kYXkgPSAwICAgICAgICAgIyBwb21vZG9yb3MgY29tcGxldGVkIHNpbmNlIHlvdSBvcGVuZWQgdGhlIGFwcAogICAgICAgIHNlbGYucnVubmluZyA9IEZhbHNlCiAgICAgICAgc2VsZi5yZW1haW5pbmcgPSBzZWxmLmNmZ1siZm9jdXMiXSAqIDYwLjAKICAgICAgICBzZWxmLmVuZF9hdCA9IDAuMAogICAgICAgIHNlbGYucGFydHlfdW50aWwgPSAwLjAKICAgICAgICBzZWxmLnNldHRpbmdzX29wZW4gPSBGYWxzZQoKICAgICAgICByb290LnRpdGxlKEFQUCkKICAgICAgICByb290LmNvbmZpZ3VyZShiZz1DT0xPUlNbImJnIl0pCiAgICAgICAgcm9vdC5yZXNpemFibGUoRmFsc2UsIEZhbHNlKQogICAgICAgIHJvb3QuYXR0cmlidXRlcygiLXRvcG1vc3QiLCBzZWxmLmNmZ1sidG9wbW9zdCJdKQogICAgICAgIHNlbGYuc2V0X2ljb24oKQoKICAgICAgICBzZWxmLmNhbnZhcyA9IHRrLkNhbnZhcyhyb290LCB3aWR0aD1zZWxmLnMoVyksIGhlaWdodD1zZWxmLnMoSCksIGJnPUNPTE9SU1siYmciXSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBoaWdobGlnaHR0aGlja25lc3M9MCwgYmQ9MCkKICAgICAgICBzZWxmLmNhbnZhcy5wYWNrKCkKICAgICAgICBzZWxmLnNldHRpbmdzID0gdGsuRnJhbWUocm9vdCwgYmc9Q09MT1JTWyJiZyJdKQogICAgICAgIHNlbGYuYnVpbGRfc2V0dGluZ3MoKQogICAgICAgIHNlbGYuYmluZF9ldmVudHMoKQogICAgICAgIHNlbGYudGljaygpCgogICAgIyAtLS0tLS0tLS0tIHV0aWxpdGllcyAtLS0tLS0tLS0tCiAgICBkZWYgcyhzZWxmLCB2KToKICAgICAgICByZXR1cm4gaW50KHJvdW5kKHYgKiBzZWxmLnNjYWxlKSkKCiAgICBkZWYgZm9udChzZWxmLCBweCwgd2VpZ2h0PSJub3JtYWwiKToKICAgICAgICByZXR1cm4gKEZPTlQsIC1zZWxmLnMocHgpLCB3ZWlnaHQpCgogICAgZGVmIHBpbGwoc2VsZiwgeDEsIHkxLCB4MiwgeTIsIHIsICoqa3cpOgogICAgICAgIHMgPSBzZWxmLnMKICAgICAgICB4MSwgeTEsIHgyLCB5MiwgciA9IHMoeDEpLCBzKHkxKSwgcyh4MiksIHMoeTIpLCBzKHIpCiAgICAgICAgcHRzID0gW3gxICsgciwgeTEsIHgyIC0gciwgeTEsIHgyLCB5MSwgeDIsIHkxICsgciwgeDIsIHkyIC0gciwgeDIsIHkyLAogICAgICAgICAgICAgICB4MiAtIHIsIHkyLCB4MSArIHIsIHkyLCB4MSwgeTIsIHgxLCB5MiAtIHIsIHgxLCB5MSArIHIsIHgxLCB5MV0KICAgICAgICByZXR1cm4gc2VsZi5jYW52YXMuY3JlYXRlX3BvbHlnb24ocHRzLCBzbW9vdGg9VHJ1ZSwgKiprdykKCiAgICBkZWYgb3ZhbChzZWxmLCBjeCwgY3ksIHJ4LCByeSwgKiprdyk6CiAgICAgICAgcyA9IHNlbGYucwogICAgICAgIHJldHVybiBzZWxmLmNhbnZhcy5jcmVhdGVfb3ZhbChzKGN4IC0gcngpLCBzKGN5IC0gcnkpLCBzKGN4ICsgcngpLCBzKGN5ICsgcnkpLCAqKmt3KQoKICAgIGRlZiB0ZXh0KHNlbGYsIHgsIHksIHR4dCwgKiprdyk6CiAgICAgICAgcmV0dXJuIHNlbGYuY2FudmFzLmNyZWF0ZV90ZXh0KHNlbGYucyh4KSwgc2VsZi5zKHkpLCB0ZXh0PXR4dCwgKiprdykKCiAgICBkZWYgc2V0X2ljb24oc2VsZik6CiAgICAgICAgc2l6ZSA9IDMyCiAgICAgICAgaW1nID0gdGsuUGhvdG9JbWFnZSh3aWR0aD1zaXplLCBoZWlnaHQ9c2l6ZSkKICAgICAgICBmb3IgeSBpbiByYW5nZShzaXplKToKICAgICAgICAgICAgcm93ID0gW10KICAgICAgICAgICAgZm9yIHggaW4gcmFuZ2Uoc2l6ZSk6CiAgICAgICAgICAgICAgICBkeCwgZHkgPSB4IC0gMTUuNSwgeSAtIDE3LjUKICAgICAgICAgICAgICAgIGlmIGR4ICogZHggLyAxOTYgKyBkeSAqIGR5IC8gMTQ0IDw9IDE6CiAgICAgICAgICAgICAgICAgICAgcm93LmFwcGVuZChNT0RFU1siZm9jdXMiXVsiY29sb3IiXSkKICAgICAgICAgICAgICAgIGVsaWYgYWJzKHggLSAxNikgPCA0IGFuZCAyIDw9IHkgPD0gNjoKICAgICAgICAgICAgICAgICAgICByb3cuYXBwZW5kKENPTE9SU1sibGVhZiJdKQogICAgICAgICAgICAgICAgZWxzZToKICAgICAgICAgICAgICAgICAgICByb3cuYXBwZW5kKENPTE9SU1siYmciXSkKICAgICAgICAgICAgaW1nLnB1dCgieyIgKyAiICIuam9pbihyb3cpICsgIn0iLCB0bz0oMCwgeSkpCiAgICAgICAgc2VsZi5pY29uID0gaW1nCiAgICAgICAgc2VsZi5yb290Lmljb25waG90byhUcnVlLCBpbWcpCgogICAgIyAtLS0tLS0tLS0tIHNldHRpbmdzIC0tLS0tLS0tLS0KICAgIGRlZiBsb2FkX3NldHRpbmdzKHNlbGYpOgogICAgICAgIGNmZyA9IGRpY3QoREVGQVVMVFMpCiAgICAgICAgdHJ5OgogICAgICAgICAgICBkYXRhID0ganNvbi5sb2FkcyhTRVRUSU5HU19GSUxFLnJlYWRfdGV4dChlbmNvZGluZz0idXRmLTgiKSkKICAgICAgICAgICAgZm9yIGssIChsbywgaGkpIGluIExJTUlUUy5pdGVtcygpOgogICAgICAgICAgICAgICAgaWYgaXNpbnN0YW5jZShkYXRhLmdldChrKSwgaW50KToKICAgICAgICAgICAgICAgICAgICBjZmdba10gPSBtaW4oaGksIG1heChsbywgZGF0YVtrXSkpCiAgICAgICAgICAgIGNmZ1sidG9wbW9zdCJdID0gYm9vbChkYXRhLmdldCgidG9wbW9zdCIsIEZhbHNlKSkKICAgICAgICBleGNlcHQgKE9TRXJyb3IsIFZhbHVlRXJyb3IpOgogICAgICAgICAgICBwYXNzCiAgICAgICAgcmV0dXJuIGNmZwoKICAgIGRlZiBzYXZlX3NldHRpbmdzKHNlbGYpOgogICAgICAgIHRyeToKICAgICAgICAgICAgU0VUVElOR1NfRklMRS53cml0ZV90ZXh0KGpzb24uZHVtcHMoc2VsZi5jZmcsIGluZGVudD0yKSwgZW5jb2Rpbmc9InV0Zi04IikKICAgICAgICBleGNlcHQgT1NFcnJvcjoKICAgICAgICAgICAgcGFzcyAgIyByZWFkLW9ubHkgZm9sZGVyOiBpdCBqdXN0IGRvZXNuJ3QgZ2V0IHNhdmVkCgogICAgZGVmIGJ1aWxkX3NldHRpbmdzKHNlbGYpOgogICAgICAgIHJvd3MgPSBbKCJGb2N1cyAobWluKSIsICJmb2N1cyIpLCAoIkJyZWFrIChtaW4pIiwgInNob3J0IiksCiAgICAgICAgICAgICAgICAoIkxvbmcgYnJlYWsgKG1pbikiLCAibG9uZyIpLCAoIlBvbW9kb3JvcyBwZXIgY3ljbGUiLCAicm91bmRzIildCiAgICAgICAgc2VsZi5zZXR0aW5nX3ZhcnMgPSB7fQogICAgICAgIGZvciBpLCAobGFiZWwsIGtleSkgaW4gZW51bWVyYXRlKHJvd3MpOgogICAgICAgICAgICB0ay5MYWJlbChzZWxmLnNldHRpbmdzLCB0ZXh0PWxhYmVsLCBiZz1DT0xPUlNbImJnIl0sIGZnPUNPTE9SU1siaW5rIl0sCiAgICAgICAgICAgICAgICAgICAgIGZvbnQ9c2VsZi5mb250KDEzKSkuZ3JpZChyb3c9aSwgY29sdW1uPTAsIHN0aWNreT0idyIsIHBhZHg9KHNlbGYucygyOCksIHNlbGYucygxMCkpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgcGFkeT1zZWxmLnMoNCkpCiAgICAgICAgICAgIHZhciA9IHRrLlN0cmluZ1Zhcih2YWx1ZT1zdHIoc2VsZi5jZmdba2V5XSkpCiAgICAgICAgICAgIHNlbGYuc2V0dGluZ192YXJzW2tleV0gPSB2YXIKICAgICAgICAgICAgZm9yIGNvbCwgKHN5bSwgc3RlcCkgaW4gZW51bWVyYXRlKFsoIuKIkiIsIC0xKSwgKE5vbmUsIDApLCAoIisiLCAxKV0sIHN0YXJ0PTEpOgogICAgICAgICAgICAgICAgaWYgc3ltIGlzIE5vbmU6CiAgICAgICAgICAgICAgICAgICAgdGsuTGFiZWwoc2VsZi5zZXR0aW5ncywgdGV4dHZhcmlhYmxlPXZhciwgd2lkdGg9MywgYmc9Q09MT1JTWyJiZyJdLCBmZz1DT0xPUlNbImluayJdLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZvbnQ9c2VsZi5mb250KDE0LCAiYm9sZCIpKS5ncmlkKHJvdz1pLCBjb2x1bW49Y29sKQogICAgICAgICAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgICAgICAgICBiID0gdGsuTGFiZWwoc2VsZi5zZXR0aW5ncywgdGV4dD1zeW0sIHdpZHRoPTIsIGJnPUNPTE9SU1sidHJhY2siXSwgZmc9Q09MT1JTWyJpbmsiXSwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICBmb250PXNlbGYuZm9udCgxNCwgImJvbGQiKSwgY3Vyc29yPSJoYW5kMiIpCiAgICAgICAgICAgICAgICBiLmdyaWQocm93PWksIGNvbHVtbj1jb2wsIHBhZHg9c2VsZi5zKDIpKQogICAgICAgICAgICAgICAgYi5iaW5kKCI8QnV0dG9uLTE+IiwgbGFtYmRhIGUsIGs9a2V5LCBkPXN0ZXA6IHNlbGYuY2hhbmdlX3NldHRpbmcoaywgZCkpCiAgICAgICAgdGsuTGFiZWwoc2VsZi5zZXR0aW5ncywgdGV4dD0iIiwgYmc9Q09MT1JTWyJiZyJdKS5ncmlkKHJvdz1sZW4ocm93cyksIGNvbHVtbj0wLCBwYWR5PXNlbGYucyg0KSkKCiAgICBkZWYgY2hhbmdlX3NldHRpbmcoc2VsZiwga2V5LCBkZWx0YSk6CiAgICAgICAgbG8sIGhpID0gTElNSVRTW2tleV0KICAgICAgICBzZWxmLmNmZ1trZXldID0gbWluKGhpLCBtYXgobG8sIHNlbGYuY2ZnW2tleV0gKyBkZWx0YSkpCiAgICAgICAgc2VsZi5zZXR0aW5nX3ZhcnNba2V5XS5zZXQoc3RyKHNlbGYuY2ZnW2tleV0pKQogICAgICAgIGlmIGtleSA9PSBzZWxmLm1vZGUgYW5kIG5vdCBzZWxmLnJ1bm5pbmc6CiAgICAgICAgICAgIHNlbGYucmVtYWluaW5nID0gc2VsZi5jZmdba2V5XSAqIDYwLjAKICAgICAgICBzZWxmLnNhdmVfc2V0dGluZ3MoKQogICAgICAgIHNlbGYucmVuZGVyKCkKCiAgICBkZWYgdG9nZ2xlX3NldHRpbmdzKHNlbGYpOgogICAgICAgIHNlbGYuc2V0dGluZ3Nfb3BlbiA9IG5vdCBzZWxmLnNldHRpbmdzX29wZW4KICAgICAgICBpZiBzZWxmLnNldHRpbmdzX29wZW46CiAgICAgICAgICAgIHNlbGYuc2V0dGluZ3MucGFjayhmaWxsPSJ4IikKICAgICAgICBlbHNlOgogICAgICAgICAgICBzZWxmLnNldHRpbmdzLnBhY2tfZm9yZ2V0KCkKICAgICAgICBzZWxmLnJlbmRlcigpCgogICAgZGVmIHRvZ2dsZV9waW4oc2VsZik6CiAgICAgICAgc2VsZi5jZmdbInRvcG1vc3QiXSA9IG5vdCBzZWxmLmNmZ1sidG9wbW9zdCJdCiAgICAgICAgc2VsZi5yb290LmF0dHJpYnV0ZXMoIi10b3Btb3N0Iiwgc2VsZi5jZmdbInRvcG1vc3QiXSkKICAgICAgICBzZWxmLnNhdmVfc2V0dGluZ3MoKQogICAgICAgIHNlbGYucmVuZGVyKCkKCiAgICAjIC0tLS0tLS0tLS0gdGltZXIgLS0tLS0tLS0tLQogICAgZGVmIHRvdGFsKHNlbGYpOgogICAgICAgIHJldHVybiBzZWxmLmNmZ1tzZWxmLm1vZGVdICogNjAuMAoKICAgIGRlZiB0b2dnbGUoc2VsZik6CiAgICAgICAgaWYgc2VsZi5ydW5uaW5nOgogICAgICAgICAgICBzZWxmLnJlbWFpbmluZyA9IG1heCgwLjAsIHNlbGYuZW5kX2F0IC0gdGltZS5tb25vdG9uaWMoKSkKICAgICAgICAgICAgc2VsZi5ydW5uaW5nID0gRmFsc2UKICAgICAgICBlbHNlOgogICAgICAgICAgICBzZWxmLmVuZF9hdCA9IHRpbWUubW9ub3RvbmljKCkgKyBzZWxmLnJlbWFpbmluZwogICAgICAgICAgICBzZWxmLnJ1bm5pbmcgPSBUcnVlCiAgICAgICAgc2VsZi5yZW5kZXIoKQoKICAgIGRlZiByZXNldChzZWxmKToKICAgICAgICBzZWxmLnJ1bm5pbmcgPSBGYWxzZQogICAgICAgIHNlbGYucmVtYWluaW5nID0gc2VsZi50b3RhbCgpCiAgICAgICAgc2VsZi5yZW5kZXIoKQoKICAgIGRlZiBzZXRfbW9kZShzZWxmLCBtb2RlKToKICAgICAgICBzZWxmLm1vZGUgPSBtb2RlCiAgICAgICAgc2VsZi5yZXNldCgpCgogICAgZGVmIG5leHRfbW9kZShzZWxmLCBjb21wbGV0ZWQpOgogICAgICAgIGlmIHNlbGYubW9kZSA9PSAiZm9jdXMiOgogICAgICAgICAgICBpZiBjb21wbGV0ZWQ6CiAgICAgICAgICAgICAgICBzZWxmLmRvbmUgKz0gMQogICAgICAgICAgICAgICAgc2VsZi50b2RheSArPSAxCiAgICAgICAgICAgIHJldHVybiAibG9uZyIgaWYgc2VsZi5kb25lID49IHNlbGYuY2ZnWyJyb3VuZHMiXSBlbHNlICJzaG9ydCIKICAgICAgICBpZiBzZWxmLm1vZGUgPT0gImxvbmciOgogICAgICAgICAgICBzZWxmLmRvbmUgPSAwCiAgICAgICAgcmV0dXJuICJmb2N1cyIKCiAgICBkZWYgc2tpcChzZWxmKToKICAgICAgICBzZWxmLnNldF9tb2RlKHNlbGYubmV4dF9tb2RlKGNvbXBsZXRlZD1GYWxzZSkpCgogICAgZGVmIGZpbmlzaChzZWxmKToKICAgICAgICBzZWxmLnJ1bm5pbmcgPSBGYWxzZQogICAgICAgIHNlbGYucGFydHlfdW50aWwgPSB0aW1lLm1vbm90b25pYygpICsgNQogICAgICAgIHNlbGYuc2V0X21vZGUoc2VsZi5uZXh0X21vZGUoY29tcGxldGVkPVRydWUpKQogICAgICAgIHNlbGYuYWxlcnQoKQoKICAgIGRlZiBhbGVydChzZWxmKToKICAgICAgICBpZiB3aW5zb3VuZDoKICAgICAgICAgICAgdHJ5OgogICAgICAgICAgICAgICAgd2luc291bmQuUGxheVNvdW5kKCJTeXN0ZW1Bc3RlcmlzayIsIHdpbnNvdW5kLlNORF9BTElBUyB8IHdpbnNvdW5kLlNORF9BU1lOQykKICAgICAgICAgICAgZXhjZXB0IFJ1bnRpbWVFcnJvcjoKICAgICAgICAgICAgICAgIHNlbGYucm9vdC5iZWxsKCkKICAgICAgICBlbHNlOgogICAgICAgICAgICBzZWxmLnJvb3QuYmVsbCgpCiAgICAgICAgc2VsZi5yb290LmRlaWNvbmlmeSgpCiAgICAgICAgc2VsZi5yb290LmxpZnQoKQogICAgICAgIHNlbGYucm9vdC5hdHRyaWJ1dGVzKCItdG9wbW9zdCIsIFRydWUpCiAgICAgICAgc2VsZi5yb290LmFmdGVyKDE1MDAsIGxhbWJkYTogc2VsZi5yb290LmF0dHJpYnV0ZXMoIi10b3Btb3N0Iiwgc2VsZi5jZmdbInRvcG1vc3QiXSkpCgogICAgZGVmIHRpY2soc2VsZik6CiAgICAgICAgaWYgc2VsZi5ydW5uaW5nOgogICAgICAgICAgICBzZWxmLnJlbWFpbmluZyA9IG1heCgwLjAsIHNlbGYuZW5kX2F0IC0gdGltZS5tb25vdG9uaWMoKSkKICAgICAgICAgICAgaWYgc2VsZi5yZW1haW5pbmcgPD0gMDoKICAgICAgICAgICAgICAgIHNlbGYuZmluaXNoKCkKICAgICAgICBzZWxmLnJlbmRlcigpCiAgICAgICAgc2VsZi5yb290LmFmdGVyKDEwMCBpZiBzZWxmLnJ1bm5pbmcgZWxzZSAyNTAsIHNlbGYudGljaykKCiAgICAjIC0tLS0tLS0tLS0gZHJhd2luZyAtLS0tLS0tLS0tCiAgICBkZWYgYmluZF9ldmVudHMoc2VsZik6CiAgICAgICAgYyA9IHNlbGYuY2FudmFzCiAgICAgICAgYWN0aW9ucyA9IHsKICAgICAgICAgICAgInRhYl9mb2N1cyI6IGxhbWJkYTogc2VsZi5zZXRfbW9kZSgiZm9jdXMiKSwKICAgICAgICAgICAgInRhYl9zaG9ydCI6IGxhbWJkYTogc2VsZi5zZXRfbW9kZSgic2hvcnQiKSwKICAgICAgICAgICAgInRhYl9sb25nIjogbGFtYmRhOiBzZWxmLnNldF9tb2RlKCJsb25nIiksCiAgICAgICAgICAgICJidG5fbWFpbiI6IHNlbGYudG9nZ2xlLAogICAgICAgICAgICAiYnRuX3Jlc2V0Ijogc2VsZi5yZXNldCwKICAgICAgICAgICAgImJ0bl9za2lwIjogc2VsZi5za2lwLAogICAgICAgICAgICAibG5rX3NldHRpbmdzIjogc2VsZi50b2dnbGVfc2V0dGluZ3MsCiAgICAgICAgICAgICJsbmtfcGluIjogc2VsZi50b2dnbGVfcGluLAogICAgICAgIH0KICAgICAgICBmb3IgdGFnLCBmbiBpbiBhY3Rpb25zLml0ZW1zKCk6CiAgICAgICAgICAgIGMudGFnX2JpbmQodGFnLCAiPEJ1dHRvbi0xPiIsIGxhbWJkYSBlLCBmPWZuOiBmKCkpCiAgICAgICAgICAgIGMudGFnX2JpbmQodGFnLCAiPEVudGVyPiIsIGxhbWJkYSBlOiBjLmNvbmZpZyhjdXJzb3I9ImhhbmQyIikpCiAgICAgICAgICAgIGMudGFnX2JpbmQodGFnLCAiPExlYXZlPiIsIGxhbWJkYSBlOiBjLmNvbmZpZyhjdXJzb3I9IiIpKQogICAgICAgIHIgPSBzZWxmLnJvb3QKICAgICAgICByLmJpbmQoIjxzcGFjZT4iLCBsYW1iZGEgZTogc2VsZi50b2dnbGUoKSkKICAgICAgICByLmJpbmQoIjxLZXlQcmVzcy1yPiIsIGxhbWJkYSBlOiBzZWxmLnJlc2V0KCkpCiAgICAgICAgci5iaW5kKCI8S2V5UHJlc3Mtcz4iLCBsYW1iZGEgZTogc2VsZi5za2lwKCkpCiAgICAgICAgZm9yIGksIG0gaW4gZW51bWVyYXRlKE9SREVSLCBzdGFydD0xKToKICAgICAgICAgICAgci5iaW5kKGYiPEtleVByZXNzLXtpfT4iLCBsYW1iZGEgZSwgbT1tOiBzZWxmLnNldF9tb2RlKG0pKQoKICAgIGRlZiByZW5kZXIoc2VsZik6CiAgICAgICAgYyA9IHNlbGYuY2FudmFzCiAgICAgICAgYy5kZWxldGUoImFsbCIpCiAgICAgICAgbSA9IE1PREVTW3NlbGYubW9kZV0KICAgICAgICBub3cgPSB0aW1lLm1vbm90b25pYygpCgogICAgICAgICMgdGFicwogICAgICAgIHggPSAxOAogICAgICAgIGZvciBrZXkgaW4gT1JERVI6CiAgICAgICAgICAgIGFjdGl2ZSA9IGtleSA9PSBzZWxmLm1vZGUKICAgICAgICAgICAgdGFnID0gZiJ0YWJfe2tleX0iCiAgICAgICAgICAgIHNlbGYucGlsbCh4LCAxOCwgeCArIDk2LCA1MCwgMTYsIGZpbGw9TU9ERVNba2V5XVsiY29sb3IiXSBpZiBhY3RpdmUgZWxzZSBDT0xPUlNbInRyYWNrIl0sCiAgICAgICAgICAgICAgICAgICAgICBvdXRsaW5lPSIiLCB0YWdzPXRhZykKICAgICAgICAgICAgc2VsZi50ZXh0KHggKyA0OCwgMzQsIE1PREVTW2tleV1bInRhYiJdLCBmaWxsPUNPTE9SU1sid2hpdGUiXSBpZiBhY3RpdmUgZWxzZSBDT0xPUlNbIm11dGVkIl0sCiAgICAgICAgICAgICAgICAgICAgICBmb250PXNlbGYuZm9udCgxMywgImJvbGQiKSwgdGFncz10YWcpCiAgICAgICAgICAgIHggKz0gMTA0CgogICAgICAgICMgcHJvZ3Jlc3MgcmluZwogICAgICAgIGN4LCBjeSwgcmFkID0gMTcwLCAyMDUsIDExOAogICAgICAgIGZyYWMgPSBzZWxmLnJlbWFpbmluZyAvIHNlbGYudG90YWwoKSBpZiBzZWxmLnRvdGFsKCkgZWxzZSAwCiAgICAgICAgc2VsZi5vdmFsKGN4LCBjeSwgcmFkLCByYWQsIG91dGxpbmU9Q09MT1JTWyJ0cmFjayJdLCB3aWR0aD1zZWxmLnMoMTQpKQogICAgICAgIGlmIGZyYWMgPiAwLjAwMToKICAgICAgICAgICAgZXh0ID0gLTM1OS45OSAqIGZyYWMKICAgICAgICAgICAgYy5jcmVhdGVfYXJjKHNlbGYucyhjeCAtIHJhZCksIHNlbGYucyhjeSAtIHJhZCksIHNlbGYucyhjeCArIHJhZCksIHNlbGYucyhjeSArIHJhZCksCiAgICAgICAgICAgICAgICAgICAgICAgICBzdGFydD05MCwgZXh0ZW50PWV4dCwgc3R5bGU9ImFyYyIsIG91dGxpbmU9bVsiY29sb3IiXSwgd2lkdGg9c2VsZi5zKDE0KSkKICAgICAgICAgICAgc2VsZi5vdmFsKGN4LCBjeSAtIHJhZCwgNywgNywgZmlsbD1tWyJjb2xvciJdLCBvdXRsaW5lPSIiKQogICAgICAgICAgICBhbmcgPSBtYXRoLnJhZGlhbnMoOTAgKyBleHQpCiAgICAgICAgICAgIGh4LCBoeSA9IGN4ICsgcmFkICogbWF0aC5jb3MoYW5nKSwgY3kgLSByYWQgKiBtYXRoLnNpbihhbmcpCiAgICAgICAgICAgIHNlbGYub3ZhbChoeCwgaHksIDExLCAxMSwgZmlsbD1DT0xPUlNbIndoaXRlIl0sIG91dGxpbmU9bVsiY29sb3IiXSwgd2lkdGg9c2VsZi5zKDQpKQoKICAgICAgICAjIG1vY2hpCiAgICAgICAgYm9iID0gbWF0aC5zaW4obm93ICogNCkgKiAyLjUgaWYgc2VsZi5ydW5uaW5nIGVsc2UgMAogICAgICAgIG15ID0gMTUwICsgYm9iCiAgICAgICAgc2VsZi5vdmFsKGN4LCBteSArIDMwLCAzNCwgNSwgZmlsbD1DT0xPUlNbInRyYWNrIl0sIG91dGxpbmU9IiIpCiAgICAgICAgc2VsZi5vdmFsKGN4LCBteSwgNDIsIDI3LCBmaWxsPW1bInNvZnQiXSwgb3V0bGluZT1tWyJjb2xvciJdLCB3aWR0aD1zZWxmLnMoMikpCiAgICAgICAgc2VsZi5vdmFsKGN4IC0gNywgbXkgLSAzMCwgOCwgNC41LCBmaWxsPUNPTE9SU1sibGVhZiJdLCBvdXRsaW5lPSIiKQogICAgICAgIHNlbGYub3ZhbChjeCArIDcsIG15IC0gMzEsIDgsIDQuNSwgZmlsbD1DT0xPUlNbImxlYWYiXSwgb3V0bGluZT0iIikKICAgICAgICBjLmNyZWF0ZV9saW5lKHNlbGYucyhjeCksIHNlbGYucyhteSAtIDI2KSwgc2VsZi5zKGN4KSwgc2VsZi5zKG15IC0gMzQpLCBmaWxsPUNPTE9SU1sibGVhZiJdLAogICAgICAgICAgICAgICAgICAgICAgd2lkdGg9c2VsZi5zKDIuNSksIGNhcHN0eWxlPSJyb3VuZCIpCiAgICAgICAgc2VsZi5vdmFsKGN4IC0gMjIsIG15ICsgNiwgNywgNCwgZmlsbD1DT0xPUlNbImJsdXNoIl0sIG91dGxpbmU9IiIpCiAgICAgICAgc2VsZi5vdmFsKGN4ICsgMjIsIG15ICsgNiwgNywgNCwgZmlsbD1DT0xPUlNbImJsdXNoIl0sIG91dGxpbmU9IiIpCiAgICAgICAgcGFydHkgPSBub3cgPCBzZWxmLnBhcnR5X3VudGlsCiAgICAgICAgaW5rID0gQ09MT1JTWyJpbmsiXQogICAgICAgIGZvciBleCBpbiAoY3ggLSAxMywgY3ggKyAxMyk6CiAgICAgICAgICAgIGlmIHNlbGYucnVubmluZyBhbmQgaW50KG5vdyAqIDEwKSAlIDQwICE9IDA6CiAgICAgICAgICAgICAgICBzZWxmLm92YWwoZXgsIG15IC0gMiwgMy41LCA0LjUsIGZpbGw9aW5rLCBvdXRsaW5lPSIiKQogICAgICAgICAgICBlbHNlOiAgIyBjbG9zZWQgZXllcyBeIF4gKHBhdXNlZCwgb3IgYmxpbmtpbmcpCiAgICAgICAgICAgICAgICBjLmNyZWF0ZV9saW5lKHNlbGYucyhleCAtIDUpLCBzZWxmLnMobXkpLCBzZWxmLnMoZXgpLCBzZWxmLnMobXkgLSA1KSwgc2VsZi5zKGV4ICsgNSksIHNlbGYucyhteSksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZpbGw9aW5rLCB3aWR0aD1zZWxmLnMoMiksIGNhcHN0eWxlPSJyb3VuZCIsIGpvaW5zdHlsZT0icm91bmQiKQogICAgICAgIGMuY3JlYXRlX2FyYyhzZWxmLnMoY3ggLSA3KSwgc2VsZi5zKG15IC0gMSksIHNlbGYucyhjeCksIHNlbGYucyhteSArIDcpLCBzdGFydD0xODAsIGV4dGVudD0xODAsCiAgICAgICAgICAgICAgICAgICAgIHN0eWxlPSJhcmMiLCBvdXRsaW5lPWluaywgd2lkdGg9c2VsZi5zKDEuNikpCiAgICAgICAgYy5jcmVhdGVfYXJjKHNlbGYucyhjeCksIHNlbGYucyhteSAtIDEpLCBzZWxmLnMoY3ggKyA3KSwgc2VsZi5zKG15ICsgNyksIHN0YXJ0PTE4MCwgZXh0ZW50PTE4MCwKICAgICAgICAgICAgICAgICAgICAgc3R5bGU9ImFyYyIsIG91dGxpbmU9aW5rLCB3aWR0aD1zZWxmLnMoMS42KSkKICAgICAgICBpZiBwYXJ0eToKICAgICAgICAgICAgZm9yIGksIChzeCwgc3kpIGluIGVudW1lcmF0ZShbKGN4IC0gNjIsIG15IC0gMjIpLCAoY3ggKyA2MCwgbXkgLSAxOCksIChjeCAtIDUyLCBteSArIDIwKSwgKGN4ICsgNTQsIG15ICsgMjIpXSk6CiAgICAgICAgICAgICAgICB0d2lua2xlID0gMSArIDAuMzUgKiBtYXRoLnNpbihub3cgKiA4ICsgaSkKICAgICAgICAgICAgICAgIHNlbGYudGV4dChzeCwgc3ksICLinKYiLCBmaWxsPW1bImNvbG9yIl0sIGZvbnQ9c2VsZi5mb250KDE0ICogdHdpbmtsZSwgImJvbGQiKSkKCiAgICAgICAgIyB0aW1lCiAgICAgICAgc2VjcyA9IGludChtYXRoLmNlaWwoc2VsZi5yZW1haW5pbmcpKQogICAgICAgIGNsb2NrID0gZiJ7c2VjcyAvLyA2MDowMmR9OntzZWNzICUgNjA6MDJkfSIKICAgICAgICBzZWxmLnRleHQoY3gsIDIyOCwgY2xvY2ssIGZpbGw9aW5rLCBmb250PXNlbGYuZm9udCg0NiwgImJvbGQiKSkKICAgICAgICBzZWxmLnRleHQoY3gsIDI2OCwgInlvdSBkaWQgaXQhIOKZoSIgaWYgcGFydHkgZWxzZSBtWyJtc2ciXSwgZmlsbD1DT0xPUlNbIm11dGVkIl0sIGZvbnQ9c2VsZi5mb250KDEzKSkKICAgICAgICBzZWxmLnJvb3QudGl0bGUoZiJ7Y2xvY2t9IMK3IHtBUFB9IiBpZiBzZWxmLnJ1bm5pbmcgZWxzZSBBUFApCgogICAgICAgICMgY3ljbGUgZG90cwogICAgICAgIG4gPSBzZWxmLmNmZ1sicm91bmRzIl0KICAgICAgICBzdGFydCA9IGN4IC0gKG4gLSAxKSAqIDEwCiAgICAgICAgZm9yIGkgaW4gcmFuZ2Uobik6CiAgICAgICAgICAgIGZpbGxlZCA9IGkgPCBzZWxmLmRvbmUKICAgICAgICAgICAgc2VsZi5vdmFsKHN0YXJ0ICsgaSAqIDIwLCAzNTIsIDUsIDUsIGZpbGw9TU9ERVNbImZvY3VzIl1bImNvbG9yIl0gaWYgZmlsbGVkIGVsc2UgQ09MT1JTWyJ0cmFjayJdLAogICAgICAgICAgICAgICAgICAgICAgb3V0bGluZT0iIikKICAgICAgICBzZWxmLnRleHQoY3gsIDM3NCwgZiJ0b2RheToge3NlbGYudG9kYXl9IHBvbW9kb3JveydzJyBpZiBzZWxmLnRvZGF5ICE9IDEgZWxzZSAnJ30iLAogICAgICAgICAgICAgICAgICBmaWxsPUNPTE9SU1sibXV0ZWQiXSwgZm9udD1zZWxmLmZvbnQoMTIpKQoKICAgICAgICAjIGJ1dHRvbnMKICAgICAgICBieSA9IDQyNQogICAgICAgIHNlbGYub3ZhbCg3NiwgYnksIDI0LCAyNCwgZmlsbD1DT0xPUlNbIndoaXRlIl0sIG91dGxpbmU9Q09MT1JTWyJ0cmFjayJdLCB3aWR0aD1zZWxmLnMoMiksIHRhZ3M9ImJ0bl9yZXNldCIpCiAgICAgICAgc2VsZi50ZXh0KDc2LCBieSwgIuKGuiIsIGZpbGw9aW5rLCBmb250PXNlbGYuZm9udCgyMCwgImJvbGQiKSwgdGFncz0iYnRuX3Jlc2V0IikKICAgICAgICBzZWxmLnBpbGwoMTE0LCBieSAtIDI2LCAyMjYsIGJ5ICsgMjYsIDI2LCBmaWxsPW1bImNvbG9yIl0sIG91dGxpbmU9IiIsIHRhZ3M9ImJ0bl9tYWluIikKICAgICAgICBsYWJlbCA9ICLinZrinZogIHBhdXNlIiBpZiBzZWxmLnJ1bm5pbmcgZWxzZSAi4pa2ICBzdGFydCIKICAgICAgICBzZWxmLnRleHQoMTcwLCBieSwgbGFiZWwsIGZpbGw9Q09MT1JTWyJ3aGl0ZSJdLCBmb250PXNlbGYuZm9udCgxNSwgImJvbGQiKSwgdGFncz0iYnRuX21haW4iKQogICAgICAgIHNlbGYub3ZhbCgyNjQsIGJ5LCAyNCwgMjQsIGZpbGw9Q09MT1JTWyJ3aGl0ZSJdLCBvdXRsaW5lPUNPTE9SU1sidHJhY2siXSwgd2lkdGg9c2VsZi5zKDIpLCB0YWdzPSJidG5fc2tpcCIpCiAgICAgICAgc2VsZi50ZXh0KDI2NCwgYnksICLCuyIsIGZpbGw9aW5rLCBmb250PXNlbGYuZm9udCgyMiwgImJvbGQiKSwgdGFncz0iYnRuX3NraXAiKQoKICAgICAgICAjIGZvb3RlcgogICAgICAgIHNlbGYudGV4dCgxMTUsIDQ4MiwgIuKcpiBzZXR0aW5ncyIgKyAoIiDilrQiIGlmIHNlbGYuc2V0dGluZ3Nfb3BlbiBlbHNlICIg4pa+IiksCiAgICAgICAgICAgICAgICAgIGZpbGw9aW5rIGlmIHNlbGYuc2V0dGluZ3Nfb3BlbiBlbHNlIENPTE9SU1sibXV0ZWQiXSwgZm9udD1zZWxmLmZvbnQoMTIpLCB0YWdzPSJsbmtfc2V0dGluZ3MiKQogICAgICAgIHBpbiA9ICLil4kgYWx3YXlzIG9uIHRvcCIgaWYgc2VsZi5jZmdbInRvcG1vc3QiXSBlbHNlICLil4sgYWx3YXlzIG9uIHRvcCIKICAgICAgICBzZWxmLnRleHQoMjMyLCA0ODIsIHBpbiwgZmlsbD1pbmsgaWYgc2VsZi5jZmdbInRvcG1vc3QiXSBlbHNlIENPTE9SU1sibXV0ZWQiXSwgZm9udD1zZWxmLmZvbnQoMTIpLAogICAgICAgICAgICAgICAgICB0YWdzPSJsbmtfcGluIikKCgpkZWYgbWFpbigpOgogICAgZW5hYmxlX2NyaXNwX3RleHQoKQogICAgcm9vdCA9IHRrLlRrKCkKICAgIE1vY2hpUG9tb2Rvcm8ocm9vdCkKICAgIHJvb3QubWFpbmxvb3AoKQoKCmlmIF9fbmFtZV9fID09ICJfX21haW5fXyI6CiAgICBtYWluKCkK",
+    "MochiPomodoro/README.txt": "ICDinL8gIE1PQ0hJIFBPTU9ET1JPICDCtyAgdjEuMC4wICDinL8KICBEZXNrdG9wIFBvbW9kb3JvIHRpbWVyCiAgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoKV0hBVCBJUyBJVD8KICBBIFBvbW9kb3JvIHRpbWVyOiB5b3Ugd29yayBmb3IgMjUgbWludXRlcywgcmVzdCBmb3IgNSwKICBhbmQgZXZlcnkgNCBwb21vZG9yb3MgeW91IHRha2UgYSBsb25nIDE1LW1pbnV0ZSBicmVhay4KICBBbGwgdGltZXMgY2FuIGJlIGNoYW5nZWQgaW4gInNldHRpbmdzIi4KCgpXSEFUJ1MgSU4gVEhJUyAuWklQCiAgTW9jaGlQb21vZG9yby5weXcgLi4uLiB0aGUgcHJvZ3JhbSAoYSBzaW5nbGUgdGV4dCBmaWxlLCB5b3UgY2FuIHJlYWQgaXQpCiAgUkVBRE1FLnR4dCAuLi4uLi4uLi4uLiB0aGlzIG1hbnVhbAoKClJFUVVJUkVNRU5UOiBQWVRIT04gMy44IE9SIE5FV0VSIChmcmVlKQogIFdpbmRvd3M6CiAgICAxLiBHbyB0byBodHRwczovL3d3dy5weXRob24ub3JnL2Rvd25sb2Fkcy8gYW5kIGRvd25sb2FkIFB5dGhvbi4KICAgIDIuIEluIHRoZSBpbnN0YWxsZXIsIGNoZWNrIHRoZSBib3ggIkFkZCBweXRob24uZXhlIHRvIFBBVEgiLgogICAgMy4gTGVhdmUgInRjbC90ayBhbmQgSURMRSIgY2hlY2tlZCAoaXQgaXMgY2hlY2tlZCBieSBkZWZhdWx0KS4KICBtYWNPUzoKICAgIEluc3RhbGwgUHl0aG9uIGZyb20gcHl0aG9uLm9yZyAoaXQgaW5jbHVkZXMgdGtpbnRlcikuCiAgTGludXg6CiAgICBzdWRvIGFwdCBpbnN0YWxsIHB5dGhvbjMgcHl0aG9uMy10ayAgIChEZWJpYW4vVWJ1bnR1KQoKCkhPVyBUTyBPUEVOIElUCiAgMS4gVW56aXAgdGhlIC56aXAgKHJpZ2h0LWNsaWNrID4gIkV4dHJhY3QgQWxsLi4uIikuCiAgMi4gT3BlbiB0aGUgTW9jaGlQb21vZG9ybyBmb2xkZXIuCiAgMy4gV2luZG93czogZG91YmxlLWNsaWNrIE1vY2hpUG9tb2Rvcm8ucHl3CiAgICAgbWFjT1MvTGludXg6IG9wZW4gYSB0ZXJtaW5hbCBpbiB0aGUgZm9sZGVyIGFuZCB0eXBlCiAgICAgICAgICAgICAgICAgIHB5dGhvbjMgTW9jaGlQb21vZG9yby5weXcKCiAgRG91YmxlLWNsaWNrIGRvZXMgbm90aGluZyBvbiBXaW5kb3dzPwogICAgUmlnaHQtY2xpY2sgdGhlIGZpbGUgPiBPcGVuIHdpdGggPiBQeXRob24uCiAgICBPciBvcGVuIFBvd2VyU2hlbGwgaW4gdGhlIGZvbGRlciBhbmQgdHlwZTogIHB5dGhvbiBNb2NoaVBvbW9kb3JvLnB5dwoKCkhPVyBUTyBVU0UgSVQKICDCtyBUYWJzIGF0IHRoZSB0b3A6IEZvY3VzIC8gQnJlYWsgLyBMb25nLgogIMK3IFBpbmsgYnV0dG9uOiBzdGFydCBvciBwYXVzZS4KICDCtyDihrogIHJlc2V0cyB0aGUgY3VycmVudCB0aW1lci4KICDCtyDCuyAgc2tpcHMgdG8gdGhlIG5leHQgYmxvY2suCiAgwrcgVGhlIGxpdHRsZSBkb3RzIHNob3cgaG93IG1hbnkgcG9tb2Rvcm9zIHlvdSd2ZSBkb25lIGluIHRoZSBjeWNsZS4KICDCtyBXaGVuIGEgYmxvY2sgZW5kcywgYSBjaGltZSBwbGF5cywgdGhlIHdpbmRvdyBjb21lcyB0byB0aGUgZnJvbnQKICAgIGFuZCBpdCBtb3ZlcyBvbiB0byB0aGUgbmV4dCBibG9jayBieSBpdHNlbGYgKHlvdSBkZWNpZGUgd2hlbiB0byBzdGFydCBpdCkuCiAgwrcgInNldHRpbmdzIjogY2hhbmdlIHRoZSBmb2N1cywgYnJlYWsgYW5kIGxvbmcgYnJlYWsgbWludXRlcywKICAgIGFuZCBob3cgbWFueSBwb21vZG9yb3MgY29tZSBiZWZvcmUgdGhlIGxvbmcgYnJlYWsuCiAgwrcgImFsd2F5cyBvbiB0b3AiOiBrZWVwcyB0aGUgd2luZG93IGFib3ZlIGFsbCBvdGhlcnMuCiAgwrcgV2hpbGUgcnVubmluZywgdGhlIHRpbWUgc2hvd3MgaW4gdGhlIHRhc2tiYXIuCgogIEtleWJvYXJkIHNob3J0Y3V0cwogICAgU3BhY2UgLi4uLi4uLi4gc3RhcnQgLyBwYXVzZQogICAgUiAuLi4uLi4uLi4uLi4gcmVzZXQKICAgIFMgLi4uLi4uLi4uLi4uIHNraXAKICAgIDEgLyAyIC8gMyAuLi4uIEZvY3VzIC8gQnJlYWsgLyBMb25nCgoKU0VDVVJJVFkgQU5EIFBSSVZBQ1kKICDCtyBJdCdzIG5vdCBhbiAuZXhlOiBpdCdzIHBsYWluLXRleHQgUHl0aG9uIGNvZGUuIE9wZW4gaXQgd2l0aCBOb3RlcGFkCiAgICBhbmQgcmVhZCBldmVyeXRoaW5nIGl0IGRvZXMsIGl0J3MgYWJvdXQgMzgwIGxpbmVzLgogIMK3IEl0IGRvZXNuJ3QgdXNlIHRoZSBpbnRlcm5ldC4gSXQgZG9lc24ndCBpbXBvcnQgYW55IG5ldHdvcmsgbW9kdWxlLgogIMK3IEl0IGRvZXNuJ3QgbmVlZCBhZG1pbmlzdHJhdG9yIHBlcm1pc3Npb25zIGFuZCBkb2Vzbid0IGluc3RhbGwgYW55dGhpbmcuCiAgwrcgSXQgZG9lc24ndCB0b3VjaCB0aGUgV2luZG93cyByZWdpc3RyeSBvciBydW4gYXQgc3RhcnR1cC4KICDCtyBJdCBvbmx5IHdyaXRlcyBvbmUgZmlsZTogbW9jaGlfc2V0dGluZ3MuanNvbiAoeW91ciBtaW51dGVzKSwgaW4gdGhpcwogICAgc2FtZSBmb2xkZXIuIFlvdSBjYW4gZGVsZXRlIGl0IHdoZW5ldmVyIHlvdSB3YW50LgogIMK3IENoZWNrIHRoYXQgeW91ciBmaWxlIHdhc24ndCBtb2RpZmllZCBieSBjb21wYXJpbmcgaXRzIFNIQS0yNTYKICAgIGZpbmdlcnByaW50IHdpdGggdGhlIG9uZSBwdWJsaXNoZWQgb24gdGhlIGRvd25sb2FkIHBhZ2U6CiAgICAgICAgUG93ZXJTaGVsbDogIEdldC1GaWxlSGFzaCAuXE1vY2hpUG9tb2Rvcm8ucHl3IC1BbGdvcml0aG0gU0hBMjU2CiAgICAgICAgbWFjT1MvTGludXg6IHNoYXN1bSAtYSAyNTYgTW9jaGlQb21vZG9yby5weXcKCgpVTklOU1RBTEwKICBEZWxldGUgdGhlIE1vY2hpUG9tb2Rvcm8gZm9sZGVyLiBEb25lLCBub3RoaW5nIGVsc2UgaXMgbGVmdCBiZWhpbmQuCgoKICBNYWRlIHdpdGggbG92ZSDimaEgIMK3ICB0aW1lIHRvIGZvY3VzIQo="
   };
-  const FIXED_DATE = new Date("2026-11-10T12:00:00");
+  const FIXED_DATE = new Date("2026-11-12T12:00:00");
   const btn = document.getElementById("dlBtn");
   const label = document.getElementById("dlLabel");
 
   const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
 
   btn.addEventListener("click", async () => {
-    if (typeof JSZip === "undefined") { label.textContent = "Revisa tu conexión e intenta de nuevo"; return; }
+    if (typeof JSZip === "undefined") { label.textContent = "Check your connection and try again"; return; }
     btn.disabled = true;
-    label.textContent = "Preparando tu mochi…";
+    label.textContent = "Getting your mochi ready…";
     try {
       const zip = new JSZip();
       for (const [path, b64] of Object.entries(FILES)) zip.file(path, b64, { base64: true, date: FIXED_DATE });
@@ -553,18 +553,18 @@
 
       document.getElementById("zipName").textContent = name;
       document.getElementById("zipHash").textContent =
-        (crypto.subtle ? hex(await crypto.subtle.digest("SHA-256", bytes)) : "abre la página por https para ver la huella");
+        (crypto.subtle ? hex(await crypto.subtle.digest("SHA-256", bytes)) : "open the page over https to see the fingerprint");
       document.getElementById("doneCard").classList.add("show");
-      label.textContent = "Descargar otra vez";
+      label.textContent = "Download again";
     } catch (err) {
       console.error(err);
-      label.textContent = "Ups, intenta de nuevo";
+      label.textContent = "Oops, try again";
     } finally {
       btn.disabled = false;
     }
   });
 
-  // Vista previa animada (solo decorativa)
+  // Animated preview (decorative only)
   const arc = document.getElementById("arc"), clock = document.getElementById("mockClock"), title = document.getElementById("mockTitle");
   const C = 741.4, TOTAL = 25 * 60;
   let left = TOTAL - 1;
@@ -573,13 +573,13 @@
   draw();
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { left = left > 0 ? left - 1 : TOTAL; draw(); }, 1000);
 
-  const EASE = [97, 95, 91, 95, 105, 108, 236, 54, 14, 72, 10, 5, 9, 101, 248, 178, 233, 197, 201, 221, 212, 210, 167, 165, 241, 181, 170, 133, 133, 155, 196, 34, 10038];
+  // Little message in the corner after 20 seconds on the page
   setTimeout(() => {
-    const t = Object.assign(document.createElement("div"), { className: "tip", textContent: String.fromCharCode(...EASE.map((v, i) => v ^ (i * 7 + 41) & 255)) });
+    const t = Object.assign(document.createElement("div"), { className: "tip", textContent: "Hi, are you overthinking it? ✿" });
     t.setAttribute("role", "status");
     document.body.appendChild(t);
     requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add("show")));
-  }, TOTAL * 40 / 3);
+  }, 20000);
 })();
 </script>
 </body>

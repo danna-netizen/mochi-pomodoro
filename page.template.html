@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mochi Pomodoro</title>
-<meta name="description" content="Temporizador Pomodoro de escritorio, kawaii y minimalista. Gratis, sin internet, código abierto.">
+<meta name="description" content="A cute, minimalist desktop Pomodoro timer. Free, offline, open source.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
@@ -217,9 +217,9 @@
       mochi pomodoro
     </a>
     <ul>
-      <li class="hide-sm"><a href="#features">qué es</a></li>
+      <li class="hide-sm"><a href="#features">what it is</a></li>
       <li><a href="#manual">manual</a></li>
-      <li><a href="#seguridad">seguridad</a></li>
+      <li><a href="#security">security</a></li>
       <li class="hide-sm"><a href="#faq">faq</a></li>
     </ul>
   </div>
@@ -228,32 +228,32 @@
 <header class="hero" id="top">
   <div class="wrap">
     <div>
-      <span class="chip"><i></i> v{{VERSION}} · gratis · sin anuncios</span>
-      <h1>Concéntrate <em>bonito</em>,<br>un pomodoro a la vez.</h1>
-      <p class="lead">Mochi Pomodoro es un temporizador de escritorio pequeñito y tierno: 25 minutos de enfoque, 5 de descanso, y un mochi que te acompaña. Sin cuentas, sin internet, sin distracciones.</p>
+      <span class="chip"><i></i> v{{VERSION}} · free · no ads</span>
+      <h1>Focus <em>sweetly</em>,<br>one pomodoro at a time.</h1>
+      <p class="lead">Mochi Pomodoro is a tiny, cute desktop timer: 25 minutes of focus, 5 of rest, and a mochi to keep you company. No accounts, no internet, no distractions.</p>
 
       <div class="dl">
         <button class="btn" id="dlBtn" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>
-          <span id="dlLabel">Descargar para escritorio</span>
+          <span id="dlLabel">Download for desktop</span>
         </button>
-        <div class="dl-meta"><b>.zip · {{SIZE_KB}} KB</b><br>Windows · macOS · Linux · requiere Python 3</div>
+        <div class="dl-meta"><b>.zip · {{SIZE_KB}} KB</b><br>Windows · macOS · Linux · requires Python 3</div>
       </div>
 
       <div class="done-card" id="doneCard" role="status" aria-live="polite">
-        <h3>✿ ¡Listo! Tu descarga empezó</h3>
-        <p>Huella SHA-256 de <span class="mono" id="zipName"></span> (generada en tu navegador):</p>
+        <h3>✿ Done! Your download has started</h3>
+        <p>SHA-256 fingerprint of <span class="mono" id="zipName"></span> (generated in your browser):</p>
         <code class="hash mono" id="zipHash">—</code>
-        <p>Sigue el <a href="#manual">manual</a> para abrirlo. ¿Quieres comprobar que es seguro? Mira <a href="#verificar">cómo verificarlo</a>.</p>
+        <p>Follow the <a href="#manual">manual</a> to open it. Want to check that it’s safe? See <a href="#verify">how to verify it</a>.</p>
       </div>
     </div>
 
-    <div class="mock" aria-label="Vista previa de la aplicación">
+    <div class="mock" aria-label="App preview">
       <span class="sparkle" style="top:70px;left:22px">✦</span>
       <span class="sparkle" style="top:120px;right:20px;animation-delay:.8s">✦</span>
       <div class="mock-bar"><i></i><i></i><i></i><span id="mockTitle">24:59 · Mochi Pomodoro</span></div>
       <div class="mock-body">
-        <div class="tabs"><span class="on">Enfoque</span><span>Descanso</span><span>Largo</span></div>
+        <div class="tabs"><span class="on">Focus</span><span>Break</span><span>Long</span></div>
         <svg class="ring" viewBox="0 0 300 290" aria-hidden="true">
           <circle cx="150" cy="140" r="118" fill="none" stroke="#F7E4EB" stroke-width="14"/>
           <circle id="arc" cx="150" cy="140" r="118" fill="none" stroke="#FF8FB1" stroke-width="14" stroke-linecap="round"
@@ -268,10 +268,10 @@
             <path d="M143 85 q3.5 5 7 0 q3.5 5 7 0" fill="none" stroke="#4B3A46" stroke-width="1.6" stroke-linecap="round"/>
           </g>
           <text id="mockClock" x="150" y="168" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="46" fill="#4B3A46">24:59</text>
-          <text x="150" y="200" text-anchor="middle" font-family="Nunito, sans-serif" font-size="13" fill="#B49AAA">a concentrarse ✿</text>
+          <text x="150" y="200" text-anchor="middle" font-family="Nunito, sans-serif" font-size="13" fill="#B49AAA">time to focus ✿</text>
           <g fill="#F7E4EB"><circle cx="120" cy="276" r="5" fill="#FF8FB1"/><circle cx="140" cy="276" r="5" fill="#FF8FB1"/><circle cx="160" cy="276" r="5"/><circle cx="180" cy="276" r="5"/></g>
         </svg>
-        <div class="mock-ctrl"><i>↺</i><b>❚❚ pausa</b><i>»</i></div>
+        <div class="mock-ctrl"><i>↺</i><b>❚❚ pause</b><i>»</i></div>
       </div>
     </div>
   </div>
@@ -279,113 +279,113 @@
 
 <section id="features">
   <div class="wrap">
-    <span class="eyebrow">qué es</span>
-    <h2 class="h2">Pequeño, tierno y sin ruido.</h2>
-    <p class="lead">La técnica Pomodoro divide tu trabajo en bloques de enfoque con descansos cortos. Mochi Pomodoro lo hace fácil y bonito, directo en tu escritorio.</p>
+    <span class="eyebrow">what it is</span>
+    <h2 class="h2">Small, cute and quiet.</h2>
+    <p class="lead">The Pomodoro technique splits your work into focus blocks with short breaks. Mochi Pomodoro makes it easy and pretty, right on your desktop.</p>
     <div class="grid">
-      <div class="card"><div class="ico p">◷</div><h3>Ciclos automáticos</h3><p>Enfoque → descanso → enfoque… y cada 4 pomodoros, un descanso largo.</p></div>
-      <div class="card"><div class="ico m">♪</div><h3>Aviso suave</h3><p>Un sonidito y la ventana aparece al frente cuando termina cada bloque.</p></div>
-      <div class="card"><div class="ico l">✦</div><h3>A tu medida</h3><p>Cambia los minutos y deja la ventana “siempre visible” si quieres.</p></div>
-      <div class="card"><div class="ico p">♡</div><h3>Privado de verdad</h3><p>Funciona 100% sin internet. Nada sale de tu computadora.</p></div>
+      <div class="card"><div class="ico p">◷</div><h3>Automatic cycles</h3><p>Focus → break → focus… and every 4 pomodoros, a long break.</p></div>
+      <div class="card"><div class="ico m">♪</div><h3>Gentle alert</h3><p>A soft chime, and the window pops to the front when each block ends.</p></div>
+      <div class="card"><div class="ico l">✦</div><h3>Made to fit you</h3><p>Change the minutes and keep the window “always on top” if you like.</p></div>
+      <div class="card"><div class="ico p">♡</div><h3>Truly private</h3><p>Works 100% offline. Nothing leaves your computer.</p></div>
     </div>
   </div>
 </section>
 
 <section id="manual">
   <div class="wrap">
-    <span class="eyebrow">manual de uso</span>
-    <h2 class="h2">De la descarga a tu primer pomodoro.</h2>
-    <p class="lead">Este mismo manual viene dentro del .zip como <code>LEEME.txt</code>.</p>
+    <span class="eyebrow">user manual</span>
+    <h2 class="h2">From download to your first pomodoro.</h2>
+    <p class="lead">This same manual comes inside the .zip as <code>README.txt</code>.</p>
 
     <div class="manual">
       <aside class="toc">
-        <b>contenido</b>
+        <b>contents</b>
         <ol>
-          <li><a href="#m1">Requisitos</a></li>
-          <li><a href="#m2">Instalar Python</a></li>
-          <li><a href="#m3">Abrir Mochi Pomodoro</a></li>
-          <li><a href="#m4">Cómo se usa</a></li>
-          <li><a href="#m5">Atajos de teclado</a></li>
-          <li><a href="#m6">Desinstalar</a></li>
+          <li><a href="#m1">Requirements</a></li>
+          <li><a href="#m2">Install Python</a></li>
+          <li><a href="#m3">Open Mochi Pomodoro</a></li>
+          <li><a href="#m4">How to use it</a></li>
+          <li><a href="#m5">Keyboard shortcuts</a></li>
+          <li><a href="#m6">Uninstall</a></li>
         </ol>
       </aside>
 
       <div class="doc">
         <article id="m1">
-          <h3><span class="n">1</span> Requisitos</h3>
+          <h3><span class="n">1</span> Requirements</h3>
           <ul>
-            <li>Windows 10/11, macOS o Linux.</li>
-            <li><b>Python 3.8 o mayor</b> (gratis). Mochi Pomodoro está escrito en Python, por eso no es un <code>.exe</code>.</li>
-            <li>Menos de 1 MB de espacio. No necesita internet para funcionar.</li>
+            <li>Windows 10/11, macOS or Linux.</li>
+            <li><b>Python 3.8 or newer</b> (free). Mochi Pomodoro is written in Python, which is why it isn’t an <code>.exe</code>.</li>
+            <li>Less than 1 MB of space. No internet needed to run.</li>
           </ul>
-          <p>El .zip contiene:</p>
+          <p>The .zip contains:</p>
           <table>
-            <tr><th>Archivo</th><th>Qué es</th></tr>
-            <tr><td><code>MochiPomodoro.pyw</code></td><td>El programa. Es un archivo de texto: puedes abrirlo con el Bloc de notas y leerlo.</td></tr>
-            <tr><td><code>LEEME.txt</code></td><td>Este manual.</td></tr>
+            <tr><th>File</th><th>What it is</th></tr>
+            <tr><td><code>MochiPomodoro.pyw</code></td><td>The program. It’s a text file: you can open it with Notepad and read it.</td></tr>
+            <tr><td><code>README.txt</code></td><td>This manual.</td></tr>
           </table>
         </article>
 
         <article id="m2">
-          <h3><span class="n">2</span> Instalar Python (solo la primera vez)</h3>
+          <h3><span class="n">2</span> Install Python (first time only)</h3>
           <div class="os">
-            <div><b>Windows</b>Descárgalo de <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a>. En el instalador marca <b>“Add python.exe to PATH”</b> y deja activado “tcl/tk and IDLE”.</div>
-            <div><b>macOS</b>Instálalo desde <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a> (ya incluye tkinter, la parte que dibuja la ventana).</div>
-            <div><b>Linux</b>En Debian/Ubuntu:<br><code>sudo apt install python3 python3-tk</code></div>
+            <div><b>Windows</b>Download it from <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a>. In the installer, check <b>“Add python.exe to PATH”</b> and leave “tcl/tk and IDLE” enabled.</div>
+            <div><b>macOS</b>Install it from <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">python.org</a> (it already includes tkinter, the part that draws the window).</div>
+            <div><b>Linux</b>On Debian/Ubuntu:<br><code>sudo apt install python3 python3-tk</code></div>
           </div>
-          <div class="note"><b>¿Ya tienes Python?</b> Abre una terminal y escribe <code>python --version</code>. Si ves 3.8 o mayor, te puedes saltar este paso.</div>
+          <div class="note"><b>Already have Python?</b> Open a terminal and type <code>python --version</code>. If you see 3.8 or newer, you can skip this step.</div>
         </article>
 
         <article id="m3">
-          <h3><span class="n">3</span> Abrir Mochi Pomodoro</h3>
+          <h3><span class="n">3</span> Open Mochi Pomodoro</h3>
           <ol>
-            <li>Pulsa <b>Descargar</b> arriba. Se guardará <code>MochiPomodoro-v{{VERSION}}.zip</code>.</li>
-            <li>Clic derecho sobre el .zip → <b>Extraer todo…</b></li>
-            <li>Entra a la carpeta <code>MochiPomodoro</code> y haz <b>doble clic</b> en <code>MochiPomodoro.pyw</code>.</li>
+            <li>Press <b>Download</b> above. It will save <code>MochiPomodoro-v{{VERSION}}.zip</code>.</li>
+            <li>Right-click the .zip → <b>Extract All…</b></li>
+            <li>Open the <code>MochiPomodoro</code> folder and <b>double-click</b> <code>MochiPomodoro.pyw</code>.</li>
           </ol>
-          <p>En macOS o Linux, abre una terminal en esa carpeta y escribe:</p>
+          <p>On macOS or Linux, open a terminal in that folder and type:</p>
           <pre>python3 MochiPomodoro.pyw</pre>
-          <div class="note"><b>¿Doble clic no hace nada?</b> Clic derecho → Abrir con → Python. O abre PowerShell en la carpeta y escribe <code>python MochiPomodoro.pyw</code>.</div>
+          <div class="note"><b>Double-click does nothing?</b> Right-click → Open with → Python. Or open PowerShell in the folder and type <code>python MochiPomodoro.pyw</code>.</div>
         </article>
 
         <article id="m4">
-          <h3><span class="n">4</span> Cómo se usa</h3>
+          <h3><span class="n">4</span> How to use it</h3>
           <ul>
-            <li><b>Pestañas</b> de arriba: Enfoque, Descanso y Largo.</li>
-            <li><b>Botón rosa</b>: empezar o pausar. El mochi abre los ojitos mientras trabaja ✿</li>
-            <li><b>↺</b> reinicia el bloque actual · <b>»</b> salta al siguiente.</li>
-            <li>Los <b>puntitos</b> muestran cuántos pomodoros llevas en el ciclo.</li>
-            <li>Al terminar un bloque suena un aviso, la ventana aparece al frente y pasa sola al siguiente bloque (tú decides cuándo empezarlo).</li>
-            <li><b>✦ ajustes</b>: minutos de enfoque, descanso, descanso largo y pomodoros por ciclo. Se recuerdan para la próxima vez.</li>
-            <li><b>◯ siempre visible</b>: deja la ventana encima de las demás.</li>
+            <li><b>Tabs</b> at the top: Focus, Break and Long.</li>
+            <li><b>Pink button</b>: start or pause. The mochi opens its little eyes while it works ✿</li>
+            <li><b>↺</b> resets the current block · <b>»</b> skips to the next one.</li>
+            <li>The <b>little dots</b> show how many pomodoros you’ve done in the cycle.</li>
+            <li>When a block ends, a chime plays, the window comes to the front and it moves on to the next block by itself (you decide when to start it).</li>
+            <li><b>✦ settings</b>: focus, break and long break minutes, and pomodoros per cycle. They’re remembered for next time.</li>
+            <li><b>◯ always on top</b>: keeps the window above all others.</li>
           </ul>
         </article>
 
         <article id="m5">
-          <h3><span class="n">5</span> Atajos de teclado</h3>
+          <h3><span class="n">5</span> Keyboard shortcuts</h3>
           <table>
-            <tr><th>Tecla</th><th>Acción</th></tr>
-            <tr><td><kbd>Espacio</kbd></td><td>Empezar / pausar</td></tr>
-            <tr><td><kbd>R</kbd></td><td>Reiniciar el bloque</td></tr>
-            <tr><td><kbd>S</kbd></td><td>Saltar al siguiente bloque</td></tr>
-            <tr><td><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td><td>Enfoque · Descanso · Descanso largo</td></tr>
+            <tr><th>Key</th><th>Action</th></tr>
+            <tr><td><kbd>Space</kbd></td><td>Start / pause</td></tr>
+            <tr><td><kbd>R</kbd></td><td>Reset the block</td></tr>
+            <tr><td><kbd>S</kbd></td><td>Skip to the next block</td></tr>
+            <tr><td><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td><td>Focus · Break · Long break</td></tr>
           </table>
         </article>
 
         <article id="m6">
-          <h3><span class="n">6</span> Desinstalar</h3>
-          <p>Borra la carpeta <code>MochiPomodoro</code>. Ya está: no instala nada en el sistema, así que no queda ningún rastro.</p>
+          <h3><span class="n">6</span> Uninstall</h3>
+          <p>Delete the <code>MochiPomodoro</code> folder. That’s it: it doesn’t install anything on your system, so no trace is left.</p>
         </article>
       </div>
     </div>
   </div>
 </section>
 
-<section class="sec" id="seguridad">
+<section class="sec" id="security">
   <div class="wrap">
-    <span class="eyebrow">seguridad</span>
-    <h2 class="h2">¿Por qué esta descarga no es malware?</h2>
-    <p class="lead">Porque no tienes que creernos: todo lo que hace Mochi Pomodoro está a la vista. Es un solo archivo de texto de {{LINES}} líneas que puedes leer antes de abrirlo. Estos son nuestros sellos de transparencia, y cada uno lo puedes comprobar tú.</p>
+    <span class="eyebrow">security</span>
+    <h2 class="h2">Why isn’t this download malware?</h2>
+    <p class="lead">Because you don’t have to take our word for it: everything Mochi Pomodoro does is out in the open. It’s a single {{LINES}}-line text file you can read before opening it. These are our transparency seals, and you can check each one yourself.</p>
 
     <div class="seals">
       {{SEALS}}
@@ -393,55 +393,55 @@
 
     <div class="split">
       <div class="card">
-        <h3>✓ Lo que hace</h3>
+        <h3>✓ What it does</h3>
         <ul class="checks">
-          <li>Abre una ventana con un temporizador.</li>
-          <li>Reproduce el sonido de aviso del sistema al terminar un bloque.</li>
-          <li>Guarda tus minutos en <code>mochi_settings.json</code>, dentro de su propia carpeta.</li>
-          <li>Usa solo la librería estándar de Python: <code>tkinter</code>, <code>json</code>, <code>math</code>, <code>time</code>, <code>pathlib</code>, <code>sys</code>, <code>winsound</code> (sonido) y <code>ctypes</code> (solo para que el texto se vea nítido en pantallas escaladas).</li>
+          <li>Opens a window with a timer.</li>
+          <li>Plays the system alert sound when a block ends.</li>
+          <li>Saves your minutes in <code>mochi_settings.json</code>, inside its own folder.</li>
+          <li>Uses only the Python standard library: <code>tkinter</code>, <code>json</code>, <code>math</code>, <code>time</code>, <code>pathlib</code>, <code>sys</code>, <code>winsound</code> (sound) and <code>ctypes</code> (only to keep text sharp on scaled displays).</li>
         </ul>
       </div>
       <div class="card">
-        <h3>✕ Lo que NO hace</h3>
+        <h3>✕ What it does NOT do</h3>
         <ul class="checks no">
-          <li>No se conecta a internet: no importa <code>socket</code>, <code>urllib</code>, <code>http</code> ni <code>requests</code>.</li>
-          <li>No pide permisos de administrador ni se instala.</li>
-          <li>No toca el registro de Windows ni se inicia solo con tu computadora.</li>
-          <li>No lee tus archivos, ni tu teclado fuera de su ventana, ni tu portapapeles.</li>
-          <li>No trae <code>.exe</code>, <code>.bat</code>, macros ni archivos ocultos.</li>
+          <li>It doesn’t connect to the internet: it doesn’t import <code>socket</code>, <code>urllib</code>, <code>http</code> or <code>requests</code>.</li>
+          <li>It doesn’t ask for administrator permissions or install itself.</li>
+          <li>It doesn’t touch the Windows registry or start with your computer.</li>
+          <li>It doesn’t read your files, your keyboard outside its window, or your clipboard.</li>
+          <li>It doesn’t include any <code>.exe</code>, <code>.bat</code>, macros or hidden files.</li>
         </ul>
       </div>
     </div>
 
-    <div class="report" id="verificar">
-      <header><h3>Reporte de integridad · v{{VERSION}}</h3><span>Huellas SHA-256 publicadas {{DATE}}</span></header>
+    <div class="report" id="verify">
+      <header><h3>Integrity report · v{{VERSION}}</h3><span>SHA-256 fingerprints published {{DATE}}</span></header>
       <div class="rows">
         <dl>
           <div class="kv"><dt>MochiPomodoro.pyw</dt><dd class="mono">{{SHA_PY}}</dd></div>
-          <div class="kv"><dt>LEEME.txt</dt><dd class="mono">{{SHA_TXT}}</dd></div>
-          <div class="kv"><dt>Tamaño del programa</dt><dd>{{SIZE_PY}} bytes · {{LINES}} líneas</dd></div>
-          <div class="kv"><dt>Conexiones de red</dt><dd>Ninguna</dd></div>
-          <div class="kv"><dt>Archivos que escribe</dt><dd><code>mochi_settings.json</code> (en su propia carpeta)</dd></div>
-          <div class="kv"><dt>Permisos que pide</dt><dd>Ninguno</dd></div>
+          <div class="kv"><dt>README.txt</dt><dd class="mono">{{SHA_TXT}}</dd></div>
+          <div class="kv"><dt>Program size</dt><dd>{{SIZE_PY}} bytes · {{LINES}} lines</dd></div>
+          <div class="kv"><dt>Network connections</dt><dd>None</dd></div>
+          <div class="kv"><dt>Files it writes</dt><dd><code>mochi_settings.json</code> (in its own folder)</dd></div>
+          <div class="kv"><dt>Permissions it asks for</dt><dd>None</dd></div>
         </dl>
       </div>
     </div>
 
     <div class="split">
       <div class="card">
-        <h3>Verifícalo tú en 3 pasos</h3>
+        <h3>Verify it yourself in 3 steps</h3>
         <ol class="steps">
-          <li><b>Compara la huella.</b> Si un solo carácter del archivo cambiara, la huella sería totalmente distinta.
+          <li><b>Compare the fingerprint.</b> If a single character of the file changed, the fingerprint would be completely different.
             <pre>Get-FileHash .\MochiPomodoro.pyw -Algorithm SHA256</pre>
             <span class="dl-meta">macOS/Linux: <code>shasum -a 256 MochiPomodoro.pyw</code></span></li>
-          <li><b>Escanéalo.</b> Sube el .zip a <a href="https://www.virustotal.com/gui/home/upload" rel="noopener" target="_blank">VirusTotal</a> (lo revisan más de 60 antivirus) o haz clic derecho → “Examinar con Microsoft Defender”.</li>
-          <li><b>Léelo.</b> Ábrelo con el Bloc de notas. Está comentado en español.</li>
+          <li><b>Scan it.</b> Upload the .zip to <a href="https://www.virustotal.com/gui/home/upload" rel="noopener" target="_blank">VirusTotal</a> (over 60 antivirus engines check it) or right-click → “Scan with Microsoft Defender”.</li>
+          <li><b>Read it.</b> Open it with Notepad. It’s commented in English.</li>
         </ol>
       </div>
       <div class="card">
-        <h3>Sobre los avisos de Windows</h3>
-        <p>Como no hay <code>.exe</code>, Windows SmartScreen normalmente no muestra la pantalla azul de “Windows protegió su PC”. Si tu navegador pregunta si quieres conservar el .zip, es un aviso genérico para cualquier descarga de un sitio pequeño, no una detección.</p>
-        <p style="margin-top:10px">Regla de oro para cualquier descarga, incluida esta: bájala solo desde esta página oficial y desconfía de copias en otros sitios. Si la huella no coincide, no la abras.</p>
+        <h3>About Windows warnings</h3>
+        <p>Since there’s no <code>.exe</code>, Windows SmartScreen usually won’t show the blue “Windows protected your PC” screen. If your browser asks whether you want to keep the .zip, that’s a generic warning for any download from a small site, not a detection.</p>
+        <p style="margin-top:10px">Golden rule for any download, this one included: only get it from this official page and be wary of copies on other sites. If the fingerprint doesn’t match, don’t open it.</p>
       </div>
     </div>
   </div>
@@ -449,28 +449,28 @@
 
 <section id="faq">
   <div class="wrap">
-    <span class="eyebrow">preguntas</span>
-    <h2 class="h2">Preguntas frecuentes</h2>
-    <details><summary>¿Es gratis?</summary><p>Sí, totalmente. Sin anuncios, sin cuentas y sin versiones de pago.</p></details>
-    <details><summary>¿Por qué necesito Python?</summary><p>Porque así el programa es un archivo de texto que puedes leer, en lugar de un .exe cerrado. Es la forma más transparente de entregarlo.</p></details>
-    <details><summary>¿Funciona sin internet?</summary><p>Sí. Una vez descargado, nunca se conecta a nada.</p></details>
-    <details><summary>¿Dónde guarda mis ajustes?</summary><p>En <code>mochi_settings.json</code>, en la misma carpeta del programa. Si lo borras, vuelve a los valores de fábrica (25 / 5 / 15 minutos).</p></details>
-    <details><summary>La huella del .zip es distinta a la de otra persona, ¿pasa algo?</summary><p>Compara las huellas de los archivos de dentro (<code>MochiPomodoro.pyw</code> y <code>LEEME.txt</code>) con el reporte de integridad: esas son las que importan y siempre deben coincidir.</p></details>
+    <span class="eyebrow">questions</span>
+    <h2 class="h2">Frequently asked questions</h2>
+    <details><summary>Is it free?</summary><p>Yes, completely. No ads, no accounts and no paid versions.</p></details>
+    <details><summary>Why do I need Python?</summary><p>Because that way the program is a text file you can read, instead of a closed .exe. It’s the most transparent way to deliver it.</p></details>
+    <details><summary>Does it work offline?</summary><p>Yes. Once downloaded, it never connects to anything.</p></details>
+    <details><summary>Where are my settings saved?</summary><p>In <code>mochi_settings.json</code>, in the same folder as the program. If you delete it, it goes back to the defaults (25 / 5 / 15 minutes).</p></details>
+    <details><summary>My .zip fingerprint is different from someone else’s, is that a problem?</summary><p>Compare the fingerprints of the files inside (<code>MochiPomodoro.pyw</code> and <code>README.txt</code>) with the integrity report: those are the ones that matter and they should always match.</p></details>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">mochi pomodoro v{{VERSION}} · hecho con cariño <span class="heart">♡</span> · ¡a concentrarse!</div>
+  <div class="wrap">mochi pomodoro v{{VERSION}} · made with love <span class="heart">♡</span> · time to focus!</div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 (() => {
-  // El .zip no existe en el servidor: se arma aquí, en memoria, solo al pulsar el botón.
+  // The .zip does not exist on the server: it is built here, in memory, only when the button is pressed.
   const VERSION = "{{VERSION}}";
   const FILES = {
     "MochiPomodoro/MochiPomodoro.pyw": "{{PY_B64}}",
-    "MochiPomodoro/LEEME.txt": "{{TXT_B64}}"
+    "MochiPomodoro/README.txt": "{{TXT_B64}}"
   };
   const FIXED_DATE = new Date("{{DATE_ISO}}T12:00:00");
   const btn = document.getElementById("dlBtn");
@@ -479,9 +479,9 @@
   const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
 
   btn.addEventListener("click", async () => {
-    if (typeof JSZip === "undefined") { label.textContent = "Revisa tu conexión e intenta de nuevo"; return; }
+    if (typeof JSZip === "undefined") { label.textContent = "Check your connection and try again"; return; }
     btn.disabled = true;
-    label.textContent = "Preparando tu mochi…";
+    label.textContent = "Getting your mochi ready…";
     try {
       const zip = new JSZip();
       for (const [path, b64] of Object.entries(FILES)) zip.file(path, b64, { base64: true, date: FIXED_DATE });
@@ -494,18 +494,18 @@
 
       document.getElementById("zipName").textContent = name;
       document.getElementById("zipHash").textContent =
-        (crypto.subtle ? hex(await crypto.subtle.digest("SHA-256", bytes)) : "abre la página por https para ver la huella");
+        (crypto.subtle ? hex(await crypto.subtle.digest("SHA-256", bytes)) : "open the page over https to see the fingerprint");
       document.getElementById("doneCard").classList.add("show");
-      label.textContent = "Descargar otra vez";
+      label.textContent = "Download again";
     } catch (err) {
       console.error(err);
-      label.textContent = "Ups, intenta de nuevo";
+      label.textContent = "Oops, try again";
     } finally {
       btn.disabled = false;
     }
   });
 
-  // Vista previa animada (solo decorativa)
+  // Animated preview (decorative only)
   const arc = document.getElementById("arc"), clock = document.getElementById("mockClock"), title = document.getElementById("mockTitle");
   const C = 741.4, TOTAL = 25 * 60;
   let left = TOTAL - 1;
@@ -514,13 +514,13 @@
   draw();
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { left = left > 0 ? left - 1 : TOTAL; draw(); }, 1000);
 
-  const EASE = [97, 95, 91, 95, 105, 108, 236, 54, 14, 72, 10, 5, 9, 101, 248, 178, 233, 197, 201, 221, 212, 210, 167, 165, 241, 181, 170, 133, 133, 155, 196, 34, 10038];
+  // Little message in the corner after 20 seconds on the page
   setTimeout(() => {
-    const t = Object.assign(document.createElement("div"), { className: "tip", textContent: String.fromCharCode(...EASE.map((v, i) => v ^ (i * 7 + 41) & 255)) });
+    const t = Object.assign(document.createElement("div"), { className: "tip", textContent: "Hi, are you overthinking it? ✿" });
     t.setAttribute("role", "status");
     document.body.appendChild(t);
     requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add("show")));
-  }, TOTAL * 40 / 3);
+  }, 20000);
 })();
 </script>
 </body>
