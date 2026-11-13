@@ -1,9 +1,9 @@
 """
-Builds index.html from page.template.html and the files in app/.
+Builds index.html from page.template.html and the files in app/v1 and app/v2.
 
 Usage:  python build.py
 
-Run it again every time you change MochiPomodoro.pyw or README.txt:
+Run it again every time you change anything in app/ or docs/WHATS-NEW-v2.pdf:
 it embeds the files in the page (as base64) and recalculates the SHA-256
 fingerprints shown in the security section.
 """
@@ -11,22 +11,29 @@ import base64
 import datetime
 import hashlib
 import io
+import json
 import re
 import zipfile
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-APP = HERE / "app"
-PY = APP / "MochiPomodoro.pyw"
-TXT = APP / "README.txt"
+PDF = HERE / "docs" / "WHATS-NEW-v2.pdf"
+
+# key -> (folder, files that go in the .zip, date of the fixed .zip timestamps)
+RELEASES = {
+    "v1": (HERE / "app" / "v1", ["MochiPomodoro.pyw", "README.txt"], "2026-11-13"),
+    "v2": (HERE / "app" / "v2", ["MochiPomodoro.pyw", "README.txt", PDF], None),
+}
 
 SEALS = [
-    ("#FF8FB1", "#FFE6EE", "&lt;/&gt;", "Open source", "You can read all of it"),
-    ("#6FC7B6", "#DDF5F0", "0", "Zero connections", "Works offline"),
-    ("#A98EF0", "#ECE6FD", "✓", "No permissions", "No admin needed"),
-    ("#FF8FB1", "#FFE6EE", "#", "SHA-256 fingerprint", "Published and checkable"),
-    ("#6FC7B6", "#DDF5F0", "✿", "No installer", "No .exe, no registry"),
+    ("#8FB07E", "#E3EDDA", "&lt;/&gt;", "Open source", "You can read all of it"),
+    ("#E58FA7", "#FBE6EB", "0", "Zero connections", "Works offline"),
+    ("#A48ED6", "#ECE4F7", "✓", "No permissions", "No admin needed"),
+    ("#8FB07E", "#E3EDDA", "#", "SHA-256 fingerprint", "Published and checkable"),
+    ("#C49A6C", "#F1E2CF", "✿", "No installer", "No .exe, no registry"),
 ]
+MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August",
+          "September", "October", "November", "December"]
 
 
 def seal_svg(i, color, soft, glyph, title, sub):
@@ -45,43 +52,56 @@ def seal_svg(i, color, soft, glyph, title, sub):
       </div>"""
 
 
-def zip_kb(py_bytes, txt_bytes):
+def zip_kb(files):
     """Real size of the (compressed) .zip the page will build."""
     buf = io.BytesIO()
     with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED, compresslevel=9) as z:
-        z.writestr("MochiPomodoro/MochiPomodoro.pyw", py_bytes)
-        z.writestr("MochiPomodoro/README.txt", txt_bytes)
+        for name, data in files.items():
+            z.writestr(name, data)
     return max(1, round(len(buf.getvalue()) / 1024))
 
 
-def main():
-    py_bytes, txt_bytes = PY.read_bytes(), TXT.read_bytes()
-    version = re.search(r'^VERSION = "([^"]+)"', py_bytes.decode("utf-8"), re.M).group(1)
-    today = datetime.date.today()
-    months = ["January", "February", "March", "April", "May", "June", "July", "August",
-              "September", "October", "November", "December"]
+def pretty(date):
+    return f"{MONTHS[date.month - 1]} {date.day}, {date.year}"
 
-    values = {
-        "VERSION": version,
-        "PY_B64": base64.b64encode(py_bytes).decode(),
-        "TXT_B64": base64.b64encode(txt_bytes).decode(),
-        "SHA_PY": hashlib.sha256(py_bytes).hexdigest(),
-        "SHA_TXT": hashlib.sha256(txt_bytes).hexdigest(),
-        "SIZE_PY": f"{len(py_bytes):,}",
-        "SIZE_KB": zip_kb(py_bytes, txt_bytes),
-        "LINES": py_bytes.decode("utf-8").count("\n"),
-        "DATE": f"on {months[today.month - 1]} {today.day}, {today.year}",
-        "DATE_ISO": today.isoformat(),
-        "SEALS": "\n      ".join(seal_svg(i, *s) for i, s in enumerate(SEALS)),
-    }
+
+def main():
+    today = datetime.date.today()
+    values = {"SEALS": "\n      ".join(seal_svg(i, *s) for i, s in enumerate(SEALS)), "DATE": pretty(today)}
+    js_releases, report = {}, []
+    for key, (folder, names, fixed) in RELEASES.items():
+        paths = [n if isinstance(n, Path) else folder / n for n in names]
+        files = {f"MochiPomodoro/{p.name}": p.read_bytes() for p in paths}
+        py = (folder / "MochiPomodoro.pyw").read_bytes()
+        version = re.search(r'^VERSION = "([^"]+)"', py.decode("utf-8"), re.M).group(1)
+        lines = py.decode("utf-8").count("\n")
+        K = key.upper()
+        values.update({
+            f"{K}_VERSION": version,
+            f"{K}_SIZE_KB": zip_kb(files),
+            f"{K}_LINES": lines,
+        })
+        js_releases[key] = {
+            "version": version,
+            "date": fixed or today.isoformat(),
+            "files": {name: base64.b64encode(data).decode() for name, data in files.items()},
+        }
+        rows = [f'<div class="kv"><dt>{p.name}</dt><dd class="mono">{hashlib.sha256(p.read_bytes()).hexdigest()}</dd></div>'
+                for p in paths]
+        rows.append(f'<div class="kv"><dt>Program size</dt><dd>{len(py):,} bytes · {lines} lines</dd></div>')
+        report.append(f'<div class="rel"><h4>v{version}{" · matcha latte" if key == "v2" else " · classic"}</h4>'
+                      f'<dl>\n          ' + "\n          ".join(rows) + "\n        </dl></div>")
+    values["RELEASES_JSON"] = json.dumps(js_releases, separators=(",", ":"))
+    values["REPORT"] = "\n        ".join(report)
+
     html = (HERE / "page.template.html").read_text(encoding="utf-8")
-    for key, val in values.items():
-        html = html.replace("{{" + key + "}}", str(val))
-    leftover = re.findall(r"\{\{[A-Z_]+\}\}", html)
+    for k, val in values.items():
+        html = html.replace("{{" + k + "}}", str(val))
+    leftover = re.findall(r"\{\{[A-Z0-9_]+\}\}", html)
     if leftover:
         raise SystemExit(f"Missing values for: {leftover}")
     (HERE / "index.html").write_text(html, encoding="utf-8", newline="\n")
-    print(f"index.html ready  ·  v{version}  ·  SHA-256 .pyw {values['SHA_PY'][:16]}…")
+    print(f"index.html ready  ·  v{values['V1_VERSION']} + v{values['V2_VERSION']}")
 
 
 if __name__ == "__main__":

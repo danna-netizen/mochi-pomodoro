@@ -4,29 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mochi Pomodoro</title>
-<meta name="description" content="A cute, minimalist desktop Pomodoro timer. Free, offline, open source.">
+<meta name="description" content="A cute, minimalist desktop focus timer. Choose your flow, dress up your mochi, track your days. Free, offline, open source.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #FFF7F9;
-    --card: #FFFFFF;
-    --ink: #4B3A46;
-    --muted: #9C8494;
-    --line: #F4DDE6;
-    --track: #F7E4EB;
-    --pink: #FF8FB1;
-    --pink-deep: #F2709A;
-    --pink-soft: #FFE6EE;
-    --mint: #6FC7B6;
-    --mint-soft: #DDF5F0;
-    --lav: #A98EF0;
-    --lav-soft: #ECE6FD;
-    --leaf: #8CCB9B;
-    --blush: #FFB8CB;
+    --bg: #F7F2EA;
+    --card: #FFFDF9;
+    --ink: #5A4A42;
+    --muted: #9A897D;
+    --line: #E8DDCC;
+    --track: #EDE4D6;
+    --matcha: #8FB07E;
+    --matcha-deep: #6E9160;
+    --matcha-soft: #E3EDDA;
+    --sakura: #EFA3B7;
+    --sakura-deep: #C9768C;
+    --sakura-soft: #FBE6EB;
+    --taro: #A48ED6;
+    --taro-deep: #7D66B8;
+    --taro-soft: #ECE4F7;
+    --hojicha: #C49A6C;
+    --hojicha-soft: #F1E2CF;
+    --blush: #F6C1CC;
     --radius: 22px;
-    --shadow: 0 1px 0 rgba(75,58,70,.04), 0 12px 32px -18px rgba(242,112,154,.35);
+    --shadow: 0 1px 0 rgba(90,74,66,.04), 0 12px 32px -18px rgba(110,145,96,.38);
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -41,56 +44,64 @@
   body::before {
     content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
     background-image: radial-gradient(var(--line) 1.2px, transparent 1.2px);
-    background-size: 26px 26px; opacity: .55;
+    background-size: 26px 26px; opacity: .6;
   }
-  h1, h2, h3 { font-family: "Fredoka", "Nunito", sans-serif; font-weight: 600; line-height: 1.15; margin: 0; }
-  a { color: var(--pink-deep); text-underline-offset: 3px; }
+  h1, h2, h3, h4 { font-family: "Fredoka", "Nunito", sans-serif; font-weight: 600; line-height: 1.15; margin: 0; }
+  a { color: var(--matcha-deep); text-underline-offset: 3px; }
   code, .mono { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: .86em; }
-  code { background: var(--pink-soft); padding: .12em .4em; border-radius: 6px; }
+  code { background: var(--matcha-soft); padding: .12em .4em; border-radius: 6px; }
   .hero .wrap > *, .manual > *, .split > *, .grid > * { min-width: 0; }
   .wrap { max-width: 1040px; margin: 0 auto; padding: 0 16px; }
   section { padding: 72px 0; }
-  .eyebrow { font-family: "Fredoka"; font-weight: 500; color: var(--pink-deep); letter-spacing: .08em; text-transform: lowercase; font-size: .95rem; }
+  .eyebrow { font-family: "Fredoka"; font-weight: 500; color: var(--matcha-deep); letter-spacing: .08em; text-transform: lowercase; font-size: .95rem; }
   .eyebrow::before { content: "✦ "; }
   .h2 { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 6px 0 12px; }
   .lead { color: var(--muted); max-width: 60ch; margin: 0; }
 
   /* nav */
-  nav { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px); background: rgba(255,247,249,.78); border-bottom: 1px solid var(--line); }
+  nav { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px); background: rgba(247,242,234,.8); border-bottom: 1px solid var(--line); }
   nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; gap: 12px; }
   .logo { display: flex; align-items: center; gap: 10px; font-family: "Fredoka"; font-weight: 600; font-size: 1.15rem; color: var(--ink); text-decoration: none; }
   .logo svg { width: 30px; height: 30px; }
   nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
   nav ul a { color: var(--muted); text-decoration: none; font-weight: 600; font-size: .95rem; }
-  nav ul a:hover { color: var(--pink-deep); }
-  @media (max-width: 560px) { nav ul { gap: 14px; } nav ul li.hide-sm { display: none; } }
+  nav ul a:hover { color: var(--matcha-deep); }
+  @media (max-width: 600px) { nav ul { gap: 14px; } nav ul li.hide-sm { display: none; } }
+  @media (max-width: 440px) { nav ul li.hide-xs { display: none; } }
+  .logo, nav ul a { white-space: nowrap; }
 
   /* hero */
   .hero { padding: 64px 0 40px; }
   .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; }
   @media (max-width: 860px) { .hero .wrap { grid-template-columns: 1fr; } }
   .chip { display: inline-flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--line); padding: 6px 14px; border-radius: 999px; font-size: .85rem; font-weight: 600; color: var(--muted); }
-  .chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 3px var(--mint-soft); }
+  .chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--sakura); box-shadow: 0 0 0 3px var(--sakura-soft); }
   .hero h1 { font-size: clamp(2.4rem, 5.6vw, 3.5rem); margin: 18px 0 14px; letter-spacing: -.01em; }
-  .hero h1 em { font-style: normal; color: var(--pink-deep); position: relative; white-space: nowrap; }
-  .hero h1 em::after { content: ""; position: absolute; left: 0; right: 0; bottom: .06em; height: .28em; background: var(--pink-soft); z-index: -1; border-radius: 6px; }
+  .hero h1 em { font-style: normal; color: var(--matcha-deep); position: relative; white-space: nowrap; }
+  .hero h1 em::after { content: ""; position: absolute; left: 0; right: 0; bottom: .06em; height: .28em; background: var(--matcha-soft); z-index: -1; border-radius: 6px; }
   .hero p.lead { font-size: 1.12rem; }
 
-  .dl { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; }
+  .dl { margin-top: 30px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
   .btn {
-    appearance: none; border: 0; cursor: pointer; font: 600 1.08rem "Fredoka", sans-serif;
+    appearance: none; border: 0; cursor: pointer; font: 600 1.05rem "Fredoka", sans-serif;
     display: inline-flex; align-items: center; gap: 10px;
-    padding: 16px 28px; border-radius: 999px; color: #fff;
-    background: var(--pink); box-shadow: 0 6px 0 var(--pink-deep), 0 16px 30px -12px rgba(242,112,154,.7);
+    padding: 15px 26px; border-radius: 999px; color: #fff;
+    background: var(--matcha); box-shadow: 0 6px 0 var(--matcha-deep), 0 16px 30px -12px rgba(110,145,96,.7);
     transition: transform .12s ease, box-shadow .12s ease, background .2s;
   }
-  .btn:hover { background: #FF9DBB; transform: translateY(-1px); }
-  .btn:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--pink-deep), 0 6px 16px -10px rgba(242,112,154,.7); }
-  .btn:focus-visible { outline: 3px solid var(--lav); outline-offset: 4px; }
+  .btn:hover { background: #9BBB8A; transform: translateY(-1px); }
+  .btn:active { transform: translateY(5px); box-shadow: 0 1px 0 var(--matcha-deep), 0 6px 16px -10px rgba(110,145,96,.7); }
+  .btn:focus-visible { outline: 3px solid var(--sakura); outline-offset: 4px; }
   .btn[disabled] { cursor: progress; opacity: .85; }
-  .btn svg { width: 20px; height: 20px; }
-  .dl-meta { font-size: .88rem; color: var(--muted); line-height: 1.5; }
+  .btn svg { width: 20px; height: 20px; flex: none; }
+  .btn small { font: 500 .78rem "Nunito"; opacity: .9; }
+  .btn.ghost { background: var(--card); color: var(--ink); border: 2px solid var(--line); box-shadow: 0 5px 0 var(--track); }
+  .btn.ghost:hover { background: #fff; }
+  .btn.ghost:active { box-shadow: 0 1px 0 var(--track); }
+  .dl-meta { margin-top: 16px; font-size: .88rem; color: var(--muted); line-height: 1.5; }
   .dl-meta b { color: var(--ink); font-weight: 700; }
+  .pdf-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; font-weight: 700; font-size: .95rem; text-decoration: none; background: var(--sakura-soft); color: var(--sakura-deep); padding: 7px 14px; border-radius: 999px; }
+  .pdf-link:hover { background: #F8D9E1; }
 
   .done-card { display: none; margin-top: 22px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px; box-shadow: var(--shadow); max-width: 560px; }
   .done-card.show { display: block; animation: pop .35s cubic-bezier(.2,1.4,.4,1); }
@@ -100,21 +111,25 @@
   @keyframes pop { from { transform: scale(.94); opacity: 0; } to { transform: none; opacity: 1; } }
 
   /* app mock */
-  .mock { justify-self: center; width: min(340px, 100%); background: var(--card); border-radius: 28px; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px rgba(242,112,154,.45); overflow: hidden; position: relative; }
+  .mock { justify-self: center; width: min(340px, 100%); background: var(--card); border-radius: 28px; border: 1px solid var(--line); box-shadow: 0 30px 60px -30px rgba(110,145,96,.5); overflow: hidden; position: relative; }
   .mock-bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid var(--line); font-size: .8rem; color: var(--muted); }
   .mock-bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--track); }
   .mock-bar span { margin-left: auto; font-weight: 600; }
-  .mock-body { padding: 18px 18px 22px; background: var(--bg); }
+  .mock-body { padding: 18px 18px 12px; background: var(--bg); }
   .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .tabs span { text-align: center; font: 600 .8rem "Fredoka"; padding: 7px 0; border-radius: 999px; background: var(--track); color: var(--muted); }
-  .tabs span.on { background: var(--pink); color: #fff; }
-  .ring { display: block; width: 100%; height: auto; margin: 8px 0 0; }
+  .tabs span.on { background: var(--matcha); color: #fff; }
+  .flowchip { text-align: center; font-size: .78rem; color: var(--muted); margin-top: 8px; }
+  .ring { display: block; width: 100%; height: auto; margin: 4px 0 0; }
   .mochi { animation: bob 1.6s ease-in-out infinite; transform-origin: center; }
   @keyframes bob { 50% { transform: translateY(-3px); } }
   .mock-ctrl { display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: 6px; }
   .mock-ctrl i { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: #fff; border: 2px solid var(--track); font-style: normal; font-weight: 700; }
-  .mock-ctrl b { padding: 11px 26px; border-radius: 999px; background: var(--pink); color: #fff; font: 600 .95rem "Fredoka"; }
-  .sparkle { position: absolute; color: var(--pink); animation: twinkle 2.4s ease-in-out infinite; font-size: 18px; }
+  .mock-ctrl b { padding: 11px 26px; border-radius: 999px; background: var(--matcha); color: #fff; font: 600 .95rem "Fredoka"; }
+  .mock-nav { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 14px; padding-top: 10px; border-top: 1px solid var(--line); }
+  .mock-nav span { text-align: center; font-size: .72rem; color: var(--muted); padding: 5px 0; border-radius: 12px; }
+  .mock-nav span.on { background: var(--matcha-soft); color: var(--ink); font-weight: 700; }
+  .sparkle { position: absolute; color: var(--sakura); animation: twinkle 2.4s ease-in-out infinite; font-size: 18px; }
   @keyframes twinkle { 50% { transform: scale(.6) rotate(20deg); opacity: .4; } }
 
   /* features */
@@ -123,9 +138,26 @@
   .card h3 { font-size: 1.12rem; margin: 12px 0 6px; }
   .card p { margin: 0; color: var(--muted); font-size: .95rem; }
   .ico { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; font-size: 1.25rem; }
-  .ico.p { background: var(--pink-soft); color: var(--pink-deep); }
-  .ico.m { background: var(--mint-soft); color: #3E9C8A; }
-  .ico.l { background: var(--lav-soft); color: #7B5FD6; }
+  .ico.m { background: var(--matcha-soft); color: var(--matcha-deep); }
+  .ico.s { background: var(--sakura-soft); color: var(--sakura-deep); }
+  .ico.t { background: var(--taro-soft); color: var(--taro-deep); }
+  .ico.h { background: var(--hojicha-soft); color: #9A7146; }
+  .tag { display: inline-block; font: 600 .7rem "Fredoka"; letter-spacing: .06em; text-transform: uppercase; background: var(--sakura-soft); color: var(--sakura-deep); padding: 2px 9px; border-radius: 999px; margin-left: 6px; vertical-align: 2px; }
+  .flavors { display: flex; gap: 6px; margin-top: 12px; flex-wrap: wrap; }
+  .flavors i { width: 20px; height: 20px; border-radius: 50%; border: 2px solid; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 12px; margin-top: 12px; font-size: .82rem; color: var(--muted); }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 12px; height: 12px; border-radius: 50%; }
+
+  /* versions */
+  .versions { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; }
+  @media (max-width: 760px) { .versions { grid-template-columns: 1fr; } }
+  .versions .card { display: flex; flex-direction: column; }
+  .versions .card.new { border: 2px solid var(--matcha); }
+  .versions h3 { margin-top: 0; font-size: 1.3rem; }
+  .versions .sub { color: var(--muted); font-size: .9rem; margin: 2px 0 8px; }
+  .versions .checks { flex: 1; }
+  .versions .btn { margin-top: 16px; align-self: flex-start; }
 
   /* manual */
   .manual { display: grid; grid-template-columns: 240px 1fr; gap: 40px; margin-top: 36px; align-items: start; }
@@ -134,23 +166,23 @@
   .toc b { font-family: "Fredoka"; font-weight: 600; font-size: .95rem; }
   .toc ol { margin: 10px 0 0; padding-left: 20px; color: var(--muted); font-size: .92rem; }
   .toc a { color: var(--ink); text-decoration: none; }
-  .toc a:hover { color: var(--pink-deep); }
+  .toc a:hover { color: var(--matcha-deep); }
   .doc h3 { font-size: 1.35rem; margin: 0 0 10px; display: flex; align-items: center; gap: 10px; }
-  .doc h3 .n { width: 30px; height: 30px; border-radius: 50%; background: var(--pink-soft); color: var(--pink-deep); display: grid; place-items: center; font-size: .95rem; flex: none; }
+  .doc h3 .n { width: 30px; height: 30px; border-radius: 50%; background: var(--matcha-soft); color: var(--matcha-deep); display: grid; place-items: center; font-size: .95rem; flex: none; }
   .doc article { padding-bottom: 34px; margin-bottom: 34px; border-bottom: 1px dashed var(--line); }
   .doc article:last-child { border-bottom: 0; }
   .doc ul, .doc ol { padding-left: 22px; }
   .doc li { margin: 4px 0; }
-  .doc li::marker { color: var(--pink); }
+  .doc li::marker { color: var(--matcha); }
   .os { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin-top: 14px; }
   .os div { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px 16px; font-size: .92rem; }
   .os b { font-family: "Fredoka"; font-weight: 600; display: block; margin-bottom: 4px; }
-  .note { background: var(--lav-soft); border-radius: 16px; padding: 12px 16px; font-size: .92rem; margin-top: 14px; }
-  .note b { color: #6B4FC8; }
+  .note { background: var(--taro-soft); border-radius: 16px; padding: 12px 16px; font-size: .92rem; margin-top: 14px; }
+  .note b { color: var(--taro-deep); }
   table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; font-size: .94rem; }
   th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
   tr:last-child td { border-bottom: 0; }
-  th { font-family: "Fredoka"; font-weight: 500; background: var(--pink-soft); color: var(--pink-deep); }
+  th { font-family: "Fredoka"; font-weight: 500; background: var(--matcha-soft); color: var(--matcha-deep); }
   kbd { font-family: "JetBrains Mono", monospace; font-size: .8rem; background: #fff; border: 1px solid var(--line); border-bottom-width: 3px; border-radius: 8px; padding: 2px 8px; white-space: nowrap; }
 
   /* security */
@@ -166,32 +198,34 @@
   .checks { list-style: none; padding: 0; margin: 12px 0 0; }
   .checks li { position: relative; padding: 8px 0 8px 34px; font-size: .95rem; border-bottom: 1px dashed var(--line); }
   .checks li:last-child { border-bottom: 0; }
-  .checks li::before { content: "✓"; flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; font-weight: 700; background: var(--mint-soft); color: #3E9C8A; position: absolute; left: 0; top: 10px; }
-  .checks.no li::before { content: "✕"; background: var(--pink-soft); color: var(--pink-deep); }
+  .checks li::before { content: "✓"; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: .75rem; font-weight: 700; background: var(--matcha-soft); color: var(--matcha-deep); position: absolute; left: 0; top: 10px; }
+  .checks.no li::before { content: "✕"; background: var(--sakura-soft); color: var(--sakura-deep); }
   .report { margin-top: 40px; background: var(--bg); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
   .report header { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding: 16px 20px; border-bottom: 1px solid var(--line); background: var(--card); }
   .report header h3 { font-size: 1.1rem; }
   .report header span { font-size: .85rem; color: var(--muted); }
   .report .rows { padding: 6px 20px 14px; }
+  .rel h4 { font-size: 1rem; color: var(--matcha-deep); margin: 14px 0 2px; }
+  .rel dl { margin: 0; }
   .kv { display: grid; grid-template-columns: 190px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px dashed var(--line); font-size: .92rem; }
-  .kv:last-child { border-bottom: 0; }
   .kv dt { color: var(--muted); font-weight: 600; }
   .kv dd { margin: 0; word-break: break-all; }
+  .general .kv:last-child { border-bottom: 0; }
   @media (max-width: 600px) { .kv { grid-template-columns: 1fr; gap: 2px; } }
   .steps { counter-reset: s; list-style: none; padding: 0; margin: 14px 0 0; }
   .steps li { counter-increment: s; position: relative; padding: 0 0 14px 40px; }
-  .steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--lav-soft); color: #6B4FC8; display: grid; place-items: center; font: 600 .85rem "Fredoka"; }
-  pre { background: var(--ink); color: #FFE6EE; border-radius: 14px; padding: 12px 14px; overflow-x: auto; font-size: .82rem; margin: 8px 0 0; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--taro-soft); color: var(--taro-deep); display: grid; place-items: center; font: 600 .85rem "Fredoka"; }
+  pre { background: var(--ink); color: var(--matcha-soft); border-radius: 14px; padding: 12px 14px; overflow-x: auto; font-size: .82rem; margin: 8px 0 0; }
 
   /* faq */
   details { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 4px 18px; margin-top: 10px; }
   summary { cursor: pointer; font-family: "Fredoka"; font-weight: 500; padding: 12px 0; list-style: none; display: flex; justify-content: space-between; gap: 10px; }
-  summary::after { content: "+"; color: var(--pink-deep); font-weight: 600; }
+  summary::after { content: "+"; color: var(--matcha-deep); font-weight: 600; }
   details[open] summary::after { content: "–"; }
   details p { margin: 0 0 14px; color: var(--muted); }
 
   footer { padding: 40px 0 56px; text-align: center; color: var(--muted); font-size: .9rem; }
-  footer .heart { color: var(--pink); }
+  footer .heart { color: var(--sakura); }
 
   @media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
 </style>
@@ -201,13 +235,14 @@
 <nav>
   <div class="wrap">
     <a class="logo" href="#top">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="19" rx="13" ry="10" fill="#FFE6EE" stroke="#FF8FB1" stroke-width="1.6"/><ellipse cx="13" cy="8.5" rx="3" ry="1.8" fill="#8CCB9B"/><ellipse cx="19" cy="8.2" rx="3" ry="1.8" fill="#8CCB9B"/><circle cx="12" cy="18" r="1.3" fill="#4B3A46"/><circle cx="20" cy="18" r="1.3" fill="#4B3A46"/><ellipse cx="9" cy="21" rx="2.2" ry="1.2" fill="#FFB8CB"/><ellipse cx="23" cy="21" rx="2.2" ry="1.2" fill="#FFB8CB"/></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><ellipse cx="16" cy="19" rx="13" ry="10" fill="#DDEBCF" stroke="#8FB07E" stroke-width="1.6"/><ellipse cx="13" cy="8.5" rx="3" ry="1.8" fill="#8FB07E"/><ellipse cx="19" cy="8.2" rx="3" ry="1.8" fill="#8FB07E"/><circle cx="12" cy="18" r="1.3" fill="#5A4A42"/><circle cx="20" cy="18" r="1.3" fill="#5A4A42"/><ellipse cx="9" cy="21" rx="2.2" ry="1.2" fill="#F6C1CC"/><ellipse cx="23" cy="21" rx="2.2" ry="1.2" fill="#F6C1CC"/></svg>
       mochi pomodoro
     </a>
     <ul>
-      <li class="hide-sm"><a href="#features">what it is</a></li>
+      <li><a href="#new">what’s new</a></li>
+      <li class="hide-sm"><a href="#versions">versions</a></li>
       <li><a href="#manual">manual</a></li>
-      <li><a href="#security">security</a></li>
+      <li class="hide-xs"><a href="#security">security</a></li>
       <li class="hide-sm"><a href="#faq">faq</a></li>
     </ul>
   </div>
@@ -216,17 +251,21 @@
 <header class="hero" id="top">
   <div class="wrap">
     <div>
-      <span class="chip"><i></i> v{{VERSION}} · free · no ads</span>
-      <h1>Focus <em>sweetly</em>,<br>one pomodoro at a time.</h1>
-      <p class="lead">Mochi Pomodoro is a tiny, cute desktop timer: 25 minutes of focus, 5 of rest, and a mochi to keep you company. No accounts, no internet, no distractions.</p>
+      <span class="chip"><i></i> new · v{{V2_VERSION}} matcha latte edition</span>
+      <h1>Find your <em>flow</em>,<br>one mochi at a time.</h1>
+      <p class="lead">Mochi Pomodoro is a tiny, cute desktop focus timer. Choose your flow, dress up your mochi in your favorite flavor, and watch your calendar fill with matcha-green days. No accounts, no internet, no distractions.</p>
 
       <div class="dl">
-        <button class="btn" id="dlBtn" type="button">
+        <button class="btn" type="button" data-rel="v2">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>
-          <span id="dlLabel">Download for desktop</span>
+          <span data-label>Download v{{V2_VERSION}}</span> <small>new</small>
         </button>
-        <div class="dl-meta"><b>.zip · {{SIZE_KB}} KB</b><br>Windows · macOS · Linux · requires Python 3</div>
+        <button class="btn ghost" type="button" data-rel="v1">
+          <span data-label>v{{V1_VERSION}} · classic</span>
+        </button>
       </div>
+      <div class="dl-meta"><b>.zip · {{V2_SIZE_KB}} KB</b> (v2) · <b>{{V1_SIZE_KB}} KB</b> (v1)<br>Windows · macOS · Linux · requires Python 3</div>
+      <a class="pdf-link" href="docs/WHATS-NEW-v2.pdf" target="_blank" rel="noopener">✿ What’s new in v2 · PDF</a>
 
       <div class="done-card" id="doneCard" role="status" aria-live="polite">
         <h3>✿ Done! Your download has started</h3>
@@ -237,44 +276,81 @@
     </div>
 
     <div class="mock" aria-label="App preview">
-      <span class="sparkle" style="top:70px;left:22px">✦</span>
-      <span class="sparkle" style="top:120px;right:20px;animation-delay:.8s">✦</span>
+      <span class="sparkle" style="top:76px;left:22px">✦</span>
+      <span class="sparkle" style="top:130px;right:20px;animation-delay:.8s">✦</span>
       <div class="mock-bar"><i></i><i></i><i></i><span id="mockTitle">24:59 · Mochi Pomodoro</span></div>
       <div class="mock-body">
         <div class="tabs"><span class="on">Focus</span><span>Break</span><span>Long</span></div>
+        <div class="flowchip">≋ Mochi Pomodoro · 25 / 5</div>
         <svg class="ring" viewBox="0 0 300 290" aria-hidden="true">
-          <circle cx="150" cy="140" r="118" fill="none" stroke="#F7E4EB" stroke-width="14"/>
-          <circle id="arc" cx="150" cy="140" r="118" fill="none" stroke="#FF8FB1" stroke-width="14" stroke-linecap="round"
+          <circle cx="150" cy="140" r="118" fill="none" stroke="#EDE4D6" stroke-width="14"/>
+          <circle id="arc" cx="150" cy="140" r="118" fill="none" stroke="#8FB07E" stroke-width="14" stroke-linecap="round"
                   stroke-dasharray="741.4" stroke-dashoffset="0" transform="rotate(-90 150 140)"/>
           <g class="mochi">
-            <ellipse cx="150" cy="117" rx="34" ry="5" fill="#F7E4EB"/>
-            <ellipse cx="150" cy="85" rx="42" ry="27" fill="#FFE6EE" stroke="#FF8FB1" stroke-width="2"/>
-            <ellipse cx="143" cy="55" rx="8" ry="4.5" fill="#8CCB9B"/><ellipse cx="157" cy="54" rx="8" ry="4.5" fill="#8CCB9B"/>
-            <line x1="150" y1="59" x2="150" y2="51" stroke="#8CCB9B" stroke-width="2.5" stroke-linecap="round"/>
-            <ellipse cx="128" cy="91" rx="7" ry="4" fill="#FFB8CB"/><ellipse cx="172" cy="91" rx="7" ry="4" fill="#FFB8CB"/>
-            <ellipse cx="137" cy="83" rx="3.5" ry="4.5" fill="#4B3A46"/><ellipse cx="163" cy="83" rx="3.5" ry="4.5" fill="#4B3A46"/>
-            <path d="M143 85 q3.5 5 7 0 q3.5 5 7 0" fill="none" stroke="#4B3A46" stroke-width="1.6" stroke-linecap="round"/>
+            <ellipse cx="150" cy="117" rx="34" ry="5" fill="#EDE4D6"/>
+            <ellipse cx="150" cy="85" rx="42" ry="27" fill="#DDEBCF" stroke="#8FB07E" stroke-width="2"/>
+            <ellipse cx="143" cy="55" rx="8" ry="4.5" fill="#8FB07E"/><ellipse cx="157" cy="54" rx="8" ry="4.5" fill="#8FB07E"/>
+            <line x1="150" y1="59" x2="150" y2="51" stroke="#8FB07E" stroke-width="2.5" stroke-linecap="round"/>
+            <ellipse cx="128" cy="91" rx="7" ry="4" fill="#F6C1CC"/><ellipse cx="172" cy="91" rx="7" ry="4" fill="#F6C1CC"/>
+            <ellipse cx="137" cy="83" rx="3.5" ry="4.5" fill="#5A4A42"/><ellipse cx="163" cy="83" rx="3.5" ry="4.5" fill="#5A4A42"/>
+            <path d="M143 85 q3.5 5 7 0 q3.5 5 7 0" fill="none" stroke="#5A4A42" stroke-width="1.6" stroke-linecap="round"/>
           </g>
-          <text id="mockClock" x="150" y="168" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="46" fill="#4B3A46">24:59</text>
-          <text x="150" y="200" text-anchor="middle" font-family="Nunito, sans-serif" font-size="13" fill="#B49AAA">time to focus ✿</text>
-          <g fill="#F7E4EB"><circle cx="120" cy="276" r="5" fill="#FF8FB1"/><circle cx="140" cy="276" r="5" fill="#FF8FB1"/><circle cx="160" cy="276" r="5"/><circle cx="180" cy="276" r="5"/></g>
+          <text id="mockClock" x="150" y="168" text-anchor="middle" font-family="Fredoka, sans-serif" font-weight="600" font-size="46" fill="#5A4A42">24:59</text>
+          <text x="150" y="200" text-anchor="middle" font-family="Nunito, sans-serif" font-size="13" fill="#A8988C">time to focus ✿</text>
+          <g fill="#EDE4D6"><circle cx="120" cy="276" r="5" fill="#8FB07E"/><circle cx="140" cy="276" r="5" fill="#8FB07E"/><circle cx="160" cy="276" r="5"/><circle cx="180" cy="276" r="5"/></g>
         </svg>
         <div class="mock-ctrl"><i>↺</i><b>❚❚ pause</b><i>»</i></div>
+        <div class="mock-nav"><span class="on">timer</span><span>flow</span><span>mochi</span><span>days</span></div>
       </div>
     </div>
   </div>
 </header>
 
-<section id="features">
+<section id="new">
   <div class="wrap">
-    <span class="eyebrow">what it is</span>
-    <h2 class="h2">Small, cute and quiet.</h2>
-    <p class="lead">The Pomodoro technique splits your work into focus blocks with short breaks. Mochi Pomodoro makes it easy and pretty, right on your desktop.</p>
+    <span class="eyebrow">what’s new in v2</span>
+    <h2 class="h2">Your focus, your flavor.</h2>
+    <p class="lead">Version 2 lets you choose <b>how</b> you focus, <b>who</b> keeps you company, and shows you <b>how far</b> you’ve come. Still one readable file, still 100% offline. <a href="docs/WHATS-NEW-v2.pdf" target="_blank" rel="noopener">Read the release notes (PDF)</a>.</p>
     <div class="grid">
-      <div class="card"><div class="ico p">◷</div><h3>Automatic cycles</h3><p>Focus → break → focus… and every 4 pomodoros, a long break.</p></div>
-      <div class="card"><div class="ico m">♪</div><h3>Gentle alert</h3><p>A soft chime, and the window pops to the front when each block ends.</p></div>
-      <div class="card"><div class="ico l">✦</div><h3>Made to fit you</h3><p>Change the minutes and keep the window “always on top” if you like.</p></div>
-      <div class="card"><div class="ico p">♡</div><h3>Truly private</h3><p>Works 100% offline. Nothing leaves your computer.</p></div>
+      <div class="card"><div class="ico m">≋</div><h3>Choose your flow <span class="tag">new</span></h3><p>Mochi Pomodoro (25/5), Deep Flow (50/10), Soft Start (15/3), or Your Flow with your own minutes, plus a daily goal.</p></div>
+      <div class="card"><div class="ico s">✿</div><h3>Dress up your mochi <span class="tag">new</span></h3><p>Seven flavors and four toppings. The whole timer takes your mochi’s color.</p>
+        <div class="flavors" aria-label="Flavors"><i style="background:#DDEBCF;border-color:#8FB07E"></i><i style="background:#FCE3EA;border-color:#EFA3B7"></i><i style="background:#ECE4F7;border-color:#B39DDB"></i><i style="background:#F1E2CF;border-color:#C49A6C"></i><i style="background:#FBF1C9;border-color:#E0BC4F"></i><i style="background:#E7E3DF;border-color:#8C847E"></i><i style="background:#fff;border-color:#D3C2AC"></i></div></div>
+      <div class="card"><div class="ico t">▦</div><h3>Flow days calendar <span class="tag">new</span></h3><p>Every day is painted in soft colors so you can see your streak grow.</p>
+        <div class="legend"><span><i style="background:#8FB07E"></i>goal reached</span><span><i style="background:#E3EDDA"></i>some flow</span><span><i style="background:#FBE6EB"></i>not this time</span></div></div>
+      <div class="card"><div class="ico h">♡</div><h3>Still truly private</h3><p>Works 100% offline, like always. No accounts, nothing leaves your computer.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="versions" style="padding-top:0">
+  <div class="wrap">
+    <span class="eyebrow">pick your version</span>
+    <h2 class="h2">Both mochis are here to stay.</h2>
+    <p class="lead">Love the original? v1 is still one click away. Both work offline and can live in different folders.</p>
+    <div class="versions">
+      <div class="card new">
+        <h3>v{{V2_VERSION}} · matcha latte</h3>
+        <p class="sub">recommended · {{V2_LINES}} lines · {{V2_SIZE_KB}} KB .zip</p>
+        <ul class="checks">
+          <li>Four flows + your own minutes, and a daily goal</li>
+          <li>Seven mochi flavors, four toppings</li>
+          <li>Flow days calendar with streaks</li>
+          <li>New bottom bar: timer · flow · mochi · days</li>
+          <li>Includes <code>WHATS-NEW-v2.pdf</code></li>
+        </ul>
+        <button class="btn" type="button" data-rel="v2"><span data-label>Download v{{V2_VERSION}}</span></button>
+      </div>
+      <div class="card">
+        <h3>v{{V1_VERSION}} · classic</h3>
+        <p class="sub">the original sakura-pink mochi · {{V1_LINES}} lines · {{V1_SIZE_KB}} KB .zip</p>
+        <ul class="checks">
+          <li>Classic Pomodoro: focus, break and long break</li>
+          <li>Adjustable minutes and pomodoros per cycle</li>
+          <li>Writes only <code>mochi_settings.json</code></li>
+          <li>Simple and tiny</li>
+        </ul>
+        <button class="btn ghost" type="button" data-rel="v1"><span data-label>Download v{{V1_VERSION}}</span></button>
+      </div>
     </div>
   </div>
 </section>
@@ -282,8 +358,8 @@
 <section id="manual">
   <div class="wrap">
     <span class="eyebrow">user manual</span>
-    <h2 class="h2">From download to your first pomodoro.</h2>
-    <p class="lead">This same manual comes inside the .zip as <code>README.txt</code>.</p>
+    <h2 class="h2">From download to your first flow.</h2>
+    <p class="lead">This same manual comes inside the .zip as <code>README.txt</code>. The steps to open it are the same for v1 and v2.</p>
 
     <div class="manual">
       <aside class="toc">
@@ -306,11 +382,12 @@
             <li><b>Python 3.8 or newer</b> (free). Mochi Pomodoro is written in Python, which is why it isn’t an <code>.exe</code>.</li>
             <li>Less than 1 MB of space. No internet needed to run.</li>
           </ul>
-          <p>The .zip contains:</p>
+          <p>The v2 .zip contains:</p>
           <table>
             <tr><th>File</th><th>What it is</th></tr>
             <tr><td><code>MochiPomodoro.pyw</code></td><td>The program. It’s a text file: you can open it with Notepad and read it.</td></tr>
             <tr><td><code>README.txt</code></td><td>This manual.</td></tr>
+            <tr><td><code>WHATS-NEW-v2.pdf</code></td><td>What changed in version 2 (v2 only).</td></tr>
           </table>
         </article>
 
@@ -327,7 +404,7 @@
         <article id="m3">
           <h3><span class="n">3</span> Open Mochi Pomodoro</h3>
           <ol>
-            <li>Press <b>Download</b> above. It will save <code>MochiPomodoro-v{{VERSION}}.zip</code>.</li>
+            <li>Press <b>Download</b> above. It will save <code>MochiPomodoro-v{{V2_VERSION}}.zip</code> (or <code>-v{{V1_VERSION}}</code> for the classic).</li>
             <li>Right-click the .zip → <b>Extract All…</b></li>
             <li>Open the <code>MochiPomodoro</code> folder and <b>double-click</b> <code>MochiPomodoro.pyw</code>.</li>
           </ol>
@@ -337,16 +414,15 @@
         </article>
 
         <article id="m4">
-          <h3><span class="n">4</span> How to use it</h3>
+          <h3><span class="n">4</span> How to use it (v2)</h3>
+          <p>The bar at the bottom of the window has four screens:</p>
           <ul>
-            <li><b>Tabs</b> at the top: Focus, Break and Long.</li>
-            <li><b>Pink button</b>: start or pause. The mochi opens its little eyes while it works ✿</li>
-            <li><b>↺</b> resets the current block · <b>»</b> skips to the next one.</li>
-            <li>The <b>little dots</b> show how many pomodoros you’ve done in the cycle.</li>
-            <li>When a block ends, a chime plays, the window comes to the front and it moves on to the next block by itself (you decide when to start it).</li>
-            <li><b>✦ settings</b>: focus, break and long break minutes, and pomodoros per cycle. They’re remembered for next time.</li>
-            <li><b>◯ always on top</b>: keeps the window above all others.</li>
+            <li><b>timer</b>: tabs for Focus, Break and Long. The big button starts or pauses, <b>↺</b> resets, <b>»</b> skips. The dots show your cycle and <i>today: 2 / 4 flows</i> your daily goal. Your mochi opens its eyes while you work ✿</li>
+            <li><b>flow</b>: choose Mochi Pomodoro, Deep Flow, Soft Start or Your Flow (your own focus and break minutes). Set your <b>daily goal</b> and “always on top”.</li>
+            <li><b>mochi</b>: pick a flavor (matcha, sakura, taro, hojicha, yuzu, black sesame, milk) and a topping (sprout, sakura flower, bow or none).</li>
+            <li><b>days</b>: your calendar. Matcha green = goal reached, soft green = some flow, soft pink = not this time (you stopped a block after working on it for over a minute). Click a day to see its minutes; your streak is at the bottom.</li>
           </ul>
+          <p>When a block ends, a chime plays, the window comes to the front and it moves on to the next block by itself (you decide when to start it). Using v1? It has the timer screen only, with minutes in “✦ settings”.</p>
         </article>
 
         <article id="m5">
@@ -357,6 +433,7 @@
             <tr><td><kbd>R</kbd></td><td>Reset the block</td></tr>
             <tr><td><kbd>S</kbd></td><td>Skip to the next block</td></tr>
             <tr><td><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></td><td>Focus · Break · Long break</td></tr>
+            <tr><td><kbd>T</kbd> <kbd>F</kbd> <kbd>M</kbd> <kbd>C</kbd></td><td>Timer · Flow · Mochi · Calendar (v2)</td></tr>
           </table>
         </article>
 
@@ -373,7 +450,7 @@
   <div class="wrap">
     <span class="eyebrow">security</span>
     <h2 class="h2">Why isn’t this download malware?</h2>
-    <p class="lead">Because you don’t have to take our word for it: everything Mochi Pomodoro does is out in the open. It’s a single {{LINES}}-line text file you can read before opening it. These are our transparency seals, and you can check each one yourself.</p>
+    <p class="lead">Because you don’t have to take our word for it: everything Mochi Pomodoro does is out in the open. Each version is a single text file you can read before opening it ({{V2_LINES}} lines for v2, {{V1_LINES}} for v1). These are our transparency seals, and you can check each one yourself.</p>
 
     <div class="seals">
       {{SEALS}}
@@ -385,8 +462,8 @@
         <ul class="checks">
           <li>Opens a window with a timer.</li>
           <li>Plays the system alert sound when a block ends.</li>
-          <li>Saves your minutes in <code>mochi_settings.json</code>, inside its own folder.</li>
-          <li>Uses only the Python standard library: <code>tkinter</code>, <code>json</code>, <code>math</code>, <code>time</code>, <code>pathlib</code>, <code>sys</code>, <code>winsound</code> (sound) and <code>ctypes</code> (only to keep text sharp on scaled displays).</li>
+          <li>Saves your settings in <code>mochi_settings.json</code> and (v2) your calendar in <code>mochi_days.json</code>, inside its own folder.</li>
+          <li>Uses only the Python standard library: <code>tkinter</code>, <code>json</code>, <code>math</code>, <code>time</code>, <code>datetime</code>, <code>calendar</code>, <code>pathlib</code>, <code>sys</code>, <code>winsound</code> (sound) and <code>ctypes</code> (small Windows helpers, like keeping text sharp on scaled displays).</li>
         </ul>
       </div>
       <div class="card">
@@ -402,14 +479,11 @@
     </div>
 
     <div class="report" id="verify">
-      <header><h3>Integrity report · v{{VERSION}}</h3><span>SHA-256 fingerprints published {{DATE}}</span></header>
+      <header><h3>Integrity report</h3><span>SHA-256 fingerprints published on {{DATE}}</span></header>
       <div class="rows">
-        <dl>
-          <div class="kv"><dt>MochiPomodoro.pyw</dt><dd class="mono">{{SHA_PY}}</dd></div>
-          <div class="kv"><dt>README.txt</dt><dd class="mono">{{SHA_TXT}}</dd></div>
-          <div class="kv"><dt>Program size</dt><dd>{{SIZE_PY}} bytes · {{LINES}} lines</dd></div>
-          <div class="kv"><dt>Network connections</dt><dd>None</dd></div>
-          <div class="kv"><dt>Files it writes</dt><dd><code>mochi_settings.json</code> (in its own folder)</dd></div>
+        {{REPORT}}
+        <dl class="general">
+          <div class="kv"><dt>Network connections</dt><dd>None (both versions)</dd></div>
           <div class="kv"><dt>Permissions it asks for</dt><dd>None</dd></div>
         </dl>
       </div>
@@ -440,57 +514,58 @@
     <span class="eyebrow">questions</span>
     <h2 class="h2">Frequently asked questions</h2>
     <details><summary>Is it free?</summary><p>Yes, completely. No ads, no accounts and no paid versions.</p></details>
+    <details><summary>Which version should I download?</summary><p>v2 if you want flows, mochi flavors and the calendar. v1 if you prefer the original, simplest timer. You can keep both.</p></details>
     <details><summary>Why do I need Python?</summary><p>Because that way the program is a text file you can read, instead of a closed .exe. It’s the most transparent way to deliver it.</p></details>
     <details><summary>Does it work offline?</summary><p>Yes. Once downloaded, it never connects to anything.</p></details>
-    <details><summary>Where are my settings saved?</summary><p>In <code>mochi_settings.json</code>, in the same folder as the program. If you delete it, it goes back to the defaults (25 / 5 / 15 minutes).</p></details>
-    <details><summary>My .zip fingerprint is different from someone else’s, is that a problem?</summary><p>Compare the fingerprints of the files inside (<code>MochiPomodoro.pyw</code> and <code>README.txt</code>) with the integrity report: those are the ones that matter and they should always match.</p></details>
+    <details><summary>Where are my settings and calendar saved?</summary><p>In <code>mochi_settings.json</code> and <code>mochi_days.json</code>, in the same folder as the program. Delete them to start fresh. Coming from v1? Copy your old <code>mochi_settings.json</code> into the v2 folder and your minutes become “Your Flow”.</p></details>
+    <details><summary>My .zip fingerprint is different from someone else’s, is that a problem?</summary><p>Compare the fingerprints of the files inside (<code>MochiPomodoro.pyw</code> and the others) with the integrity report: those are the ones that matter and they should always match.</p></details>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">mochi pomodoro v{{VERSION}} · made with love <span class="heart">♡</span> · time to focus!</div>
+  <div class="wrap">mochi pomodoro v{{V2_VERSION}} · classic v{{V1_VERSION}} · made with love <span class="heart">♡</span> · stay in your flow!</div>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script>
 (() => {
-  // The .zip does not exist on the server: it is built here, in memory, only when the button is pressed.
-  const VERSION = "{{VERSION}}";
-  const FILES = {
-    "MochiPomodoro/MochiPomodoro.pyw": "{{PY_B64}}",
-    "MochiPomodoro/README.txt": "{{TXT_B64}}"
-  };
-  const FIXED_DATE = new Date("{{DATE_ISO}}T12:00:00");
-  const btn = document.getElementById("dlBtn");
-  const label = document.getElementById("dlLabel");
-
+  // The .zip files do not exist on the server: they are built here, in memory, only when a button is pressed.
+  const RELEASES = {{RELEASES_JSON}};
   const hex = buf => [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2, "0")).join("");
 
-  btn.addEventListener("click", async () => {
-    if (typeof JSZip === "undefined") { label.textContent = "Check your connection and try again"; return; }
-    btn.disabled = true;
-    label.textContent = "Getting your mochi ready…";
-    try {
-      const zip = new JSZip();
-      for (const [path, b64] of Object.entries(FILES)) zip.file(path, b64, { base64: true, date: FIXED_DATE });
-      const bytes = await zip.generateAsync({ type: "uint8array", compression: "DEFLATE", compressionOptions: { level: 9 } });
-      const name = `MochiPomodoro-v${VERSION}.zip`;
-      const url = URL.createObjectURL(new Blob([bytes], { type: "application/zip" }));
-      const a = Object.assign(document.createElement("a"), { href: url, download: name });
-      document.body.appendChild(a); a.click(); a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 4000);
+  document.querySelectorAll("[data-rel]").forEach(btn => {
+    const rel = RELEASES[btn.dataset.rel];
+    const label = btn.querySelector("[data-label]");
+    const original = label.textContent;
+    btn.addEventListener("click", async () => {
+      if (typeof JSZip === "undefined") { label.textContent = "Check your connection and try again"; return; }
+      btn.disabled = true;
+      label.textContent = "Getting your mochi ready…";
+      try {
+        const zip = new JSZip();
+        const date = new Date(`${rel.date}T12:00:00`);
+        for (const [path, b64] of Object.entries(rel.files)) zip.file(path, b64, { base64: true, date });
+        const bytes = await zip.generateAsync({ type: "uint8array", compression: "DEFLATE", compressionOptions: { level: 9 } });
+        const name = `MochiPomodoro-v${rel.version}.zip`;
+        const url = URL.createObjectURL(new Blob([bytes], { type: "application/zip" }));
+        const a = Object.assign(document.createElement("a"), { href: url, download: name });
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
 
-      document.getElementById("zipName").textContent = name;
-      document.getElementById("zipHash").textContent =
-        (crypto.subtle ? hex(await crypto.subtle.digest("SHA-256", bytes)) : "open the page over https to see the fingerprint");
-      document.getElementById("doneCard").classList.add("show");
-      label.textContent = "Download again";
-    } catch (err) {
-      console.error(err);
-      label.textContent = "Oops, try again";
-    } finally {
-      btn.disabled = false;
-    }
+        document.getElementById("zipName").textContent = name;
+        document.getElementById("zipHash").textContent =
+          (crypto.subtle ? hex(await crypto.subtle.digest("SHA-256", bytes)) : "open the page over https to see the fingerprint");
+        const card = document.getElementById("doneCard");
+        card.classList.remove("show"); void card.offsetWidth; card.classList.add("show");
+        if (!btn.closest(".hero")) card.scrollIntoView({ behavior: "smooth", block: "center" });
+        label.textContent = original;
+      } catch (err) {
+        console.error(err);
+        label.textContent = "Oops, try again";
+      } finally {
+        btn.disabled = false;
+      }
+    });
   });
 
   // Animated preview (decorative only)
@@ -501,7 +576,6 @@
   const draw = () => { arc.style.strokeDashoffset = C * (1 - left / TOTAL); clock.textContent = fmt(left); title.textContent = `${fmt(left)} · Mochi Pomodoro`; };
   draw();
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(() => { left = left > 0 ? left - 1 : TOTAL; draw(); }, 1000);
-
 })();
 </script>
 </body>
